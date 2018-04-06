@@ -77,7 +77,7 @@
     root: '/',
     scheme: 'Muse',
     version: '6.1.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="1234目录1.修改页脚（footer）处，时间与作者姓名间的图标2.给博客增加一个萌萌哒看板娘3.增加访客统计功能 1.修改页脚（footer）处，时间与作者姓名间的图标NexT主题默认的图标为一个人像（user），可以将其改为心形图案。 先打开文件 ~/blog/themes/next/_config.yml12345678icon:    # Icon name in fontawesome">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-06T17:22:47.488Z">
+<meta property="og:updated_time" content="2018-04-06T17:42:23.438Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对基于HEXO的NexT主题的美化">
 <meta name="twitter:description" content="1234目录1.修改页脚（footer）处，时间与作者姓名间的图标2.给博客增加一个萌萌哒看板娘3.增加访客统计功能 1.修改页脚（footer）处，时间与作者姓名间的图标NexT主题默认的图标为一个人像（user），可以将其改为心形图案。 先打开文件 ~/blog/themes/next/_config.yml12345678icon:    # Icon name in fontawesome">
@@ -227,7 +227,7 @@
         
           
   
-  <li class="menu-item menu-item-about">
+  <li class="menu-item menu-item-about menu-item-active">
     <a href="/about/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
 </li>
@@ -237,7 +237,7 @@
         
           
   
-  <li class="menu-item menu-item-tags menu-item-active">
+  <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
 </li>
@@ -420,7 +420,8 @@
 <p>pv的方式，按点击数来记录，即单个用户连续点击n篇文章，记录n次访问量<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=<span class="string">"busuanzi_container_site_pv"</span>&gt;</span><br><span class="line">    本站总访问量&lt;span id=<span class="string">"busuanzi_value_site_pv"</span>&gt;&lt;/span&gt;次</span><br><span class="line">&lt;<span class="regexp">/span&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>uv的方式，按用户数记录，即单个用户连续点击n篇文章，只记为1次访问量<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=<span class="string">"busuanzi_container_site_uv"</span>&gt;</span><br><span class="line">    本站总访问量&lt;span id=<span class="string">"busuanzi_value_site_uv"</span>&gt;&lt;/span&gt;次</span><br><span class="line">&lt;<span class="regexp">/span&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>该部分参考了<a href="https://segmentfault.com/a/1190000009544924#articleHeader12" target="_blank" rel="noopener">这篇文章</a>的第十三条。</p>
-<p>一些常用的资料：</p>
+<h2 id="4-Back-to-top-按钮显示百分比"><a href="#4-Back-to-top-按钮显示百分比" class="headerlink" title="4.Back-to-top 按钮显示百分比"></a>4.Back-to-top 按钮显示百分比</h2><p>打开文件 <code>~/blog/themes/next/_config.yml</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Scroll percent label in b2t button.</span><br><span class="line">  scrollpercent: false</span><br></pre></td></tr></table></figure></p>
+<p>将’scrollpercen: ‘的值改为’true’可<br>一些常用的资料：</p>
 <p><a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">HEXO官方文档</a><br><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">NexT使用文档</a><br><a href="http://nipponcolors.com/" target="_blank" rel="noopener">日本の伝統色</a></p>
 
       
@@ -609,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-修改页脚（footer）处，时间与作者姓名间的图标"><span class="nav-number">1.</span> <span class="nav-text">1.修改页脚（footer）处，时间与作者姓名间的图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-给博客增加一个萌萌哒看板娘"><span class="nav-number">2.</span> <span class="nav-text">2.给博客增加一个萌萌哒看板娘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-增加访客统计功能"><span class="nav-number">3.</span> <span class="nav-text">3.增加访客统计功能</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-修改页脚（footer）处，时间与作者姓名间的图标"><span class="nav-number">1.</span> <span class="nav-text">1.修改页脚（footer）处，时间与作者姓名间的图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-给博客增加一个萌萌哒看板娘"><span class="nav-number">2.</span> <span class="nav-text">2.给博客增加一个萌萌哒看板娘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-增加访客统计功能"><span class="nav-number">3.</span> <span class="nav-text">3.增加访客统计功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Back-to-top-按钮显示百分比"><span class="nav-number">4.</span> <span class="nav-text">4.Back-to-top 按钮显示百分比</span></a></li></ol></div>
             
 
           </div>
@@ -680,6 +681,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
