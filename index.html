@@ -398,7 +398,7 @@
       
         
           <p>&emsp;&emsp;小区又双叒叕升级门禁系统，每户只给免费发两张门禁卡.额外购卡的话，每张卡居然收10元RMB.成本几毛钱的东西收这个价感觉略坑，查了一下资料决定自己动手复制一张卡.<del> 实际上最后算下来，钱花的更多了23333. </del></p>
-<p>&emsp;&emsp;先了解一下非接触式智能卡（Contactless smart card）的基本知识：<br>由ISO/IEC JTC 1颁布的ISO/ICE 14443协议定义了两种非接触卡（A型和B型）的技术标准，具体的技术细节不再赘述.概括一下过程就是非接触卡（PICC）接受由非接触读写器（PCD）传输的数据和能量，同时对数据进行解码和处理，然后再将处理过的数据反馈给PCD.</p>
+<p>&emsp;&emsp;先了解一下非接触式智能卡（Contactless smart card）的基本知识：由ISO/IEC JTC 1颁布的ISO/ICE 14443协议定义了两种非接触卡（A型和B型）的技术标准，具体的技术细节不再赘述.概括一下过程就是非接触卡（PICC）接受由非接触读写器（PCD）传输的数据和能量，同时对数据进行解码和处理，然后PICC再将处理过的数据反馈给PCD.</p>
 <p>&emsp;&emsp;基于ISO/IEC 14443标准中对Type A 13.56 MHz型智能卡的规定，1994年，NXP公司推出了MIFARE（名称源于MIkron FARE Collection System）系列智能卡的第一款产品： MIFARE Classic 1K（简称M1卡）. MIFARE Classic 1K 是目前最常见的一种非接触卡，每张卡具有一个独一无二且不可修改的UID编号，绝大多数门禁卡、学生卡、水卡等都是这种卡.这种卡也是被将要我复制的卡.<br>
           <!--noindex-->
           <div class="post-button text-center">
@@ -528,7 +528,7 @@
       
         
           <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">目录</span><br><span class="line">1.给博客增加一个萌萌哒看板娘</span><br><span class="line">2.修改页脚处，年份与姓名间的图标</span><br><span class="line">3.增加访客统计功能</span><br><span class="line">4.Back-to-top 按钮显示百分比</span><br><span class="line">5.如何设置「阅读全文」？</span><br></pre></td></tr></table></figure>
-<p>刚开始接触HEXO，这几天在一些大佬的博客和官方文档里学到了不少个性化设置。故记录于此，以备以后查阅。<br><blockquote><p>Tips：如果发现修改后页面部分内容未正常显示，先试试<code>$ hexo clean</code>,再进行生成和部署</p>
+<p>刚开始接触HEXO，这几天在一些大佬的博客和官方文档里学到了不少个性化设置。故记录于此，以备以后查阅。<br><blockquote><p>Tip：如果发现修改后页面部分内容未正常显示，先试试<code>$ hexo clean</code>,再进行生成和部署</p>
 </blockquote></p>
 <hr>
 <h2 id="给博客增加一个萌萌哒看板娘"><a href="#给博客增加一个萌萌哒看板娘" class="headerlink" title="给博客增加一个萌萌哒看板娘"></a>给博客增加一个萌萌哒看板娘</h2><blockquote><p>*经测试该插件在IE及Microsoft Edge上会引起不同程度的卡顿，建议使用Chrome浏览</p>
