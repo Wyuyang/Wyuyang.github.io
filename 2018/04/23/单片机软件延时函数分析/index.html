@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="初学89C51，在尝试控制LED灯闪烁间隔时长时，需要实现延时功能，查了一下相关资料，记下来作为笔记。  有哪些控制延时的方式？实现延时的方法主要有两类： 硬件延时：主要是通过单片机内部的定时器来实现，精度较高，作为小白暂时略过。 软件延时： 通过程序中的循环结构，不断重复一些无意义的指令以占用CPU运算资源，实现延时功能，实现起来较为简单，但精度较差。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-25T13:50:25.274Z">
+<meta property="og:updated_time" content="2018-05-15T04:18:13.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单片机软件延时函数分析">
 <meta name="twitter:description" content="初学89C51，在尝试控制LED灯闪烁间隔时长时，需要实现延时功能，查了一下相关资料，记下来作为笔记。  有哪些控制延时的方式？实现延时的方法主要有两类： 硬件延时：主要是通过单片机内部的定时器来实现，精度较高，作为小白暂时略过。 软件延时： 通过程序中的循环结构，不断重复一些无意义的指令以占用CPU运算资源，实现延时功能，实现起来较为简单，但精度较差。">
@@ -405,9 +405,9 @@
 <p><strong>软件延时</strong>： 通过程序中的循环结构，不断重复一些无意义的指令以占用CPU运算资源，实现延时功能，实现起来较为简单，但精度较差。<br><a id="more"></a></p>
 <hr>
 <h2 id="利用C51实现软件延时"><a href="#利用C51实现软件延时" class="headerlink" title="利用C51实现软件延时"></a>利用C51实现软件延时</h2><p><strong>第一种方法</strong>，使用while循环<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delay</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(i--);	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过调整在主调函数中赋予变量i的初始值（如50000），来控制时间间隔</p>
-<p>在<em>单片机原理与应用设计</em>一书的<a href="https://books.google.com/books?id=MQ8oDwAAQBAJ&amp;pg=PA78&amp;lpg=PA78&amp;dq=%E8%BD%AF%E4%BB%B6%E5%BB%B6%E6%97%B6+51%E5%8D%95%E7%89%87%E6%9C%BA&amp;source=bl&amp;ots=AaXXhS0AlI&amp;sig=LngwaJOTi_XGklZxp6Td1hgpD7Y&amp;hl=zh-CN&amp;sa=X&amp;ved=0ahUKEwjTm4b90dDaAhWJh5AKHYSvCYIQ6AEIZTAK#v=onepage&amp;q=%E8%BD%AF%E4%BB%B6%E5%BB%B6%E6%97%B6%2051%E5%8D%95%E7%89%87%E6%9C%BA&amp;f=false" target="_blank" rel="noopener">第七十八页</a>中提到：“单片机中的一个循环次数不宜超过255次”，尚不清楚具体理由。若要满足一个循环不超过255次的要求，宜采用下一种方法。</p>
+<p>通过调整在主调函数中赋予变量i的初始值（如50000），来控制时间间隔。</p>
 <p><strong>第二种方法</strong>，使用for循环，多层嵌套<br><em>代码源于网络，延时1s</em><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delay1s</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> h,i,j,k;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(h=<span class="number">5</span>;h&gt;<span class="number">0</span>;h--)</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">4</span>;i&gt;<span class="number">0</span>;i--)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">116</span>;j&gt;<span class="number">0</span>;j--)</span><br><span class="line">                <span class="keyword">for</span>(k=<span class="number">214</span>;k&gt;<span class="number">0</span>;k--);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注：需注意<code>char</code>型变量范围为0~255.</p>
 <hr>
 <h2 id="如何确定延时时间？"><a href="#如何确定延时时间？" class="headerlink" title="如何确定延时时间？"></a>如何确定延时时间？</h2><p>显然，上述两种程序的延时时长由循环次数决定，而循环次数又由<code>h, i, j, k</code>参数确定。但在循环次数和延时时长之间存在着怎样的一种关系？只有弄清楚这一问题，才能根据需要调整参数的值。</p>
 <p>如果只是想实现简单的控制led灯闪烁，不作深入了解，只需按照以下方法计算即可：</p>
@@ -420,7 +420,7 @@
 
 
 <p><strong>状态周期</strong>：两个振荡周期组成一个状态周期（S周期）。对于<code>Fosc=12Mhz</code>的晶振，一个状态周期为0.166μs。</p>
-<p><strong>机器周期</strong>：单片机完成一个独立的操作所用的时间被称为一个机器周期，一般记为<code>Tcy</code>。一个机器周期包含6个状态周期，即等于12个时钟周期，时间长度为1μs。<br><blockquote><p>*MCS-51里定义一个振荡周期为一个节拍（P）。如果记一个机器周期中的六个状态周期为<code>S1、S2、S3、S4、S5、S6</code>，每个状态周期对应的两个节拍为<code>P1、P2</code>，那么一个机器周期中的12个状态周期可以记作<code>S1P1 S1P2 S2P1 S2P2 S3P1 S3P2………S6P1 S6P2</code>。更详细的内容可参见[这里][2]<br><del>当然这些概念在这里并没有什么卵用hhh</del></p>
+<p><strong>机器周期</strong>：单片机完成一个独立的操作所用的时间被称为一个机器周期，一般记为<code>Tcy</code>。一个机器周期包含6个状态周期，即等于12个时钟周期，时间长度为1μs。<br><blockquote><p>*MCS-51里定义一个振荡周期为一个节拍（P）。如果记一个机器周期中的六个状态周期为<code>S1、S2、S3、S4、S5、S6</code>，每个状态周期对应的两个节拍为<code>P1、P2</code>，那么一个机器周期中的12个状态周期可以记作<code>S1P1 S1P2 S2P1 S2P2 S3P1 S3P2………S6P1 S6P2</code>。更详细的内容可参见[这里][1]<br><del>当然这些概念在这里并没有什么卵用hhh</del></p>
 </blockquote></p>
 <p><strong>指令周期</strong>：单片机完成一条独立的指令所用的时间被称为一个指令周期，而一个指令周期包含一个或多个机器周期。MCS-51中，有单周期指令，双周期指令和四周期指令。</p>
 <p>假设有一条指令为A,单周期指令的意思是说，执行完指令A需要一个机器周期，即对于指令A而言，一个指令周期等于一个机器周期。</p>
@@ -477,6 +477,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/20/Q&A/" rel="prev" title="Q&A">
+                Q&A <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -552,7 +556,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
