@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="对于浮点数不宜使用 == 或 != 运算符写作业时遇到了一个奇怪的bug，精简一下，代码大致如下：12345678......    double x = -5;        x = x + 0.1;        if(x == -4.9)        printf(&quot;\n&quot;);......">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 学习笔记">
+<meta property="og:url" content="http://wangyuyang.me/2018/05/26/C-学习笔记/index.html">
+<meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
+<meta property="og:description" content="对于浮点数不宜使用 == 或 != 运算符写作业时遇到了一个奇怪的bug，精简一下，代码大致如下：12345678......    double x = -5;        x = x + 0.1;        if(x == -4.9)        printf(&quot;\n&quot;);......">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-06-07T12:54:33.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C 学习笔记">
+<meta name="twitter:description" content="对于浮点数不宜使用 == 或 != 运算符写作业时遇到了一个奇怪的bug，精简一下，代码大致如下：12345678......    double x = -5;        x = x + 0.1;        if(x == -4.9)        printf(&quot;\n&quot;);......">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Y.-Y. Wang's blog" type="application/atom+xml"/>
+
+
+
+
+  <link rel="canonical" href="http://wangyuyang.me/2018/05/26/C-学习笔记/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>C 学习笔记 | Y.-Y. Wang's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Y.-Y. Wang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangyuyang.me/2018/05/26/C-学习笔记/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y.-Y. Wang"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y.-Y. Wang's blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C 学习笔记
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-26 20:56:16" itemprop="dateCreated datePublished" datetime="2018-05-26T20:56:16+08:00">2018-05-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-07 20:54:33" itemprop="dateModified" datetime="2018-06-07T20:54:33+08:00">2018-06-07</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="对于浮点数不宜使用-或-运算符"><a href="#对于浮点数不宜使用-或-运算符" class="headerlink" title="对于浮点数不宜使用 == 或 != 运算符"></a>对于浮点数不宜使用 == 或 != 运算符</h2><p>写作业时遇到了一个奇怪的bug，精简一下，代码大致如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line">    <span class="keyword">double</span> x = <span class="number">-5</span>;</span><br><span class="line">    </span><br><span class="line">    x = x + <span class="number">0.1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(x == <span class="number">-4.9</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a> 
+<p>执行如上语句后，发现语句<code>printf(&quot;\n&quot;);</code>并未执行.换句话说，if后表达式的值为false.</p>
+<p>这个结果就有点让人感到困惑了，显然当程序执行完第四行后，x的值应当为1.1，为何表达式<code>x == 1.1</code>的值为0？打开Visual Studio的调试功能才发现问题所在：执行完第四行后x的值并不是-4.900…000，而是-4.900…007，确实不等于-4.9.</p>
+<p>发现问题之后便查了一下资料，才知道这一bug的产生原因：IEEE 754-1985标准中规定浮点数在计算机中以二进制形式储存，因此在转换为十进制时会产生截断误差，也就是说<code>float</code>和<code>double</code>型变量都有精度限制，当使用<code>==</code>或<code>!=</code>进行判断时，必须保证运算符两边的值均为字面量而非计算量，否则大概率会出现问题.</p>
+<p>参考资料&amp;扩展阅读：<br> <a href="https://www.zhihu.com/question/21175703" target="_blank" rel="noopener">有没有使用“==”判断浮点数相等与否出现错误的例子？</a><br> <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" rel="noopener">代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+<hr>
+<h2 id="关于二维数组的一些问题"><a href="#关于二维数组的一些问题" class="headerlink" title="关于二维数组的一些问题"></a>关于二维数组的一些问题</h2><p>见<a href="https://blog.csdn.net/u012938194/article/details/50526198" target="_blank" rel="noopener">这里</a></p>
+<hr>
+<h2 id="自定义标识符"><a href="#自定义标识符" class="headerlink" title="自定义标识符"></a>自定义标识符</h2><p>有这样一道题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">下列标识符中，不合法的C语言用户自定义标识符是（）。</span><br><span class="line">    A:printf</span><br><span class="line">    B:enum</span><br><span class="line">    C:_</span><br><span class="line">    D:sin</span><br></pre></td></tr></table></figure></p>
+<p>答案选B<br>printf实际可以是自定义标识符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以下标识符中，不能作为合法的C用户定义标识符的是（）。</span><br><span class="line">    A:putchar</span><br><span class="line">    B:_double</span><br><span class="line">    C:_123</span><br><span class="line">    D:INT</span><br></pre></td></tr></table></figure>
+<p>答案选A<br>Are you kidding me?</p>
+<hr>
+<h2 id="实参与形参"><a href="#实参与形参" class="headerlink" title="实参与形参"></a>实参与形参</h2><p>实参数组类型与形参数组类型可以不匹配</p>
+<hr>
+<h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>学校考试按如下标准：<br>16位编译器</p>
+<p>char ：1个字节<br>char*(即指针变量): 2个字节<br>short int : 2个字节<br>int：  2个字节<br>unsigned int : 2个字节<br>float:  4个字节<br>double:   8个字节<br>long:   4个字节<br>long long:  8个字节<br>unsigned long:  4个字节</p>
+<hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/20/Q&A/" rel="next" title="Q&A">
+                <i class="fa fa-chevron-left"></i> Q&A
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/30/Python-学习笔记/" rel="prev" title="Python 学习笔记">
+                Python 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Y.-Y. Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对于浮点数不宜使用-或-运算符"><span class="nav-number">1.</span> <span class="nav-text">对于浮点数不宜使用 == 或 != 运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于二维数组的一些问题"><span class="nav-number">2.</span> <span class="nav-text">关于二维数组的一些问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义标识符"><span class="nav-number">3.</span> <span class="nav-text">自定义标识符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实参与形参"><span class="nav-number">4.</span> <span class="nav-text">实参与形参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型"><span class="nav-number">5.</span> <span class="nav-text">基本数据类型</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y.-Y. Wang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.7.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":125,"height":250},"mobile":{"show":true}});</script></body>
+</html>

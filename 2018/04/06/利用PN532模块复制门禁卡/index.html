@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;小区又双叒叕升级门禁系统，每户只给免费发两张门禁卡.额外购卡的话，每张卡居然收10元RMB.成本几毛钱的东西收这个价感觉略坑，查了一下资料决定自己动手复制一张卡. 实际上最后算下来，钱花的更多了23333.  &amp;emsp;&amp;emsp;先了解一下非接触式智能卡（Contactless smart card）的基本知识：由ISO/IEC JTC 1颁布的ISO/ICE 1444">
+<meta name="keywords" content="RFID">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用PN532模块复制门禁卡">
+<meta property="og:url" content="http://wangyuyang.me/2018/04/06/利用PN532模块复制门禁卡/index.html">
+<meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;小区又双叒叕升级门禁系统，每户只给免费发两张门禁卡.额外购卡的话，每张卡居然收10元RMB.成本几毛钱的东西收这个价感觉略坑，查了一下资料决定自己动手复制一张卡. 实际上最后算下来，钱花的更多了23333.  &amp;emsp;&amp;emsp;先了解一下非接触式智能卡（Contactless smart card）的基本知识：由ISO/IEC JTC 1颁布的ISO/ICE 1444">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-07T23:52:50.857Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用PN532模块复制门禁卡">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;小区又双叒叕升级门禁系统，每户只给免费发两张门禁卡.额外购卡的话，每张卡居然收10元RMB.成本几毛钱的东西收这个价感觉略坑，查了一下资料决定自己动手复制一张卡. 实际上最后算下来，钱花的更多了23333.  &amp;emsp;&amp;emsp;先了解一下非接触式智能卡（Contactless smart card）的基本知识：由ISO/IEC JTC 1颁布的ISO/ICE 1444">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Y.-Y. Wang's blog" type="application/atom+xml"/>
+
+
+
+
+  <link rel="canonical" href="http://wangyuyang.me/2018/04/06/利用PN532模块复制门禁卡/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>利用PN532模块复制门禁卡 | Y.-Y. Wang's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Y.-Y. Wang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangyuyang.me/2018/04/06/利用PN532模块复制门禁卡/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y.-Y. Wang"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y.-Y. Wang's blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">利用PN532模块复制门禁卡
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-06 21:18:49" itemprop="dateCreated datePublished" datetime="2018-04-06T21:18:49+08:00">2018-04-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-04-08 07:52:50" itemprop="dateModified" datetime="2018-04-08T07:52:50+08:00">2018-04-08</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;小区又双叒叕升级门禁系统，每户只给免费发两张门禁卡.额外购卡的话，每张卡居然收10元RMB.成本几毛钱的东西收这个价感觉略坑，查了一下资料决定自己动手复制一张卡.<del> 实际上最后算下来，钱花的更多了23333. </del></p>
+<p>&emsp;&emsp;先了解一下非接触式智能卡（Contactless smart card）的基本知识：由ISO/IEC JTC 1颁布的ISO/ICE 14443协议定义了两种非接触卡（A型和B型）的技术标准，具体的技术细节不再赘述.概括一下过程就是非接触卡（PICC）接受由非接触读写器（PCD）传输的数据和能量，同时对数据进行解码和处理，然后PICC再将处理过的数据反馈给PCD.</p>
+<p>&emsp;&emsp;基于ISO/IEC 14443标准中对Type A 13.56 MHz型智能卡的规定，1994年，NXP公司推出了MIFARE（名称源于MIkron FARE Collection System）系列智能卡的第一款产品： MIFARE Classic 1K（简称M1卡）. MIFARE Classic 1K 是目前最常见的一种非接触卡，每张卡具有一个独一无二且不可修改的UID编号，绝大多数门禁卡、学生卡、水卡等都是这种卡.这种卡也是被将要我复制的卡.<br><a id="more"></a><br>&emsp;&emsp;MIFARE系列还有其他产品，如MIFARE Ultralight,MIFARE Plus和MIFARE DESFire.这四类卡又有其他不同的分支，这里亦不在谈，<a href="https://en.wikipedia.org/wiki/MIFARE" target="_blank" rel="noopener">戳这里</a>可以进一步了解MIFARE卡的历史和种类.不过值得一提的是，MIFARE Ultralight和MIFARE DESFire被用于我国部分城市的交通卡中，任何尝试修改、复制交通卡内数据的行为都是触犯我国法律的。</p>
+<p>&emsp;&emsp;2007年12月，MIFARE Classic被证实存在设计缺陷，可以被多种方式破解，正是这一原因使得我们可以在没有Key A,B的情况下完成卡的复制。</p>
+<blockquote><p>这里描述的是复制非全加密的M1卡.全加密的M1卡需要使用Proxmark 3进行嗅探，成本较高，大概需要300+RMB，这里不做讨论（有说法称PN532亦可破解全加密卡，具体情况不详）.</p>
+</blockquote>
+<p>&emsp;&emsp;复制所需的工具：<br>&emsp;&emsp;&emsp;&emsp;PN532模块<br>&emsp;&emsp;&emsp;&emsp;PL2303 USB to Serial<br>&emsp;&emsp;&emsp;&emsp;CUID卡一张<br>&emsp;&emsp;成本大概30￥，其中一张CUID卡的价格大概在1￥左右.</p>
+<blockquote><p>PN532可用ACR112U代替，但ACR112U价格较高(100+RMB).<br> CUID卡是UID卡（Chinese Magic Card,可修改一次UID编号）的变种，出厂时空白，可以重复、随意擦写卡中数据（包括0扇区的UID编号）.</p>
+</blockquote>
+<p>&emsp;&emsp;工具凑齐后需要将PL2303和PN532模块连接起来，连接时要注意线序：<br> PN532*&nbsp;&nbsp;&nbsp;&nbsp;PL2303<br>  GND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GND<br>  VCC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+5V<br>  TXD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RXD<br>  RXD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TXD</p>
+<blockquote><p>*背面印刷有引脚说明，若不慎将GND和VCC反接会导致模块烧毁.</p>
+</blockquote>
+<p>&emsp;&emsp;连接完成后，将PL2303插入电脑，安装相应的驱动后即可利用上位机读取卡片中的信息，将读取的数据导出为”.dump”文件，再写入CUID卡中即可完成复制.拿到门禁上一试，成功！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RFID/" rel="tag"># RFID</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/06/对基于HEXO的NexT主题的美化/" rel="next" title="对基于HEXO的NexT主题的美化">
+                <i class="fa fa-chevron-left"></i> 对基于HEXO的NexT主题的美化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/23/单片机软件延时函数分析/" rel="prev" title="单片机软件延时函数分析">
+                单片机软件延时函数分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Y.-Y. Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y.-Y. Wang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.7.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":125,"height":250},"mobile":{"show":true}});</script></body>
+</html>
