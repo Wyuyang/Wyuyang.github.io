@@ -74,7 +74,7 @@
     root: '/',
     scheme: 'Muse',
     version: '6.7.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -108,6 +108,8 @@
 <meta name="twitter:title" content="About">
 <meta name="twitter:description" content="关于本站去年年底突然产生了搭建一个博客的想法，于是在阿里云上租下一个ECS，用WordPress做了第一个博客,未购域名，IP:47.100.160.10。但WordPress相关资源偏少，始终找不到满意的主题，且阿里云ECS的低价学生套餐配置感人，高配套餐实在负担不起。经过了解后决定采用 Github Pages + Hexo 的方式重新搭建一个博客，采用Next主题，即得到了本站。 就这么折腾">
 
+
+  
 
 
   <link rel="alternate" href="/atom.xml" title="Y.-Y. Wang's blog" type="application/atom+xml"/>
@@ -477,7 +479,7 @@
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Y.-Y. Wang</span>
 
@@ -501,6 +503,32 @@
 
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
 
 
 
@@ -516,6 +544,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
