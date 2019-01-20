@@ -229,6 +229,40 @@
         
         
           
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br/>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-archives">
 
     
@@ -420,12 +454,12 @@
 <p><a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener">戳这里</a>进入作者的网站。</p>
 <h3 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h3><p>打开<code>~/blog/themes/next/layout/_partials/footer.swig</code></p>
 <p>在<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"copyright"</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<p>前插入一段代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
-<p>然后滚动到文件最后（或者其他合适的地方），插入：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"busuanzi-count"</span>&gt;</span><br><span class="line">&lt;i <span class="class"><span class="keyword">class</span></span>=<span class="string">"fa fa-user-md"</span>&gt;&lt;/i&gt;&lt;span id="busuanzi_container_site_uv"&gt;</span><br><span class="line">    您是第&lt;span id="busuanzi_value_site_uv"&gt;&lt;/span&gt;位客人呢| ω・´)</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure></p>
+<p>前插入一段代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>然后滚动到文件最后（或者其他合适的地方），插入：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"busuanzi-count"</span>&gt;</span><br><span class="line">&lt;i <span class="class"><span class="keyword">class</span></span>=<span class="string">"fa fa-user-md"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_uv"</span>&gt;</span></span></span><br><span class="line"><span class="xml">    您是第<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_uv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>位客人呢| ω・´)</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
 <p>如果不想要提示前的图标，直接删去<code>&lt;i class=&quot;fa fa-user-md&quot;&gt;&lt;/i&gt;</code>即可。</p>
 <p>在这里有两种不同的统计方式：</p>
-<p>pv的方式，按点击数来记录，即单个用户连续点击n篇文章，记录n次访问量。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=<span class="string">"busuanzi_container_site_pv"</span>&gt;</span><br><span class="line">    本站总访问量&lt;span id=<span class="string">"busuanzi_value_site_pv"</span>&gt;&lt;/span&gt;次</span><br><span class="line">&lt;<span class="regexp">/span&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>uv的方式，按用户数记录，即单个用户连续点击n篇文章，只记为1次访问量。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=<span class="string">"busuanzi_container_site_uv"</span>&gt;</span><br><span class="line">    本站总访问量&lt;span id=<span class="string">"busuanzi_value_site_uv"</span>&gt;&lt;/span&gt;次</span><br><span class="line">&lt;<span class="regexp">/span&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>pv的方式，按点击数来记录，即单个用户连续点击n篇文章，记录n次访问量。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=<span class="string">"busuanzi_container_site_pv"</span>&gt;</span><br><span class="line">    本站总访问量&lt;span id=<span class="string">"busuanzi_value_site_pv"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>次</span><br><span class="line">&lt;<span class="regexp">/span&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>uv的方式，按用户数记录，即单个用户连续点击n篇文章，只记为1次访问量。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=<span class="string">"busuanzi_container_site_uv"</span>&gt;</span><br><span class="line">    本站总访问量&lt;span id=<span class="string">"busuanzi_value_site_uv"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>次</span><br><span class="line">&lt;<span class="regexp">/span&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>该部分参考了<a href="https://segmentfault.com/a/1190000009544924#articleHeader12" target="_blank" rel="noopener">这篇文章</a>的第十三条。</p>
 <h3 id="另一种方法"><a href="#另一种方法" class="headerlink" title="另一种方法"></a>另一种方法</h3><p>只需要在主题配置文件<code>_config.yml</code>中找到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Show Views/Visitors of the website/page with busuanzi.</span><br><span class="line"># Get more information on http://ibruce.info/2015/04/04/busuanzi/</span><br><span class="line">busuanzi_count:</span><br><span class="line">  enable: false</span><br><span class="line">  total_visitors: true</span><br><span class="line">  total_visitors_icon: user</span><br><span class="line">  total_views: true</span><br><span class="line">  total_views_icon: eye</span><br><span class="line">  post_views: true</span><br><span class="line">  post_views_icon: eye</span><br></pre></td></tr></table></figure></p>
 <p>按需修改即可。</p>
