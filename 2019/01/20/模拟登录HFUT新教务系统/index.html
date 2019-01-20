@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="今天继续试一试模拟登录学校的新教务系统，新教务系统是由上海树维开发的。  思路寻找和模拟登录信息门户一样，切到开发者模式，登录一次看一看请求过程。login中可以看到网页后台提交了一个Request Payload：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-20T06:30:18.744Z">
+<meta property="og:updated_time" content="2019-01-20T06:32:55.582Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模拟登录HFUT新教务系统">
 <meta name="twitter:description" content="今天继续试一试模拟登录学校的新教务系统，新教务系统是由上海树维开发的。  思路寻找和模拟登录信息门户一样，切到开发者模式，登录一次看一看请求过程。login中可以看到网页后台提交了一个Request Payload：">
@@ -226,7 +226,7 @@
         
           
   
-  <li class="menu-item menu-item-about">
+  <li class="menu-item menu-item-about menu-item-active">
     <a href="/about/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
 </li>
@@ -246,7 +246,7 @@
         
           
   
-  <li class="menu-item menu-item-categories menu-item-active">
+  <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
 </li>
@@ -400,7 +400,7 @@
         <blockquote><p>今天继续试一试模拟登录学校的新教务系统，新教务系统是由上海树维开发的。</p>
 </blockquote>
 <h2 id="思路寻找"><a href="#思路寻找" class="headerlink" title="思路寻找"></a>思路寻找</h2><p>和模拟登录信息门户一样，切到开发者模式，登录一次看一看请求过程。<br>login中可以看到网页后台提交了一个Request Payload：<br><a id="more"></a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;   </span><br><span class="line">    username: "2019123456", </span><br><span class="line">    password: "91abd3f34f9de4fccfb71eade0dd825e275939ebf", </span><br><span class="line">    captcha: ""</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>username是直接明文提交的，没什么问题，但password明显是加密过的。加密方式倒也很好判断，网页在加载时载入了一个名为<code>sha1.js</code>的文件，肯定是对密码进行了SHA-1加密。但是直接用密码在<a href="http://www.sha1-online.com/" target="_blank" rel="noopener">这里</a>试了一下，得到的结果和Request Payload并不一样。试着用<code>CTRL + F</code> 搜一下sha1.js中出现的’CryptpJS’，在login的Response中找到这段代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> encryptPassword = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">$.get(&#123;</span><br><span class="line">  url: <span class="built_in">window</span>.CONTEXT_PATH + <span class="string">"/login-salt"</span>,</span><br><span class="line">  <span class="keyword">async</span>: <span class="literal">false</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">salt</span>) </span>&#123;</span><br><span class="line">    encryptPassword = <span class="keyword">new</span> <span class="built_in">String</span>(CryptoJS.SHA1(salt + <span class="string">'-'</span> + $(<span class="string">"#p"</span>).val())) + <span class="string">""</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> postData = &#123;</span><br><span class="line">  username: $form.find(<span class="string">"[name=u]"</span>).val(),</span><br><span class="line">  password: encryptPassword,</span><br><span class="line">  captcha: $form.find(<span class="string">"[name=c]"</span>).val()</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>username是直接明文提交的，没什么问题，但password明显是加密过的。加密方式倒也很好判断，网页在加载时载入了一个名为<code>sha1.js</code>的文件，肯定是对密码进行了SHA-1加密。但是直接用密码在<a href="http://www.sha1-online.com/" target="_blank" rel="noopener">这里</a>试了一下，得到的结果和Request Payload并不一样。试着用<code>CTRL + F</code> 搜一下sha1.js中出现的<code>CryptpJS</code>，在login的Response中找到这段代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> encryptPassword = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">$.get(&#123;</span><br><span class="line">  url: <span class="built_in">window</span>.CONTEXT_PATH + <span class="string">"/login-salt"</span>,</span><br><span class="line">  <span class="keyword">async</span>: <span class="literal">false</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">salt</span>) </span>&#123;</span><br><span class="line">    encryptPassword = <span class="keyword">new</span> <span class="built_in">String</span>(CryptoJS.SHA1(salt + <span class="string">'-'</span> + $(<span class="string">"#p"</span>).val())) + <span class="string">""</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> postData = &#123;</span><br><span class="line">  username: $form.find(<span class="string">"[name=u]"</span>).val(),</span><br><span class="line">  password: encryptPassword,</span><br><span class="line">  captcha: $form.find(<span class="string">"[name=c]"</span>).val()</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>可以看到实际提交的encryptPassword，加密前为<code>salt + &#39;-&#39; + password</code>, 而salt则从login-salt中获得。</p>
 <p>需要注意，和登录信息门户时提交Form Data的方法不同，Post Payload请求需要另外做一些处理。</p>
 <p>流程已经基本明确，剩下的就是要靠requests库来实现这一过程。</p>
