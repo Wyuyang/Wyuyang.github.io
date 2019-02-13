@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="想给爬虫写一个GUI，再挖一个新坑hhh笔记主要整理自Bob Tabor的视频教程Windows 10 development for absolute beginners以及Runoob。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-11T15:46:21.973Z">
+<meta property="og:updated_time" content="2019-02-13T04:46:35.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UWP开发笔记">
 <meta name="twitter:description" content="想给爬虫写一个GUI，再挖一个新坑hhh笔记主要整理自Bob Tabor的视频教程Windows 10 development for absolute beginners以及Runoob。">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-11 23:46:21" itemprop="dateModified" datetime="2019-02-11T23:46:21+08:00">2019-02-11</time>
+                <time title="修改时间：2019-02-13 12:46:35" itemprop="dateModified" datetime="2019-02-13T12:46:35+08:00">2019-02-13</time>
               
             
           </span>
@@ -502,7 +502,7 @@
 <p>MainPage.xaml文件顶端的代码就是XAML的Schemas，一般不需要改动。</p>
 <h3 id="命名空间（Namespaces）"><a href="#命名空间（Namespaces）" class="headerlink" title="命名空间（Namespaces）"></a>命名空间（Namespaces）</h3><p>在命名空间后加冒号“ : ”时，实际上是在告诉XAML语法分析器在哪里能够找到这个元素的定义。大部分XAML代码都不需要带命名空间，Page中已经定义了一个默认命名空间。</p>
 <hr>
-<h2 id="XAML-Controls-Gallery"><a href="#XAML-Controls-Gallery" class="headerlink" title="XAML Controls Gallery"></a>XAML Controls Gallery</h2><p>XAML Controls Gallery应用包含了Fluent Design System和XAML所有可用的控件实例。<br><a href="https://www.microsoft.com/zh-cn/p/xaml-controls-gallery/9msvh128x2zt?activetab=pivot%3Aoverviewtab" target="_blank" rel="noopener">获取 XAML 控件库应用 (Microsoft Store)</a><br>墙裂推荐的这个UWP应用！！里面可以随意修改每一个控件的属性并立刻看到结果，再也不用怕文档描述模糊看不懂了！应用本身也是开源的。<br><del>微软大法好！！！！！</del></p>
+<h2 id="XAML-Controls-Gallery"><a href="#XAML-Controls-Gallery" class="headerlink" title="XAML Controls Gallery"></a>XAML Controls Gallery</h2><p>XAML Controls Gallery应用包含了Fluent Design System和XAML所有可用的控件实例。<br><a href="https://www.microsoft.com/zh-cn/p/xaml-controls-gallery/9msvh128x2zt?activetab=pivot%3Aoverviewtab" target="_blank" rel="noopener">获取 XAML 控件库应用 (Microsoft Store)</a><br>墙裂推荐的这个UWP应用！！里面可以随意修改每一个控件的属性并立刻看到效果，再也不用怕文档描述模糊看不懂了！应用本身也是开源的。<br><del>微软大法好！！！！！</del></p>
 <hr>
 <h2 id="Grid布局"><a href="#Grid布局" class="headerlink" title="Grid布局"></a>Grid布局</h2><p>Grid没有Content属性，但具有UElementCollection类型的Children属性，因此可以将多个控件放入同一个布局控件中去。<br>在尝试将控件嵌入另一个控件时，实际上是在调用Children属性的Add方法，例如（在C#中实现）：</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Grid.Children.Add(OneofMyButton);</span><br></pre></td></tr></table></figure>
@@ -530,7 +530,7 @@
 <li>定义几个子元素之间的位置关系</li>
 <li>定义子元素与父面板之间的位置关系</li>
 </ul>
-<p>用于在RelativePanel内定位的Attached ProPerty有三类：</p>
+<p>用于在RelativePanel内定位的Attached Property有三类：</p>
 <ul>
 <li>Sibling Position Relationship，同级位置关系，用于放置同级元素，如控件的上、下、左、右</li>
 <li>Sibling Alignment Relationship，同级对齐关系，如控件间的左对齐、顶端对齐等</li>
@@ -628,6 +628,7 @@
 <p>还有水平居中就是让控件左右边距相同，垂直居中就是上下边距相同。</p>
 <p>全部的Properties可以查阅Microsoft Docs <a href="https://docs.microsoft.com/zh-cn/uwp/api/windows.ui.xaml.controls.relativepanel" target="_blank" rel="noopener">RelativePanel Class</a><br><del>Microsoft的文档是真的详细，还是想说一句，微软大法好！!</del></p>
 <p>如果控件的位置关系存在冲突，则按照以下优先级顺序：<br>面板对齐关系 &gt; 同级对齐关系 &gt; 同级位置关系</p>
+<hr>
 <h2 id="SplitView-Class"><a href="#SplitView-Class" class="headerlink" title="SplitView Class"></a>SplitView Class</h2><p><em>Namespace: Windows.UI.Xaml.Controls</em><br><em>Assemblies: Windows.UI.Xaml.Controls.dll, Windows.dll</em></p>
 <p>API：<a href="https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.SplitView" target="_blank" rel="noopener">SplitView 类</a></p>
 <p>拆分视图控件，一个能显示两个视图的容器，其中一个视图是主页面的content，另一个视图是一个能随意展开/折叠的窗格，一般被用做导航菜单。<br>举个栗子，网易云音乐UWP主界面左侧的导航条（写有搜索、发现音乐、我的音乐和歌单等内容的那个灰色部分）就是这玩意儿。</p>
@@ -646,7 +647,16 @@
 <li>CompactPaneLength，见上</li>
 </ul>
 <p>说白了，Overlay和Inline的本质区别就是Inline下打开时会把下面的内容推开，Overlay则会把下面的内容盖住；加了Compact之后区别就是关闭窗格之后能看到一个狭窄的小窗格。</p>
+<p>仍然以网易云音乐为例，网易云音乐左侧的SplitView，IsPaneOpen的值默认为True，DisplayMode的值为CompactInline。<br>系统自带的MSN天气也类似，只不过应用开启时IsPaneOpen的值为False。</p>
 <p>Windows 10还引入了一个导航构件NavigationView，暂时不清楚二者有何区别。</p>
+<hr>
+<h2 id="实现两个页面之间的导航"><a href="#实现两个页面之间的导航" class="headerlink" title="实现两个页面之间的导航"></a>实现两个页面之间的导航</h2><p>看这一部分视频教程的时候完全没看明白到底发生了什么，去补了一下UWP结构的知识，这方面的资料似乎比较少，结合自己的理解大概是这样的关系（不知道对不对）：</p>
+<p>当运行一个应用（Application）时，应用会自动创建一个主视图，也就是我们看到的那个窗口（Window），根据需要，我们还可以创建其它辅助视图（更多的Window），不过一般只需一个主视图就够了。<br>在Window中又包含一个框架（Frame），Frame中则包含有任意数量的Page（也可以只有一个MainPage），Page中则包括了前面学到的各种控件，比如Button、TextBlock等。Frame和Page的关系就像浏览器和它的所有标签页一样。</p>
+<p>每一个页面就是一个Page，以网易云音乐UWP为例，在启动程序后，会弹出网易云音乐的主窗口，主窗口左侧的SplitView中，我们可以选择“搜索”、“发现音乐”、“MV”、“朋友”等内容。点击后就会跳转到相应的Page中。</p>
+<p>回到最初的问题上，由于不同的Page都属于同一个Frame，所以页面间的导航就由Frame控制（就像在浏览器里切换页面，这一操作是通过浏览器实现的）。Frame类有一个方法Navigate，参数为要导航到的页面类型：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rootFrame.Navigate(<span class="keyword">typeof</span>(MainPage), e.Arguments)</span><br></pre></td></tr></table></figure>
+<p>上面给出了导航到MainPage的C#代码，第二个参数可省略，暂且不管。第一个参数并不是直接使用页面的名称MainPage，还要使用typeof()运算符。</p>
+<p>Frame同时也保留了导航到的页面的历史记录，因此可以使用GoBack和GoForward方法实现前进/后退功能。</p>
 
       
     </div>
@@ -829,7 +839,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML"><span class="nav-number">1.</span> <span class="nav-text">XML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个XML文档实例"><span class="nav-number">1.1.</span> <span class="nav-text">一个XML文档实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素和属性"><span class="nav-number">1.2.</span> <span class="nav-text">元素和属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DTD-和-Schemes"><span class="nav-number">1.3.</span> <span class="nav-text">DTD 和 Schemes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML-Namespaces"><span class="nav-number">1.4.</span> <span class="nav-text">XML Namespaces</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XAML"><span class="nav-number">2.</span> <span class="nav-text">XAML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性（Properties）"><span class="nav-number">2.1.</span> <span class="nav-text">属性（Properties）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纲要（Schemas）"><span class="nav-number">2.2.</span> <span class="nav-text">纲要（Schemas）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命名空间（Namespaces）"><span class="nav-number">2.3.</span> <span class="nav-text">命名空间（Namespaces）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XAML-Controls-Gallery"><span class="nav-number">3.</span> <span class="nav-text">XAML Controls Gallery</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grid布局"><span class="nav-number">4.</span> <span class="nav-text">Grid布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Auto-和"><span class="nav-number">4.1.</span> <span class="nav-text">Auto 和 *</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grid和StackPanel布局的区别"><span class="nav-number">5.</span> <span class="nav-text">Grid和StackPanel布局的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RelativePanel-Class"><span class="nav-number">6.</span> <span class="nav-text">RelativePanel Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SplitView-Class"><span class="nav-number">7.</span> <span class="nav-text">SplitView Class</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML"><span class="nav-number">1.</span> <span class="nav-text">XML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个XML文档实例"><span class="nav-number">1.1.</span> <span class="nav-text">一个XML文档实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素和属性"><span class="nav-number">1.2.</span> <span class="nav-text">元素和属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DTD-和-Schemes"><span class="nav-number">1.3.</span> <span class="nav-text">DTD 和 Schemes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML-Namespaces"><span class="nav-number">1.4.</span> <span class="nav-text">XML Namespaces</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XAML"><span class="nav-number">2.</span> <span class="nav-text">XAML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性（Properties）"><span class="nav-number">2.1.</span> <span class="nav-text">属性（Properties）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纲要（Schemas）"><span class="nav-number">2.2.</span> <span class="nav-text">纲要（Schemas）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命名空间（Namespaces）"><span class="nav-number">2.3.</span> <span class="nav-text">命名空间（Namespaces）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XAML-Controls-Gallery"><span class="nav-number">3.</span> <span class="nav-text">XAML Controls Gallery</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grid布局"><span class="nav-number">4.</span> <span class="nav-text">Grid布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Auto-和"><span class="nav-number">4.1.</span> <span class="nav-text">Auto 和 *</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grid和StackPanel布局的区别"><span class="nav-number">5.</span> <span class="nav-text">Grid和StackPanel布局的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RelativePanel-Class"><span class="nav-number">6.</span> <span class="nav-text">RelativePanel Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SplitView-Class"><span class="nav-number">7.</span> <span class="nav-text">SplitView Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现两个页面之间的导航"><span class="nav-number">8.</span> <span class="nav-text">实现两个页面之间的导航</span></a></li></ol></div>
             
 
           </div>
