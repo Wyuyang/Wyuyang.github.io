@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="希望利用C#写一个GUI，方便起见抓取数据部分也由C#实现，先写一个小程序试一试。 爬虫主体是借助System.Net.Http.HttpClient实现的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模拟登录HFUT新教务系统-C#">
+<meta property="og:url" content="http://wangyuyang.me/2019/02/16/模拟登录HFUT新教务系统-csharp/index.html">
+<meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
+<meta property="og:description" content="希望利用C#写一个GUI，方便起见抓取数据部分也由C#实现，先写一个小程序试一试。 爬虫主体是借助System.Net.Http.HttpClient实现的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-16T09:36:10.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模拟登录HFUT新教务系统-C#">
+<meta name="twitter:description" content="希望利用C#写一个GUI，方便起见抓取数据部分也由C#实现，先写一个小程序试一试。 爬虫主体是借助System.Net.Http.HttpClient实现的。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Y.-Y. Wang's blog" type="application/atom+xml"/>
+
+
+
+
+  <link rel="canonical" href="http://wangyuyang.me/2019/02/16/模拟登录HFUT新教务系统-csharp/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>模拟登录HFUT新教务系统-C# | Y.-Y. Wang's blog</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-112074623-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-112074623-1');
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Y.-Y. Wang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br/>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangyuyang.me/2019/02/16/模拟登录HFUT新教务系统-csharp/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y.-Y. Wang"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y.-Y. Wang's blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">模拟登录HFUT新教务系统-C#
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-16 17:10:23 / 修改时间：17:36:10" itemprop="dateCreated datePublished" datetime="2019-02-16T17:10:23+08:00">2019-02-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>希望利用C#写一个GUI，方便起见抓取数据部分也由C#实现，先写一个小程序试一试。</p>
+<p>爬虫主体是借助System.Net.Http.HttpClient实现的。<br><a id="more"></a><br><blockquote><p>System.Net.Http是什么？</p>
+<p>Provides a programming interface for modern HTTP applications, including HTTP client components that allow applications to consume web services over HTTP and HTTP components that can be used by both clients and servers for parsing HTTP headers.</p>
+<p>Commonly Used Types:<br>System.Net.Http.HttpResponseMessage<br>System.Net.Http.DelegatingHandler<br>System.Net.Http.HttpRequestException<br>System.Net.Http.HttpClient<br>System.Net.Http.MultipartContent<br>System.Net.Http.Headers.HttpContentHeaders<br>System.Net.Http.HttpClientHandler<br>System.Net.Http.StreamContent<br>System.Net.Http.FormUrlEncodedContent<br>System.Net.Http.HttpMessageHandler</p>
+</blockquote></p>
+<p>主要思路和<a href="https://wangyuyang.me/2019/01/20/%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95HFUT%E6%96%B0%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F/#more">这篇文章</a>相同。</p>
+<p>Post Json数据部分代码则参考了<a href="https://blogs.msdn.microsoft.com/wsdevsol/2013/02/05/how-to-use-httpclient-to-post-json-data/" target="_blank" rel="noopener">How to use HttpClient to post JSON data</a>。<br><del>完全没看懂“Add code to serialize the object to a string and…”这一部分代码到底干了啥，反正能用Orz</del></p>
+<p>下附源码：<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Net.Http;</span><br><span class="line"><span class="keyword">using</span> System.Runtime.Serialization;</span><br><span class="line"><span class="keyword">using</span> System.Runtime.Serialization.Json;</span><br><span class="line"><span class="keyword">using</span> System.Security.Cryptography;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">jwxt</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            Console.WriteLine(<span class="string">"Hello World!"</span>);</span><br><span class="line">            LoginJwxt();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">DataContract</span>]</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Post_Payload</span></span><br><span class="line">        &#123;</span><br><span class="line">            [<span class="meta">DataMember(Name = <span class="meta-string">"username"</span>)</span>]</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">string</span> username &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">            [<span class="meta">DataMember(Name = <span class="meta-string">"password"</span>)</span>]</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">string</span> password &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">            [<span class="meta">DataMember(Name = <span class="meta-string">"captcha"</span>)</span>]</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">string</span> captcha &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">LoginJwxt</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">string</span> login_url = <span class="string">"http://jxglstu.hfut.edu.cn/eams5-student/login"</span>;</span><br><span class="line">            <span class="keyword">string</span> login_salt_url = <span class="string">"http://jxglstu.hfut.edu.cn/eams5-student/login-salt"</span>;</span><br><span class="line">            <span class="keyword">string</span> student_info_url = <span class="string">"http://jxglstu.hfut.edu.cn/eams5-student/for-std/student-info/info/91526"</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">string</span> username = <span class="string">"2019123456"</span>;</span><br><span class="line">            <span class="keyword">string</span> password = <span class="string">"123456"</span>;</span><br><span class="line">            <span class="keyword">string</span> encryptpassword;</span><br><span class="line">            <span class="keyword">string</span> salt = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">            HttpClient httpClient = <span class="keyword">new</span> HttpClient();</span><br><span class="line"></span><br><span class="line">            httpClient.DefaultRequestHeaders.Add(<span class="string">"user-agent"</span>, <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36"</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//获取salt</span></span><br><span class="line">            salt = httpClient.GetStringAsync(login_salt_url).Result;</span><br><span class="line">            password = salt + <span class="string">"-"</span> + password;</span><br><span class="line"></span><br><span class="line">            SHA1 sha = <span class="keyword">new</span> SHA1CryptoServiceProvider();</span><br><span class="line">            StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sha.ComputeHash(Encoding.UTF8.GetBytes(password)).Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                builder.Append(sha.ComputeHash(Encoding.UTF8.GetBytes(password))[i].ToString(<span class="string">"x2"</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            encryptpassword = builder.ToString();</span><br><span class="line"></span><br><span class="line">            <span class="comment">//Create and Populate the Post_Payload class with data</span></span><br><span class="line">            Post_Payload post_Payload = <span class="keyword">new</span> Post_Payload();</span><br><span class="line">            post_Payload.username = username;</span><br><span class="line">            post_Payload.password = encryptpassword;</span><br><span class="line">            post_Payload.captcha = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//Create a Json Serializer for our type </span></span><br><span class="line">            DataContractJsonSerializer jsonSer = <span class="keyword">new</span> DataContractJsonSerializer(<span class="keyword">typeof</span>(Post_Payload));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// use the serializer to write the object to a MemoryStream </span></span><br><span class="line">            MemoryStream ms = <span class="keyword">new</span> MemoryStream();</span><br><span class="line">            jsonSer.WriteObject(ms, post_Payload);</span><br><span class="line">            ms.Position = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//use a Stream reader to construct the StringContent (Json) </span></span><br><span class="line">            StreamReader sr = <span class="keyword">new</span> StreamReader(ms);</span><br><span class="line">            StringContent theContent = <span class="keyword">new</span> StringContent(sr.ReadToEnd(), System.Text.Encoding.UTF8, <span class="string">"application/json"</span>);</span><br><span class="line"></span><br><span class="line">            httpClient.PostAsync(login_url, theContent);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//验证是否登录成功，保存学籍信息页到本地</span></span><br><span class="line">            FileStream fs = <span class="keyword">new</span> FileStream(<span class="string">"E:\\abc.txt"</span>, FileMode.Create);</span><br><span class="line">            <span class="comment">//获得字节数组</span></span><br><span class="line">            <span class="keyword">byte</span>[] data = System.Text.Encoding.Default.GetBytes(httpClient.GetStringAsync(student_info_url).Result);</span><br><span class="line">            <span class="comment">//开始写入</span></span><br><span class="line">            fs.Write(data, <span class="number">0</span>, data.Length);</span><br><span class="line">            <span class="comment">//清空缓冲区、关闭流</span></span><br><span class="line">            fs.Flush();</span><br><span class="line">            fs.Close();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/16/CSharp-学习笔记/" rel="next" title="C#学习笔记">
+                <i class="fa fa-chevron-left"></i> C#学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Y.-Y. Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y.-Y. Wang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.7.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color='30,30,30' opacity='0.4' zIndex='-1' count='45' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":125,"height":250},"mobile":{"show":true}});</script></body>
+</html>
