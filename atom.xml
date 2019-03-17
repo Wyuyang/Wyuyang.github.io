@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wangyuyang.me/"/>
-  <updated>2019-02-22T16:23:22.441Z</updated>
+  <updated>2019-03-17T06:30:36.695Z</updated>
   <id>http://wangyuyang.me/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.Net/Matlab混合编程</title>
+    <link href="http://wangyuyang.me/2019/03/17/CSharp-Matlab%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/"/>
+    <id>http://wangyuyang.me/2019/03/17/CSharp-Matlab混合编程/</id>
+    <published>2019-03-17T05:22:26.000Z</published>
+    <updated>2019-03-17T06:30:36.695Z</updated>
+    
+    <content type="html"><![CDATA[<p>为了方便的使用Matlab中自定义的函数，需要制作一个简单的界面。但Matlab难以作出一个漂亮的GUI。因此希望利用C#制作出一个界面。</p><p>Matlab版本为R2018a</p><p>在C#中调用Matlab函数大体上分为以下几个步骤：</p><ol><li>首先创建一个函数的M文件。</li><li>将函数文件编译为dll文件。</li><li>在C#工程中添加对dll文件引用，并在程序中加入对命名空间的引用。</li><li>愉快的敲代码。</li></ol><p>具体描述一下过程：</p><h2 id="创建M文件"><a href="#创建M文件" class="headerlink" title="创建M文件"></a>创建M文件</h2><p>没什么好说的，需要了解一些Matlab基础知识和语法。</p><h2 id="将函数编译为dll文件"><a href="#将函数编译为dll文件" class="headerlink" title="将函数编译为dll文件"></a>将函数编译为dll文件</h2><p>这一块主要分为两部分：</p><h3 id="创建一个编译dll库的工程-prj"><a href="#创建一个编译dll库的工程-prj" class="headerlink" title="创建一个编译dll库的工程.prj"></a>创建一个编译dll库的工程.prj</h3><p>在Command Window中输入deploytool</p><p>在弹出的Matlab Compiler窗口中，有五个选项：</p><ul><li>Application Compiler</li><li>Hadoop Compiler</li><li>Library Compiler</li><li>Production Server Compiler</li><li>Web App Compiler</li></ul><p>这里选择Library Compiler，然后在上方的Type内选择.Net Assembly，并在旁边的Exported Functions中添加前面创建的M文件。</p><p>接下来需要填写窗口下方的信息，Namespace, Class Name, Method Name按需添加、填写即可。</p><h3 id="编译函数"><a href="#编译函数" class="headerlink" title="编译函数"></a>编译函数</h3><p>必要信息填写完成后直接点击Package，选择保存位置即可。等待数分钟后即完成编译。</p><h2 id="在C-工程中添加对dll文件引用"><a href="#在C-工程中添加对dll文件引用" class="headerlink" title="在C#工程中添加对dll文件引用"></a>在C#工程中添加对dll文件引用</h2><p>首先添加对dll库引用：</p><p>解决方案资源管理器 -&gt; 引用-（右键） -&gt; 添加引用 -&gt; 程序集 -&gt; 浏览 -（选择生成的dll库）-&gt; 添加</p><p>然后使用using引用对应的命名空间即可。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;为了方便的使用Matlab中自定义的函数，需要制作一个简单的界面。但Matlab难以作出一个漂亮的GUI。因此希望利用C#制作出一个界面。&lt;/p&gt;
+&lt;p&gt;Matlab版本为R2018a&lt;/p&gt;
+&lt;p&gt;在C#中调用Matlab函数大体上分为以下几个步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>模拟登录HFUT新教务系统-C#</title>
