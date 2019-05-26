@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wangyuyang.me/"/>
-  <updated>2019-04-11T11:21:25.267Z</updated>
+  <updated>2019-05-18T15:02:50.695Z</updated>
   <id>http://wangyuyang.me/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OpenCV笔记</title>
+    <link href="http://wangyuyang.me/2019/05/18/OpenCV%E7%AC%94%E8%AE%B0/"/>
+    <id>http://wangyuyang.me/2019/05/18/OpenCV笔记/</id>
+    <published>2019-05-18T14:22:20.000Z</published>
+    <updated>2019-05-18T15:02:50.695Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="imread-函数用法"><a href="#imread-函数用法" class="headerlink" title="imread()函数用法"></a>imread()函数用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.imread(path, flag)</span><br></pre></td></tr></table></figure><p>path为图片路径，未找到指定文件时返回值None<br>flag为读取图片的方式，具体取值含义可以参考官方文档。</p><h2 id="使用Matplotlib正确显示彩色图像"><a href="#使用Matplotlib正确显示彩色图像" class="headerlink" title="使用Matplotlib正确显示彩色图像"></a>使用Matplotlib正确显示彩色图像</h2><p>尝试直接使用下面代码显示图像时发现颜色不正常：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">pyplot.imgshow(img)</span><br></pre></td></tr></table></figure></p><p>查阅资料，[Extracting a region from an image using slicing in Python, OpenCV][1]里提到：<br><blockquote><p>There is a slight difference in pixel ordering in OpenCV and Matplotlib.</p><p>OpenCV follows BGR order, while matplotlib likely follows RGB order.</p><p>So when you display an image loaded in OpenCV using pylab functions, you may need to convert it into RGB mode. </p></blockquote><br>关于为什么OpenCV选择BGR而不是RGB这个问题，可以看这里[深度学习中为什么普遍使用BGR而不用RGB？][2]<br>另附上Stackoverflow中给出的两种解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = img[::,::<span class="number">-1</span>]</span><br><span class="line">pyplot.imshow(img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">pyplot.imshow(img)</span><br></pre></td></tr></table></figure></p><p> [1] <a href="https://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="noopener">https://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748</a><br> [2] <a href="https://www.zhihu.com/question/264044792" target="_blank" rel="noopener">https://www.zhihu.com/question/264044792</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;imread-函数用法&quot;&gt;&lt;a href=&quot;#imread-函数用法&quot; class=&quot;headerlink&quot; title=&quot;imread()函数用法&quot;&gt;&lt;/a&gt;imread()函数用法&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;t
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>二十</title>
