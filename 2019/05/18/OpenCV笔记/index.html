@@ -96,17 +96,17 @@
 
 
 
-  <meta name="description" content="imread()函数用法1cv2.imread(path, flag) path为图片路径，未找到指定文件时返回值Noneflag为读取图片的方式，具体取值含义可以参考官方文档。 使用Matplotlib正确显示彩色图像尝试直接使用下面代码显示图像时发现颜色不正常：12img = cv2.imread(&apos;xxoo.png&apos;)pyplot.imgshow(img) 查阅资料，[Extracting">
+  <meta name="description" content="imread()函数用法1cv2.imread(path, flag)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenCV笔记">
 <meta property="og:url" content="http://wangyuyang.me/2019/05/18/OpenCV笔记/index.html">
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
-<meta property="og:description" content="imread()函数用法1cv2.imread(path, flag) path为图片路径，未找到指定文件时返回值Noneflag为读取图片的方式，具体取值含义可以参考官方文档。 使用Matplotlib正确显示彩色图像尝试直接使用下面代码显示图像时发现颜色不正常：12img = cv2.imread(&apos;xxoo.png&apos;)pyplot.imgshow(img) 查阅资料，[Extracting">
+<meta property="og:description" content="imread()函数用法1cv2.imread(path, flag)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-18T15:02:50.695Z">
+<meta property="og:updated_time" content="2019-05-27T02:54:02.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenCV笔记">
-<meta name="twitter:description" content="imread()函数用法1cv2.imread(path, flag) path为图片路径，未找到指定文件时返回值Noneflag为读取图片的方式，具体取值含义可以参考官方文档。 使用Matplotlib正确显示彩色图像尝试直接使用下面代码显示图像时发现颜色不正常：12img = cv2.imread(&apos;xxoo.png&apos;)pyplot.imgshow(img) 查阅资料，[Extracting">
+<meta name="twitter:description" content="imread()函数用法1cv2.imread(path, flag)">
 
 
 
@@ -392,12 +392,24 @@
                 
               
 
-              <time title="创建时间：2019-05-18 22:22:20 / 修改时间：23:02:50" itemprop="dateCreated datePublished" datetime="2019-05-18T22:22:20+08:00">2019-05-18</time>
+              <time title="创建时间：2019-05-18 22:22:20" itemprop="dateCreated datePublished" datetime="2019-05-18T22:22:20+08:00">2019-05-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-27 10:54:02" itemprop="dateModified" datetime="2019-05-27T10:54:02+08:00">2019-05-27</time>
               
             
           </span>
@@ -440,13 +452,13 @@
 
       
         <h2 id="imread-函数用法"><a href="#imread-函数用法" class="headerlink" title="imread()函数用法"></a>imread()函数用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.imread(path, flag)</span><br></pre></td></tr></table></figure>
+<a id="more"></a> 
 <p>path为图片路径，未找到指定文件时返回值None<br>flag为读取图片的方式，具体取值含义可以参考官方文档。</p>
 <h2 id="使用Matplotlib正确显示彩色图像"><a href="#使用Matplotlib正确显示彩色图像" class="headerlink" title="使用Matplotlib正确显示彩色图像"></a>使用Matplotlib正确显示彩色图像</h2><p>尝试直接使用下面代码显示图像时发现颜色不正常：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">pyplot.imgshow(img)</span><br></pre></td></tr></table></figure></p>
-<p>查阅资料，[Extracting a region from an image using slicing in Python, OpenCV][1]里提到：<br><blockquote><p>There is a slight difference in pixel ordering in OpenCV and Matplotlib.</p>
+<p>查阅资料，<a href="https://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="noopener">Extracting a region from an image using slicing in Python, OpenCV</a>里提到：<br><blockquote><p>There is a slight difference in pixel ordering in OpenCV and Matplotlib.</p>
 <p>OpenCV follows BGR order, while matplotlib likely follows RGB order.</p>
 <p>So when you display an image loaded in OpenCV using pylab functions, you may need to convert it into RGB mode. </p>
-</blockquote><br>关于为什么OpenCV选择BGR而不是RGB这个问题，可以看这里[深度学习中为什么普遍使用BGR而不用RGB？][2]<br>另附上Stackoverflow中给出的两种解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = img[::,::<span class="number">-1</span>]</span><br><span class="line">pyplot.imshow(img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">pyplot.imshow(img)</span><br></pre></td></tr></table></figure></p>
-<p> [1] <a href="https://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="noopener">https://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748</a><br> [2] <a href="https://www.zhihu.com/question/264044792" target="_blank" rel="noopener">https://www.zhihu.com/question/264044792</a></p>
+</blockquote><br>关于为什么OpenCV选择BGR而不是RGB这个问题，可以看这里<a href="https://www.zhihu.com/question/264044792" target="_blank" rel="noopener">深度学习中为什么普遍使用BGR而不用RGB？</a><br>另附上Stackoverflow中给出的两种解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = img[::,::<span class="number">-1</span>]</span><br><span class="line">pyplot.imshow(img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">pyplot.imshow(img)</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
