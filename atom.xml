@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wangyuyang.me/"/>
-  <updated>2019-05-27T02:54:02.879Z</updated>
+  <updated>2019-07-29T02:00:42.597Z</updated>
   <id>http://wangyuyang.me/</id>
   
   <author>
@@ -17,17 +17,17 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>OpenCV笔记</title>
-    <link href="http://wangyuyang.me/2019/05/18/OpenCV%E7%AC%94%E8%AE%B0/"/>
-    <id>http://wangyuyang.me/2019/05/18/OpenCV笔记/</id>
-    <published>2019-05-18T14:22:20.000Z</published>
-    <updated>2019-05-27T02:54:02.879Z</updated>
+    <title>笔记</title>
+    <link href="http://wangyuyang.me/2019/07/20/%E7%AC%94%E8%AE%B0/"/>
+    <id>http://wangyuyang.me/2019/07/20/笔记/</id>
+    <published>2019-07-20T14:28:11.000Z</published>
+    <updated>2019-07-29T02:00:42.597Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="imread-函数用法"><a href="#imread-函数用法" class="headerlink" title="imread()函数用法"></a>imread()函数用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.imread(path, flag)</span><br></pre></td></tr></table></figure><a id="more"></a> <p>path为图片路径，未找到指定文件时返回值None<br>flag为读取图片的方式，具体取值含义可以参考官方文档。</p><h2 id="使用Matplotlib正确显示彩色图像"><a href="#使用Matplotlib正确显示彩色图像" class="headerlink" title="使用Matplotlib正确显示彩色图像"></a>使用Matplotlib正确显示彩色图像</h2><p>尝试直接使用下面代码显示图像时发现颜色不正常：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">pyplot.imgshow(img)</span><br></pre></td></tr></table></figure></p><p>查阅资料，<a href="https://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="noopener">Extracting a region from an image using slicing in Python, OpenCV</a>里提到：<br><blockquote><p>There is a slight difference in pixel ordering in OpenCV and Matplotlib.</p><p>OpenCV follows BGR order, while matplotlib likely follows RGB order.</p><p>So when you display an image loaded in OpenCV using pylab functions, you may need to convert it into RGB mode. </p></blockquote><br>关于为什么OpenCV选择BGR而不是RGB这个问题，可以看这里<a href="https://www.zhihu.com/question/264044792" target="_blank" rel="noopener">深度学习中为什么普遍使用BGR而不用RGB？</a><br>另附上Stackoverflow中给出的两种解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = img[::,::<span class="number">-1</span>]</span><br><span class="line">pyplot.imshow(img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">pyplot.imshow(img)</span><br></pre></td></tr></table></figure></p>]]></content>
+    <content type="html"><![CDATA[<p>学一些东西时遇到的问题。<br><a id="more"></a> </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">目录</span><br><span class="line">1. Assembly Language</span><br><span class="line">    1.1 DOSBox 窗口大小调整无反应</span><br><span class="line"></span><br><span class="line">2. LabVIEW</span><br><span class="line">    2.1 Control Design效率问题</span><br><span class="line"></span><br><span class="line">3. OpenCV</span><br><span class="line">    3.1 imread()函数用法</span><br><span class="line">    3.2 使用Matplotlib正确显示彩色图像</span><br></pre></td></tr></table></figure><h2 id="Assembly-Language"><a href="#Assembly-Language" class="headerlink" title="Assembly Language"></a>Assembly Language</h2><h3 id="DOSBox-窗口大小调整无反应"><a href="#DOSBox-窗口大小调整无反应" class="headerlink" title="DOSBox 窗口大小调整无反应"></a>DOSBox 窗口大小调整无反应</h3><p>根据网络上的说法，调整安装目录下<code>dosbox-0.74-3.conf</code>下的配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">windowresolution=original</span><br><span class="line">output=surface</span><br></pre></td></tr></table></figure></p><p>改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">windowresolution = 1536*864</span><br><span class="line">output = overlay</span><br></pre></td></tr></table></figure></p><p>发现没有变化，Google一下，建议改<code>scaler</code>为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[render]</span><br><span class="line"></span><br><span class="line">frameskip = 0</span><br><span class="line">aspect = false</span><br><span class="line">scaler = normal2x forced</span><br></pre></td></tr></table></figure></p><p>然而强制缩放太糊，我还是改成了<code>scaler=none</code>。<br>又折腾半小时才解决，发现是<code>1536x864</code>而不是<code>1536*864</code>,即字母<code>x</code>而不是乘号<code>*</code>…..<del>mdzz，配置文件的注释也不写清楚</del><br>另外之所以改为<code>1536x864</code>而不是<code>1920x1080</code>是因为笔记本本来就开了125%缩放。<br>另另外，感觉<code>output = overlay</code>比<code>opengl</code>更锐利一点？</p><hr><h2 id="LabVIEW"><a href="#LabVIEW" class="headerlink" title="LabVIEW"></a>LabVIEW</h2><h3 id="Control-Design效率问题"><a href="#Control-Design效率问题" class="headerlink" title="Control Design效率问题"></a>Control Design效率问题</h3><p>用LabVIEW做了一个二阶LTI系统的单位阶跃响应曲线绘制VI，系统初始参数由滑动杆输入，计算结果捆绑成簇，输出到front panel的XY图控件。</p><p>计算这一块有两种解决办法，一种是直接调用<code>Control and Simulation &gt;&gt; Control Design &gt;&gt; Model Construction &gt;&gt; CD Construct Second Order Model.vi</code>和<code>CD Step Response Model.vi</code>。另一种方法是调用公式节点直接写C进行计算。</p><p>前一种方法实现最简单，只需要点一点鼠标就可以了，但问题在于，不知道该VI及其子VI的执行策略，每次程序循环执行时，CPU占用率就会飙到50%以上。</p><p>而直接用C语言实现计算，虽然写起来很麻烦，但速度反而非常快，CPU占用率只要不到5%。</p><p>至于为什么会造成这一情况我不是很确定，调试时用LabVIEW提供的性能和内存页也没看出来啥的。不过双击Model Construction下的任意控件，可以看到这些控件都是使用一些基础VI实现的。因此我猜测会不会是因为这些封装好的控件本身调用了过多的子VI，导致CPU被大量的占用？不管怎样，以后没有啥特殊需求（比如求高阶系统特性之类的），还是优先考虑用C来实现。</p><hr><h2 id="OpenCV"><a href="#OpenCV" class="headerlink" title="OpenCV"></a>OpenCV</h2><h3 id="imread-函数用法"><a href="#imread-函数用法" class="headerlink" title="imread()函数用法"></a>imread()函数用法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.imread(path, flag)</span><br></pre></td></tr></table></figure><!-- more --> <p>path为图片路径，未找到指定文件时返回值None<br>flag为读取图片的方式，具体取值含义可以参考官方文档。</p><h3 id="使用Matplotlib正确显示彩色图像"><a href="#使用Matplotlib正确显示彩色图像" class="headerlink" title="使用Matplotlib正确显示彩色图像"></a>使用Matplotlib正确显示彩色图像</h3><p>尝试直接使用下面代码显示图像时发现颜色不正常：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">pyplot.imgshow(img)</span><br></pre></td></tr></table></figure></p><p>查阅资料，<a href="https://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="noopener">Extracting a region from an image using slicing in Python, OpenCV</a>里提到：<br><blockquote><p>There is a slight difference in pixel ordering in OpenCV and Matplotlib.</p><p>OpenCV follows BGR order, while matplotlib likely follows RGB order.</p><p>So when you display an image loaded in OpenCV using pylab functions, you may need to convert it into RGB mode. </p></blockquote><br>关于为什么OpenCV选择BGR而不是RGB这个问题，可以看这里<a href="https://www.zhihu.com/question/264044792" target="_blank" rel="noopener">深度学习中为什么普遍使用BGR而不用RGB？</a><br>另附上Stackoverflow中给出的两种解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = img[::,::<span class="number">-1</span>]</span><br><span class="line">pyplot.imshow(img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">pyplot.imshow(img)</span><br></pre></td></tr></table></figure></p>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;imread-函数用法&quot;&gt;&lt;a href=&quot;#imread-函数用法&quot; class=&quot;headerlink&quot; title=&quot;imread()函数用法&quot;&gt;&lt;/a&gt;imread()函数用法&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;cv2.imread(path, flag)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+      &lt;p&gt;学一些东西时遇到的问题。&lt;br&gt;
     
     </summary>
     
@@ -204,27 +204,6 @@
   </entry>
   
   <entry>
-    <title>Arduino Q&amp;A</title>
-    <link href="http://wangyuyang.me/2018/08/08/Arduino-Q&amp;A/"/>
-    <id>http://wangyuyang.me/2018/08/08/Arduino-Q&amp;A/</id>
-    <published>2018-08-08T12:38:52.000Z</published>
-    <updated>2018-08-08T13:05:43.110Z</updated>
-    
-    <content type="html"><![CDATA[<p>Q：为什么Arduino代码中没有main函数？如何在项目中使用多个文件？<br>A：参见<a href="https://www.cnblogs.com/lulipro/p/6090407.html5" target="_blank" rel="noopener">「如何编写自己的Arduino库？」</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Q：为什么Arduino代码中没有main函数？如何在项目中使用多个文件？&lt;br&gt;A：参见&lt;a href=&quot;https://www.cnblogs.com/lulipro/p/6090407.html5&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;「如何
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>对Python中class的理解</title>
     <link href="http://wangyuyang.me/2018/06/10/%E5%AF%B9Python%E4%B8%ADclass%E7%9A%84%E7%90%86%E8%A7%A3/"/>
     <id>http://wangyuyang.me/2018/06/10/对Python中class的理解/</id>
@@ -281,50 +260,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Q&amp;A</title>
-    <link href="http://wangyuyang.me/2018/05/20/Q&amp;A/"/>
-    <id>http://wangyuyang.me/2018/05/20/Q&amp;A/</id>
-    <published>2018-05-20T12:10:50.000Z</published>
-    <updated>2018-05-31T14:53:08.844Z</updated>
-    
-    <content type="html"><![CDATA[<p>Q:如何使51单片机持续输出低/高电平？<br>A:51单片机上电复位后，所有未经人为操控的I/O口默认输出高电平。此外当一个端口在指令控制下输出低/高电平后，只要没有其他指令改变其输出电平，该端口将始终输出这一电平。<br><a id="more"></a><br>Q:<br>A:</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Q:如何使51单片机持续输出低/高电平？&lt;br&gt;A:51单片机上电复位后，所有未经人为操控的I/O口默认输出高电平。此外当一个端口在指令控制下输出低/高电平后，只要没有其他指令改变其输出电平，该端口将始终输出这一电平。&lt;br&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>单片机软件延时函数分析</title>
-    <link href="http://wangyuyang.me/2018/04/23/%E5%8D%95%E7%89%87%E6%9C%BA%E8%BD%AF%E4%BB%B6%E5%BB%B6%E6%97%B6%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90/"/>
-    <id>http://wangyuyang.me/2018/04/23/单片机软件延时函数分析/</id>
-    <published>2018-04-23T14:55:38.000Z</published>
-    <updated>2018-05-15T04:18:13.854Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>初学89C51，在尝试控制LED灯闪烁间隔时长时，需要实现延时功能，查了一下相关资料，记下来作为笔记。</p></blockquote><h2 id="有哪些控制延时的方式？"><a href="#有哪些控制延时的方式？" class="headerlink" title="有哪些控制延时的方式？"></a>有哪些控制延时的方式？</h2><p>实现延时的方法主要有两类：</p><p><strong>硬件延时</strong>：主要是通过单片机内部的定时器来实现，精度较高，作为小白暂时略过。</p><p><strong>软件延时</strong>： 通过程序中的循环结构，不断重复一些无意义的指令以占用CPU运算资源，实现延时功能，实现起来较为简单，但精度较差。<br><a id="more"></a></p><hr><h2 id="利用C51实现软件延时"><a href="#利用C51实现软件延时" class="headerlink" title="利用C51实现软件延时"></a>利用C51实现软件延时</h2><p><strong>第一种方法</strong>，使用while循环<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delay</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">while</span>(i--);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>通过调整在主调函数中赋予变量i的初始值（如50000），来控制时间间隔。</p><p><strong>第二种方法</strong>，使用for循环，多层嵌套<br><em>代码源于网络，延时1s</em><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delay1s</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> h,i,j,k;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(h=<span class="number">5</span>;h&gt;<span class="number">0</span>;h--)</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">4</span>;i&gt;<span class="number">0</span>;i--)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">116</span>;j&gt;<span class="number">0</span>;j--)</span><br><span class="line">                <span class="keyword">for</span>(k=<span class="number">214</span>;k&gt;<span class="number">0</span>;k--);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>注：需注意<code>char</code>型变量范围为0~255.</p><hr><h2 id="如何确定延时时间？"><a href="#如何确定延时时间？" class="headerlink" title="如何确定延时时间？"></a>如何确定延时时间？</h2><p>显然，上述两种程序的延时时长由循环次数决定，而循环次数又由<code>h, i, j, k</code>参数确定。但在循环次数和延时时长之间存在着怎样的一种关系？只有弄清楚这一问题，才能根据需要调整参数的值。</p><p>如果只是想实现简单的控制led灯闪烁，不作深入了解，只需按照以下方法计算即可：</p><p>设时钟频率为T，延时时长为t，那么单片机将一条简单的指令（如加减运算）执行一次所需的时长为12/T，设将这一命令重复执行N次即可达到目标，则n满足：</p><center><font size="5">N=tT/12</font></center><br>举个例子，假设单片机时钟频率为12Mhz，那么单片机执行一次加法或减法运算需要1μs，想要实现500ms的延时，只需重复执行5*10^5次，时长就大约为500ms。<br><br>下面将对原理进行更深一步的说明。<br><br>### 几个概念<br><br><strong>时钟周期</strong>：在MCS-51中亦称为振荡周期、晶振周期，是单片机中最基本的时间单位，周期长度等于为单片机提供时钟脉冲信号的震荡源的周期。<br>记时钟晶振的频率为<code>Fosc</code>,振荡周期为<code>Tosc</code>，则有关系式：<br><center><font size="5">Tosc=1/Fosc</font></center><p>这一关系式是显然的，因为频率与周期必互为倒数。</p><p>若开发板上晶振频率为12Mhz（10^6Hz），计算可得:</p><center><font size="5">Tosc=1/12μs=0.0833……μs</font></center><p><strong>状态周期</strong>：两个振荡周期组成一个状态周期（S周期）。对于<code>Fosc=12Mhz</code>的晶振，一个状态周期为0.166μs。</p><p><strong>机器周期</strong>：单片机完成一个独立的操作所用的时间被称为一个机器周期，一般记为<code>Tcy</code>。一个机器周期包含6个状态周期，即等于12个时钟周期，时间长度为1μs。<br><blockquote><p>*MCS-51里定义一个振荡周期为一个节拍（P）。如果记一个机器周期中的六个状态周期为<code>S1、S2、S3、S4、S5、S6</code>，每个状态周期对应的两个节拍为<code>P1、P2</code>，那么一个机器周期中的12个状态周期可以记作<code>S1P1 S1P2 S2P1 S2P2 S3P1 S3P2………S6P1 S6P2</code>。更详细的内容可参见[这里][1]<br><del>当然这些概念在这里并没有什么卵用hhh</del></p></blockquote></p><p><strong>指令周期</strong>：单片机完成一条独立的指令所用的时间被称为一个指令周期，而一个指令周期包含一个或多个机器周期。MCS-51中，有单周期指令，双周期指令和四周期指令。</p><p>假设有一条指令为A,单周期指令的意思是说，执行完指令A需要一个机器周期，即对于指令A而言，一个指令周期等于一个机器周期。</p><p>若A为双周期指令，则执行完指令A需要两个机器周期，即对于指令A而言，一个指令周期等于两个机器周期。四周期指令同理。</p><p>那么，有哪些指令是单/双/四周期指令？据我所知，大多数指令为单周期指令，只有乘除法运算为四周期指令，其他的都是双周期指令。至于如何更明确具体的判断一条指令是几周期指令的方法我还尚未研究。</p><blockquote><p>总结:&ensp;1个机器周期=6个状态周期=12个时钟周期<br>&emsp;&emsp;&emsp;1个指令周期=1/2/4个机器周期</p></blockquote><p>有了这些概念作为基础，上面所提到的计算循环次数的方法就不难理解了。回过头来看上面的例子（摘自<em>单片机原理与应用设计</em>一书第七十八页）：</p><p>设51单片机时钟频率为12Mhz，试实现约500ms的延时。</p><p>分析：时钟频率12Mhz，那么，一个机器周期为1μs，又因乘除之外的指令均为单周期指令或双周期指令，故执行一次指令用时1μs~2μs，延时500ms只需执行指令2.5~5*10^5次。</p><hr><p>参考资料:<br>  [1] 王欣飞，谢龙汉，谢锋然.单片机原理与应用设计[M].北京：清华大学出版社，2014.<br>  [2] <a href="https://www.wikipedia.org/" target="_blank" rel="noopener">Wikipedia</a>.</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;&lt;p&gt;初学89C51，在尝试控制LED灯闪烁间隔时长时，需要实现延时功能，查了一下相关资料，记下来作为笔记。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;有哪些控制延时的方式？&quot;&gt;&lt;a href=&quot;#有哪些控制延时的方式？&quot; class=&quot;headerlink&quot; title=&quot;有哪些控制延时的方式？&quot;&gt;&lt;/a&gt;有哪些控制延时的方式？&lt;/h2&gt;&lt;p&gt;实现延时的方法主要有两类：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;硬件延时&lt;/strong&gt;：主要是通过单片机内部的定时器来实现，精度较高，作为小白暂时略过。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;软件延时&lt;/strong&gt;： 通过程序中的循环结构，不断重复一些无意义的指令以占用CPU运算资源，实现延时功能，实现起来较为简单，但精度较差。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="51单片机" scheme="http://wangyuyang.me/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
-    
-      <category term="嵌入式" scheme="http://wangyuyang.me/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
     
   </entry>
   
