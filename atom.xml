@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wangyuyang.me/"/>
-  <updated>2019-08-06T00:39:52.674Z</updated>
+  <updated>2019-08-06T00:41:24.713Z</updated>
   <id>http://wangyuyang.me/</id>
   
   <author>
@@ -21,16 +21,14 @@
     <link href="http://wangyuyang.me/2019/08/06/MCS-51/"/>
     <id>http://wangyuyang.me/2019/08/06/MCS-51/</id>
     <published>2019-08-06T00:29:51.000Z</published>
-    <updated>2019-08-06T00:39:52.674Z</updated>
+    <updated>2019-08-06T00:41:24.713Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="Cx51的数据类型"><a href="#Cx51的数据类型" class="headerlink" title="Cx51的数据类型"></a>Cx51的数据类型</h2><p>摘自<a href="http://www.keil.com/support/man/docs/c51/c51_le_datatypes.htm" target="_blank" rel="noopener">Cx51 User’s Guide</a></p><table><thead><tr><th>Data Types</th><th>Bits</th><th>Bytes</th><th>Value Range</th></tr></thead><tbody><tr><td>bit</td><td>1</td><td></td><td>0 to 1</td></tr><tr><td>signed char</td><td>8</td><td>1</td><td>-128 — +127</td></tr><tr><td>unsigned char</td><td>8</td><td>1</td><td>0 — 255</td></tr><tr><td>enum</td><td>8 / 16</td><td>1 or 2</td><td>-128 — +127 or -32768 — +32767</td></tr><tr><td>signed short int</td><td>16</td><td>2</td><td>-32768 — +32767</td></tr><tr><td>unsigned short int</td><td>16</td><td>2</td><td>0 — 65535</td></tr><tr><td>signed int</td><td>16</td><td>2</td><td>-32768 — +32767</td></tr><tr><td>unsigned int</td><td>16</td><td>2</td><td>0 — 65535</td></tr><tr><td>signed long int</td><td>32</td><td>4</td><td>-2147483648 — +2147483647</td></tr><tr><td>unsigned long int</td><td>32</td><td>4</td><td>0 — 4294967295</td></tr><tr><td>float</td><td>32</td><td>4</td><td>±1.175494E-38 — ±3.402823E+38</td></tr><tr><td>double</td><td>32</td><td>4</td><td>±1.175494E-38 — ±3.402823E+38</td></tr><tr><td>sbit</td><td>1</td><td></td><td>0 or 1</td></tr><tr><td>sfr</td><td>8</td><td>1</td><td>0 — 255</td></tr><tr><td>sfr16</td><td>16</td><td>2</td><td>0 — 65535</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<p>正式开始学习8051及C51。</p><h2 id="Cx51的数据类型"><a href="#Cx51的数据类型" class="headerlink" title="Cx51的数据类型"></a>Cx51的数据类型</h2><p>摘自<a href="http://www.keil.com/support/man/docs/c51/c51_le_datatypes.htm" target="_blank" rel="noopener">Cx51 User’s Guide</a><br><a id="more"></a><br>| Data Types             | Bits       | Bytes      | Value Range                        |<br>|——————–    |——–    |——–    |——————————–    |<br>| bit                    | 1          |            | 0 to 1                             |<br>| signed char            | 8          | 1          | -128 — +127                        |<br>| unsigned char          | 8          | 1          | 0 — 255                            |<br>| enum                   | 8 / 16     | 1 or 2     | -128 — +127 or -32768 — +32767     |<br>| signed short int       | 16         | 2          | -32768 — +32767                    |<br>| unsigned short int     | 16         | 2          | 0 — 65535                          |<br>| signed int             | 16         | 2          | -32768 — +32767                    |<br>| unsigned int           | 16         | 2          | 0 — 65535                          |<br>| signed long int        | 32         | 4          | -2147483648 — +2147483647          |<br>| unsigned long int      | 32         | 4          | 0 — 4294967295                     |<br>| float                  | 32         | 4          | ±1.175494E-38 — ±3.402823E+38      |<br>| double                 | 32         | 4          | ±1.175494E-38 — ±3.402823E+38      |<br>| sbit                   | 1          |            | 0 or 1                             |<br>| sfr                    | 8          | 1          | 0 — 255                            |<br>| sfr16                  | 16         | 2          | 0 — 65535                          |</p>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;Cx51的数据类型&quot;&gt;&lt;a href=&quot;#Cx51的数据类型&quot; class=&quot;headerlink&quot; title=&quot;Cx51的数据类型&quot;&gt;&lt;/a&gt;Cx51的数据类型&lt;/h2&gt;&lt;p&gt;摘自&lt;a href=&quot;http://www.keil.com/support/man
-      
+      &lt;p&gt;正式开始学习8051及C51。&lt;/p&gt;
+&lt;h2 id=&quot;Cx51的数据类型&quot;&gt;&lt;a href=&quot;#Cx51的数据类型&quot; class=&quot;headerlink&quot; title=&quot;Cx51的数据类型&quot;&gt;&lt;/a&gt;Cx51的数据类型&lt;/h2&gt;&lt;p&gt;摘自&lt;a href=&quot;http://www.keil.com/support/man/docs/c51/c51_le_datatypes.htm&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Cx51 User’s Guide&lt;/a&gt;&lt;br&gt;
     
     </summary>
     
