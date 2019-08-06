@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-06T01:14:19.423Z">
+<meta property="og:updated_time" content="2019-08-06T12:11:25.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MCS 51">
 <meta name="twitter:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
@@ -392,7 +392,7 @@
                 
               
 
-              <time title="创建时间：2019-08-06 08:29:51 / 修改时间：09:14:19" itemprop="dateCreated datePublished" datetime="2019-08-06T08:29:51+08:00">2019-08-06</time>
+              <time title="创建时间：2019-08-06 08:29:51 / 修改时间：20:11:25" itemprop="dateCreated datePublished" datetime="2019-08-06T08:29:51+08:00">2019-08-06</time>
             
 
             
@@ -543,7 +543,31 @@
 </tr>
 </tbody>
 </table>
-<p>仔细看一下表，实际上Cx51对C18是做了简化，在Cx51中，有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int = short int</span><br><span class="line">float = double</span><br></pre></td></tr></table></figure></p>
+<p>仔细看一下表，实际上Cx51对C18是做了简化，在Cx51中，有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int = short int</span><br><span class="line">double = float</span><br></pre></td></tr></table></figure></p>
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><p>51单片机内有两个16位定时器T0和T1，与之相关的特殊功能寄存器有三个，分别是：</p>
+<ul>
+<li>定时值存储寄存器 TH / TL</li>
+<li>定时器控制寄存器 TCON</li>
+<li>定时器模式寄存器 TMOD</li>
+</ul>
+<p>三种寄存器的功能也比较明显，看名字就知道，第一个用来设定定时器开始计数的初值；第二个控制定时器的启动/停止，此外还可以指示定时器是否发生溢出；最后一个寄存器指定定时器的工作模式，比如定时器模式和计数器模式、8/16位定时器等。</p>
+<p>显然，由三个寄存器的功能可以看出，使用定时器的步骤：</p>
+<ol>
+<li>设定TMOD参数    （指定定时器的工作模式，一般16位工作模式即可满足需求）</li>
+<li>设定TH / TL的初始值    （有点类似数电课程设计里用74LS90和74LS192芯片做计数器）</li>
+<li>设定TCON参数    （让定时器开始计数）</li>
+<li>校验TCON参数</li>
+</ol>
+<p>事实上前三步已经实现了定时计数功能，但是，只通过前三步我们并不能知道计时是否已经结束。而TCON中的TF位可以指示定时器是否溢出（有点像计数器芯片里的借位输出端BO），通过检测TF变量的变化次数，就可以知道定时器发生了多少次溢出。而发生一次溢出所需要的时间是确定的（和TH / TL初值和时钟信号频率有关），因此很容易就知道定时器已经计数了多长时间。</p>
+<p>其它补充知识：</p>
+<ul>
+<li>TMOD不可位寻址，另外两种寄存器可位寻址。</li>
+<li>TMOD中GATE置为0禁用定时器，置为1解除禁用状态。</li>
+<li>16位定时器可应付几乎所有场景，此时直接令 TMOD = 0x01 即可。 </li>
+<li>TCON的TR置为1后开始计数，置为0后暂停计数。</li>
+<li>每次计数时，每经过一个机器周期，定时器值会增加1。</li>
+<li>暂停计数时定时器的值不会被重置，还会保持暂停前的状态。</li>
+</ul>
 
       
     </div>
@@ -718,7 +742,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51-的数据类型"><span class="nav-number">1.</span> <span class="nav-text">Cx51 的数据类型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51-的数据类型"><span class="nav-number">1.</span> <span class="nav-text">Cx51 的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器"><span class="nav-number">2.</span> <span class="nav-text">定时器</span></a></li></ol></div>
             
 
           </div>
