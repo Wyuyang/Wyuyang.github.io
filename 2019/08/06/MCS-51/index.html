@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-07T05:36:57.453Z">
+<meta property="og:updated_time" content="2019-08-07T12:51:28.785Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MCS 51">
 <meta name="twitter:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-07 13:36:57" itemprop="dateModified" datetime="2019-08-07T13:36:57+08:00">2019-08-07</time>
+                <time title="修改时间：2019-08-07 20:51:28" itemprop="dateModified" datetime="2019-08-07T20:51:28+08:00">2019-08-07</time>
               
             
           </span>
@@ -565,7 +565,7 @@
 <li>定时器模式寄存器 TMOD</li>
 </ul>
 <p>三种寄存器的功能也比较明显，看名字就知道，第一个用来设定定时器开始计数的初值；第二个控制定时器的启动/停止，此外还可以指示定时器是否发生溢出；最后一个寄存器指定定时器的工作模式，比如定时器模式和计数器模式、8/16位定时器等。</p>
-<p>显然，由三个寄存器的功能可以看出，使用定时器的步骤：</p>
+<p>显然，由三个寄存器的功能可以看出，使用定时器的步骤（不使用中断）：</p>
 <ol>
 <li>设定TMOD参数    （指定定时器的工作模式，一般16位工作模式即可满足需求）</li>
 <li>设定TH / TL的初始值    （有点类似数电课程设计里用74LS90和74LS192芯片做计数器）</li>
@@ -583,6 +583,7 @@
 <li>每次计数时，每经过一个机器周期，定时器值会增加1。</li>
 <li>暂停计数时定时器的值不会被重置，还会保持暂停前的状态。</li>
 </ul>
+<p>附代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;reg52.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">sbit LED = P2^<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line">    TMOD = <span class="number">0x01</span>;</span><br><span class="line">    TH0 = <span class="number">0x0</span>;</span><br><span class="line">    TL0 = <span class="number">0x0</span>;</span><br><span class="line">    TR0 = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(TF0 == <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            TF0 = <span class="number">0</span>;</span><br><span class="line">            count++;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(count &gt;= <span class="number">10</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                count = <span class="number">0</span>;</span><br><span class="line">                LED = ~LED;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>2019年8月6日</p>
 <hr>
 <h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>中断的优先级有两种，当程序执行时，若低优先级中断执行时，发生了高优先级中断，则：</p>
@@ -632,15 +633,15 @@
 </tr>
 </tbody>
 </table>
-<p>与之相关的寄存器有两个（STC89C52的datasheet图6-1 STC89C52系列中断系统结构图）：</p>
+<p>与之相关的寄存器有两个（参考STC89C52的datasheet中 图6-1 STC89C52系列中断系统结构图）：</p>
 <ul>
-<li>中断允许控制寄存器    IE，XICON寄存器</li>
-<li>中断优先级控制寄存器  IP，XICON，IPH寄存器</li>
+<li>中断允许控制寄存器        IE，XICON寄存器</li>
+<li>中断优先级控制寄存器      IP，XICON，IPH寄存器</li>
 </ul>
 <blockquote><p>注：XICON，IPH寄存器为STC89C52独有，可实现4个中断优先级，而传统的8051单片机只能实现2级中断优先级</p>
 </blockquote>
 <p>显然，由中断相关寄存器的名称可以知道，要想使用中断，首先要在中断允许寄存器中启用中断功能，然后调整中断优先级寄存器中优先级的设定（也可不调整直接使用默认优先级）。</p>
-<h3 id="中断允许控制寄存器"><a href="#中断允许控制寄存器" class="headerlink" title="中断允许控制寄存器"></a>中断允许控制寄存器</h3><p><em>IE: Interrupt Enable 中断允许寄存器 可位寻址</em><br><em>Adress: A8H</em></p>
+<h3 id="中断允许控制寄存器"><a href="#中断允许控制寄存器" class="headerlink" title="中断允许控制寄存器"></a>中断允许控制寄存器</h3><p><em>IE: Interrupt Enable  中断允许寄存器  可位寻址</em><br><em>Adress: A8H</em></p>
 <p>单片机对任意中断源是否做出响应均由该寄存器进行控制。</p>
 <ul>
 <li>EA 总中断控制位</li>
@@ -651,7 +652,7 @@
 <li>ES 串行口中断允许位</li>
 </ul>
 <p>置1为允许中断，置0为禁止中断。</p>
-<h3 id="中断优先级控制寄存器"><a href="#中断优先级控制寄存器" class="headerlink" title="中断优先级控制寄存器"></a>中断优先级控制寄存器</h3><p><em>IP: Interrupt Priority 中断优先级寄存器 可位寻址</em><br><em>Adress: B8H</em></p>
+<h3 id="中断优先级控制寄存器"><a href="#中断优先级控制寄存器" class="headerlink" title="中断优先级控制寄存器"></a>中断优先级控制寄存器</h3><p><em>IP: Interrupt Priority  中断优先级寄存器  可位寻址</em><br><em>Adress: B8H</em></p>
 <p>各个中断源属于两级中断中的哪一级由该寄存器控制。</p>
 <ul>
 <li>PT0 定时器/计数器 0 中断优先级控制位</li>
@@ -664,7 +665,7 @@
 <p>若两中断源被设定为相同优先级，当两中断源同时请求中断时，按照默认优先级别响应中断。</p>
 <h3 id="中断函数"><a href="#中断函数" class="headerlink" title="中断函数"></a>中断函数</h3><p>中断函数的调用格式：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Function_Name</span><span class="params">()</span> interrupt Interrupt_Number <span class="keyword">using</span> Register_Bank</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">/* code */</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>代码中Interrupt_Number参考上表，无论是否为默认优先级，该值均不变。<br><code>using Register_Bank</code>语句可省略。</p>
+<p>代码中<code>Interrupt_Number</code>参考上表，无论是否为默认优先级，该值均不变。<br><code>using Register_Bank</code>语句可省略。</p>
 <p>一些关于中断函数的注意事项：</p>
 <blockquote><p>No function arguments may be specified for an interrupt function. The compiler emits an error message if an interrupt function is declared with any arguments.<br>声明中断函数时不能有参数，否则编译器会报错。</p>
 <p>Interrupt function declarations may not include a return value. They must be declared as void. The compiler emits an error message if any attempt is made to define a return value for the interrupt function. The implicit int return value, however, is ignored by the compiler.<br>声明中断函数时不能包含返回值。中断函数必须声明为 void 类型。对于任何试图将中断函数声明为有返回值类型的函数的行为，编译器都会报错。不过，如果返回值为隐式 int 类型则会被编译器忽略。</p>
