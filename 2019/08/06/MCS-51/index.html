@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-07T12:51:28.785Z">
+<meta property="og:updated_time" content="2019-08-08T13:23:00.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MCS 51">
 <meta name="twitter:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-07 20:51:28" itemprop="dateModified" datetime="2019-08-07T20:51:28+08:00">2019-08-07</time>
+                <time title="修改时间：2019-08-08 21:23:00" itemprop="dateModified" datetime="2019-08-08T21:23:00+08:00">2019-08-08</time>
               
             
           </span>
@@ -674,6 +674,108 @@
 </blockquote>
 <p>2019年8月7日 七夕</p>
 <hr>
+<h2 id="串口通信"><a href="#串口通信" class="headerlink" title="串口通信"></a>串口通信</h2><h3 id="一些基本概念"><a href="#一些基本概念" class="headerlink" title="一些基本概念"></a>一些基本概念</h3><p>通信可以分为两大类：</p>
+<ul>
+<li>串行传输：一次发送/接收一个位</li>
+<li><ul>
+<li>异步传输</li>
+</ul>
+</li>
+<li><ul>
+<li>同步传输</li>
+</ul>
+</li>
+<li><ul>
+<li>等时传输</li>
+</ul>
+</li>
+<li>并行传输：一次发送/接收多个位</li>
+</ul>
+<p>以8051为例，8051的RXD和TXD口一次只能接收/发送一个位，为串行传输。<br>以8086为例，8086的数据总线宽度为16，一次可以向内存中读取/写入16位数据，为并行传输。</p>
+<p>直觉上觉得并行传输速度快，更先进。查了一下结果发现居然还真不是这样，串行传输反而有取代并行传输的趋势。</p>
+<p>PCI和PATA都是并行传输，家里十几年前买的电脑里用的非常宽的硬盘线就是PATA接口，现在已经被淘汰。<br>PCI Express（即PCIe）和SATA均为串行传输，笔记本里的Intel 530和Samsung 860EVO就分别是PCIe和SATA接口，体积很小，但速度依然很快。</p>
+<p><a href="https://zh.wikipedia.org/wiki/%E6%AF%94%E7%89%B9%E7%8E%87" target="_blank" rel="noopener">比特率（Bit rate）</a>：指单位时间内传输送或处理的比特的数量，规定使用“比特每秒”（bit/s或bps）为单位。</p>
+<h3 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h3><p><em>Universal asynchronous receiver-transmitter 通用异步收发传输器</em></p>
+<p>UART是什么？摘自<a href="http://www.circuitbasics.com/basics-uart-communication/" target="_blank" rel="noopener">这里</a>：</p>
+<blockquote><p>UART stands for Universal Asynchronous Receiver/Transmitter. It’s not a communication protocol like SPI and I2C, but a physical circuit in a microcontroller, or a stand-alone IC. A UART’s main purpose is to transmit and receive serial data.</p>
+</blockquote>
+<p>简单地说，UART不是具体的某一个独立的芯片，而是一种异步串行通信的方式，但这种方式还不能称之为“通信协议”。</p>
+<p>UART通信只需要两个接口：</p>
+<ul>
+<li>RXD 串行接收引脚</li>
+<li>TXD 串行发送引脚</li>
+</ul>
+<p><del>RXD和TXD中的X有什么含义？</del></p>
+<p>显然，在进行UART通信时，要将一个设备的RXD端和另一个设备的TXD端连接。</p>
+<p>前面提到，UART是一种异步通信，这意味着没有时钟信号两设备上的让RXD和TXD保持同步。为了保证RXD能够完整的接收到所有数据，传输数据时要满足的条件和步骤大致如下：</p>
+<ul>
+<li>数据以数据包的形式传送，数据包的结构是可以修改的，只需提前在数据接收方和发送方处设置好即可。</li>
+<li>数据接收方和发送方的通信波特率应保持一致。</li>
+<li>通信未开始时，线路保持高电平。</li>
+<li>通信开始时，TXD首先发送一位0（低电平）作为起始位通知接收方开始传输数据。</li>
+<li>发送数据。</li>
+<li>发送一位1作为停止位，完成一个数据包的传输。</li>
+</ul>
+<h3 id="RS232"><a href="#RS232" class="headerlink" title="RS232"></a>RS232</h3><p><a href="https://zh.wikipedia.org/wiki/RS-232" target="_blank" rel="noopener">RS-232</a>是美国电子工业联盟（EIA）制定的串行数据通信的接口标准，原始编号全称是EIA-RS-232。它被广泛用于计算机串行接口外设连接。</p>
+<p>RS-232接口最初规定为25个引脚，但大部分设备进行了简化，只使用了其中的9个引脚：</p>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Abbreviation</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pin1</td>
+<td>DCD</td>
+<td>Data Carrier Detect</td>
+</tr>
+<tr>
+<td>Pin2</td>
+<td>RXD</td>
+<td>Receiver</td>
+</tr>
+<tr>
+<td>Pin3</td>
+<td>TXD</td>
+<td>Transmit</td>
+</tr>
+<tr>
+<td>Pin4</td>
+<td>DTR</td>
+<td>Data Terminal Ready</td>
+</tr>
+<tr>
+<td>Pin5</td>
+<td>GND</td>
+<td>Ground</td>
+</tr>
+<tr>
+<td>Pin6</td>
+<td>DSR</td>
+<td>Data Set Ready</td>
+</tr>
+<tr>
+<td>Pin7</td>
+<td>RTS</td>
+<td>Request To Send</td>
+</tr>
+<tr>
+<td>Pin8</td>
+<td>CTS</td>
+<td>Clear To Send</td>
+</tr>
+<tr>
+<td>Pin9</td>
+<td>RI</td>
+<td>Ring Indicator</td>
+</tr>
+</tbody>
+</table>
+<p>需要注意的是，RS232标准采用的电平为RS232电平而不是TTL电平，RS232电平为负逻辑电平，即-15V~-3V代表逻辑”1”，+3V~+15V代表逻辑”0”。<br>可使用CH340芯片进行转换。</p>
+<p>2019年8月8日 立秋</p>
 
       
     </div>
@@ -848,7 +950,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51-的数据类型"><span class="nav-number">1.</span> <span class="nav-text">Cx51 的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器"><span class="nav-number">2.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">3.</span> <span class="nav-text">中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断允许控制寄存器"><span class="nav-number">3.1.</span> <span class="nav-text">中断允许控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断优先级控制寄存器"><span class="nav-number">3.2.</span> <span class="nav-text">中断优先级控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断函数"><span class="nav-number">3.3.</span> <span class="nav-text">中断函数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51-的数据类型"><span class="nav-number">1.</span> <span class="nav-text">Cx51 的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器"><span class="nav-number">2.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">3.</span> <span class="nav-text">中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断允许控制寄存器"><span class="nav-number">3.1.</span> <span class="nav-text">中断允许控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断优先级控制寄存器"><span class="nav-number">3.2.</span> <span class="nav-text">中断优先级控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断函数"><span class="nav-number">3.3.</span> <span class="nav-text">中断函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#串口通信"><span class="nav-number">4.</span> <span class="nav-text">串口通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些基本概念"><span class="nav-number">4.1.</span> <span class="nav-text">一些基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UART"><span class="nav-number">4.2.</span> <span class="nav-text">UART</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS232"><span class="nav-number">4.3.</span> <span class="nav-text">RS232</span></a></li></ol></li></ol></div>
             
 
           </div>
