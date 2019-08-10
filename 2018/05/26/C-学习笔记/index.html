@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="对于浮点数不宜使用 == 或 != 运算符写作业时遇到了一个奇怪的bug，精简一下，代码大致如下：12345678......    double x = -5;        x = x + 0.1;        if(x == -4.9)        printf(&quot;\n&quot;);......">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-08T08:49:18.061Z">
+<meta property="og:updated_time" content="2019-08-09T12:51:02.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C 学习笔记">
 <meta name="twitter:description" content="对于浮点数不宜使用 == 或 != 运算符写作业时遇到了一个奇怪的bug，精简一下，代码大致如下：12345678......    double x = -5;        x = x + 0.1;        if(x == -4.9)        printf(&quot;\n&quot;);......">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-08 16:49:18" itemprop="dateModified" datetime="2019-08-08T16:49:18+08:00">2019-08-08</time>
+                <time title="修改时间：2019-08-09 20:51:02" itemprop="dateModified" datetime="2019-08-09T20:51:02+08:00">2019-08-09</time>
               
             
           </span>
@@ -460,17 +460,17 @@
 <hr>
 <h2 id="关于二维数组的一些问题"><a href="#关于二维数组的一些问题" class="headerlink" title="关于二维数组的一些问题"></a>关于二维数组的一些问题</h2><p>见<a href="https://blog.csdn.net/u012938194/article/details/50526198" target="_blank" rel="noopener">这里</a></p>
 <hr>
-<h2 id="自定义标识符"><a href="#自定义标识符" class="headerlink" title="自定义标识符"></a>自定义标识符</h2><p>有这样一道题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">下列标识符中，不合法的C语言用户自定义标识符是（）。</span><br><span class="line">    A:printf</span><br><span class="line">    B:enum</span><br><span class="line">    C:_</span><br><span class="line">    D:sin</span><br></pre></td></tr></table></figure></p>
-<p>答案选B<br>printf实际可以是自定义标识符。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以下标识符中，不能作为合法的C用户定义标识符的是（）。</span><br><span class="line">    A:putchar</span><br><span class="line">    B:_double</span><br><span class="line">    C:_123</span><br><span class="line">    D:INT</span><br></pre></td></tr></table></figure>
-<p>答案选A<br>Are you kidding me?</p>
-<hr>
 <h2 id="实参与形参"><a href="#实参与形参" class="headerlink" title="实参与形参"></a>实参与形参</h2><p>实参数组类型与形参数组类型可以不匹配。</p>
 <hr>
-<h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>学校考试按如下标准：<br>16位编译器</p>
-<p>char ：1个字节<br>char*(即指针变量): 2个字节<br>short int : 2个字节<br>int：  2个字节<br>unsigned int : 2个字节<br>float:  4个字节<br>double:   8个字节<br>long:   4个字节<br>long long:  8个字节<br>unsigned long:  4个字节</p>
+<h2 id="位操作"><a href="#位操作" class="headerlink" title="位操作"></a>位操作</h2><h3 id="取反"><a href="#取反" class="headerlink" title="取反 ~"></a>取反 ~</h3><p>对一个二进制数的每一位执行逻辑反操作。使数字1成为0，0成为1。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ 3</span><br><span class="line">    NOT 0011</span><br><span class="line">      = 1100</span><br></pre></td></tr></table></figure></p>
+<h3 id="按位与-amp"><a href="#按位与-amp" class="headerlink" title="按位与 &amp;"></a>按位与 &amp;</h3><p>按位与处理两个长度相同的二进制数，两个相应的二进位都为1，该位的结果值才为1，否则为0。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">3 &amp; 5</span><br><span class="line">        0011</span><br><span class="line">    AND 0101</span><br><span class="line">      = 0001</span><br><span class="line"></span><br><span class="line">3 &amp; 3</span><br><span class="line">        0011</span><br><span class="line">    AND 0011</span><br><span class="line">      = 0011</span><br></pre></td></tr></table></figure></p>
+<h3 id="按位或"><a href="#按位或" class="headerlink" title="按位或 |"></a>按位或 |</h3><p>按位或处理两个长度相同的二进制数，两个相应的二进位中只要有一个为1，该位的结果值为1。如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3 | 5</span><br><span class="line">        0011</span><br><span class="line">    OR  0101</span><br><span class="line">      = 0111</span><br></pre></td></tr></table></figure></p>
+<h3 id="按位异或"><a href="#按位异或" class="headerlink" title="按位异或 ^"></a>按位异或 ^</h3><p>对等长二进制模式或二进制数的每一位执行逻辑异或操作。操作的结果是如果某位不同则该位为1，否则该位为0。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3 ^ 5</span><br><span class="line">        0011</span><br><span class="line">    XOR 0101</span><br><span class="line">      = 0110</span><br></pre></td></tr></table></figure></p>
+<h3 id="左移-lt-lt"><a href="#左移-lt-lt" class="headerlink" title="左移 &lt;&lt;"></a>左移 &lt;&lt;</h3><p>移位后空缺的部分全部填0。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 &lt;&lt; 3</span><br><span class="line">        0001</span><br><span class="line">    &lt;&lt;     3</span><br><span class="line">      = 1000</span><br></pre></td></tr></table></figure></p>
+<h3 id="右移-gt-gt"><a href="#右移-gt-gt" class="headerlink" title="右移 &gt;&gt;"></a>右移 &gt;&gt;</h3><p>移位后左边空缺的部分，正数左补0，负数左补1，右边丢弃。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">15 &gt;&gt; 3</span><br><span class="line">        1111</span><br><span class="line">    &gt;&gt;     3</span><br><span class="line">      = 0001</span><br></pre></td></tr></table></figure></p>
 <hr>
-<h2 id="函数默认返回值问题"><a href="#函数默认返回值问题" class="headerlink" title="函数默认返回值问题"></a>函数默认返回值问题</h2>
+<p>; ## 复合赋值运算符</p>
+
       
     </div>
 
@@ -648,7 +648,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对于浮点数不宜使用-或-运算符"><span class="nav-number">1.</span> <span class="nav-text">对于浮点数不宜使用 == 或 != 运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于二维数组的一些问题"><span class="nav-number">2.</span> <span class="nav-text">关于二维数组的一些问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义标识符"><span class="nav-number">3.</span> <span class="nav-text">自定义标识符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实参与形参"><span class="nav-number">4.</span> <span class="nav-text">实参与形参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型"><span class="nav-number">5.</span> <span class="nav-text">基本数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数默认返回值问题"><span class="nav-number">6.</span> <span class="nav-text">函数默认返回值问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对于浮点数不宜使用-或-运算符"><span class="nav-number">1.</span> <span class="nav-text">对于浮点数不宜使用 == 或 != 运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于二维数组的一些问题"><span class="nav-number">2.</span> <span class="nav-text">关于二维数组的一些问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实参与形参"><span class="nav-number">3.</span> <span class="nav-text">实参与形参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位操作"><span class="nav-number">4.</span> <span class="nav-text">位操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#取反"><span class="nav-number">4.1.</span> <span class="nav-text">取反 ~</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按位与-amp"><span class="nav-number">4.2.</span> <span class="nav-text">按位与 &amp;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按位或"><span class="nav-number">4.3.</span> <span class="nav-text">按位或 |</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按位异或"><span class="nav-number">4.4.</span> <span class="nav-text">按位异或 ^</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#左移-lt-lt"><span class="nav-number">4.5.</span> <span class="nav-text">左移 &lt;&lt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#右移-gt-gt"><span class="nav-number">4.6.</span> <span class="nav-text">右移 &gt;&gt;</span></a></li></ol></li></ol></div>
             
 
           </div>
