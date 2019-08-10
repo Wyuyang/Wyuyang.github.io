@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="对于浮点数不宜使用 == 或 != 运算符写作业时遇到了一个奇怪的bug，精简一下，代码大致如下：12345678......    double x = -5;        x = x + 0.1;        if(x == -4.9)        printf(&quot;\n&quot;);......">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-10T13:37:59.277Z">
+<meta property="og:updated_time" content="2019-08-10T13:43:02.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C 学习笔记">
 <meta name="twitter:description" content="对于浮点数不宜使用 == 或 != 运算符写作业时遇到了一个奇怪的bug，精简一下，代码大致如下：12345678......    double x = -5;        x = x + 0.1;        if(x == -4.9)        printf(&quot;\n&quot;);......">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-10 21:37:59" itemprop="dateModified" datetime="2019-08-10T21:37:59+08:00">2019-08-10</time>
+                <time title="修改时间：2019-08-10 21:43:02" itemprop="dateModified" datetime="2019-08-10T21:43:02+08:00">2019-08-10</time>
               
             
           </span>
@@ -511,10 +511,8 @@
 </tr>
 <tr>
 <td>Bitwise OR assignment</td>
-<td>a</td>
-<td>= b</td>
-<td>a = a</td>
-<td>b</td>
+<td>a or= b</td>
+<td>a = a or b</td>
 </tr>
 <tr>
 <td>Bitwise XOR assignment</td>
@@ -533,7 +531,7 @@
 </tr>
 </tbody>
 </table>
-<p><em>摘自<a href="https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Compound_assignment_operators" target="_blank" rel="noopener">Operators in C and C++ - Compound assignment operators</a></em></p>
+<p><em>因无法在表格中使用” | “，故用” or “替代</em><br><em>摘自<a href="https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Compound_assignment_operators" target="_blank" rel="noopener">Operators in C and C++ - Compound assignment operators</a></em></p>
 <p>需要注意的是，表格第二列和第三列并不完全等价，有说法称第二列的执行效率更高。个人觉得如果编译器优化比较好的话应该还是有一定。</p>
 <p>另外运算中还存在变量的数据类型问题，暂未深入研究。</p>
 <hr>
