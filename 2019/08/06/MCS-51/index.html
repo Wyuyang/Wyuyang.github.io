@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-10T13:20:49.820Z">
+<meta property="og:updated_time" content="2019-08-12T08:07:37.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MCS 51">
 <meta name="twitter:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-10 21:20:49" itemprop="dateModified" datetime="2019-08-10T21:20:49+08:00">2019-08-10</time>
+                <time title="修改时间：2019-08-12 16:07:37" itemprop="dateModified" datetime="2019-08-12T16:07:37+08:00">2019-08-12</time>
               
             
           </span>
@@ -652,6 +652,7 @@
 <blockquote><p>注：XICON，IPH寄存器为STC89C52独有，可实现4个中断优先级，而传统的8051单片机只能实现2级中断优先级</p>
 </blockquote>
 <p>显然，由中断相关寄存器的名称可以知道，要想使用中断，首先要在中断允许寄存器中启用中断功能，然后调整中断优先级寄存器中优先级的设定（也可不调整直接使用默认优先级）。</p>
+<p>当单片机收到中断信息后，应当转去执行中断信息的处理程序，但是单片机是如何根据中断信息找到处理程序的入口呢？显然，在单片机内部，中断信息和其处理程序建立了某种联系。上表中每一个中断源都对应唯一的一个InterruptNumber——中断类型码，单片机会根据中断类型码，在中断向量表中找到对应的处理程序入口地址，进而开始执行中断服务程序。</p>
 <h3 id="中断允许控制寄存器"><a href="#中断允许控制寄存器" class="headerlink" title="中断允许控制寄存器"></a>中断允许控制寄存器</h3><p><em>IE: Interrupt Enable  中断允许寄存器  可位寻址</em><br><em>Adress: A8H</em></p>
 <p>单片机对任意中断源是否做出响应均由该寄存器进行控制。</p>
 <ul>
@@ -678,6 +679,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Function_Name</span><span class="params">()</span> interrupt Interrupt_Number <span class="keyword">using</span> Register_Bank</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">/* code */</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>代码中<code>Interrupt_Number</code>参考上表，无论是否为默认优先级，该值均不变。<br><code>using Register_Bank</code>语句可省略。</p>
 <p>即使中断函数写在main函数后面，也不需要在main函数前先对中断函数进行声明。</p>
+<p>如果定义两个中断处理函数时，使他们能对同一个中断源进行响应（如两个函数声明时使用了相同的中断向量<code>interrupt 0</code>），那么程序在执行时会发生什么？<br>测试了一下，这样的程序能够通过Keil编译（虽然会有警告<code>WARNING L5: CODE SPACE MEMORY OVERLAP</code>，实际上Keil的官方文档中，<a href="http://www.keil.com/support/docs/839.htm" target="_blank" rel="noopener">对WARING L5的描述</a>也提到了这种情况，但并未说明后果），暂未测试实际执行情况。</p>
 <p>一些关于中断函数的注意事项：</p>
 <blockquote><p>No function arguments may be specified for an interrupt function. The compiler emits an error message if an interrupt function is declared with any arguments.<br>声明中断函数时不能有参数，否则编译器会报错。</p>
 <p>Interrupt function declarations may not include a return value. They must be declared as void. The compiler emits an error message if any attempt is made to define a return value for the interrupt function. The implicit int return value, however, is ignored by the compiler.<br>声明中断函数时不能包含返回值。中断函数必须声明为 void 类型。对于任何试图将中断函数声明为有返回值类型的函数的行为，编译器都会报错。不过，如果返回值为隐式 int 类型则会被编译器忽略。</p>
@@ -918,7 +920,7 @@
 <hr>
 <h2 id="Cx51中的坑"><a href="#Cx51中的坑" class="headerlink" title="Cx51中的坑"></a>Cx51中的坑</h2><p>不到十行的程序莫名其妙的报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error C141: syntax error near &apos;int&apos;, expected &apos;__asm&apos;</span><br></pre></td></tr></table></figure></p>
 <p>翻来覆去看对应的语句，怎么都没找到错误，查了一下才知道到底是什么问题。</p>
-<p>确切的讲，这个问题是C89的锅，C89规定变量必须声明在函数的开头，也就是其他执行语句的前面。而C99和C11就没有这个限制。</p>
+<p>确切的讲，这个问题是C89的锅，C89规定变量必须声明在块的开头，也就是其他执行语句的前面。而C99标准放宽了这一限制。</p>
 <p>2019年8月9日</p>
 <hr>
 
