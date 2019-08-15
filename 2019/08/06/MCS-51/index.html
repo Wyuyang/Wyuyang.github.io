@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-12T08:07:37.668Z">
+<meta property="og:updated_time" content="2019-08-15T12:53:30.164Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MCS 51">
 <meta name="twitter:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-12 16:07:37" itemprop="dateModified" datetime="2019-08-12T16:07:37+08:00">2019-08-12</time>
+                <time title="修改时间：2019-08-15 20:53:30" itemprop="dateModified" datetime="2019-08-15T20:53:30+08:00">2019-08-15</time>
               
             
           </span>
@@ -713,7 +713,7 @@
 <p>UART是什么？摘自<a href="http://www.circuitbasics.com/basics-uart-communication/" target="_blank" rel="noopener">这里</a>：</p>
 <blockquote><p>UART stands for Universal Asynchronous Receiver/Transmitter. It’s not a communication protocol like SPI and I2C, but a physical circuit in a microcontroller, or a stand-alone IC. A UART’s main purpose is to transmit and receive serial data.</p>
 </blockquote>
-<p>简单地说，UART不是具体的某一个独立的芯片，而是一种异步串行通信的方式，但这种方式还不能称之为“通信协议”。</p>
+<p>简单地说，UART不是具体的某一个独立的芯片，而是一种异步串行通信的方式，但这种方式还不能称之为“通信协议”。<br><del>其实我觉得这不就是一种通信协议么…</del></p>
 <p>UART通信只需要两个接口：</p>
 <ul>
 <li>RXD 串行接收引脚</li>
@@ -917,6 +917,69 @@
 </table>
 <p>USB标准采用的电平依然不是TTL电平，其D-和D+引脚传输的是差分信号。可使用<a href="http://www.winchiphead.com/download/CH340/CH340DS1.PDF" target="_blank" rel="noopener">CH340</a>芯片进行转换。</p>
 <p>2019年8月8日 立秋</p>
+<h3 id="串行口控制寄存器"><a href="#串行口控制寄存器" class="headerlink" title="串行口控制寄存器"></a>串行口控制寄存器</h3><p><em>SCON: Serial Control 串行口控制寄存器 可位寻址</em><br><em>Address: 98H</em></p>
+<p>类似TCON，控制串口的工作模式及指示串口状态。</p>
+<ul>
+<li>RI 接收中断标志位</li>
+<li>TI 发送中断标志位</li>
+<li>RB8 模式 2 和 3 中接收到的第九位数据</li>
+<li>TB8 模式 2 和 3 中要发送的第九位数据</li>
+<li>REN 使能串行接收</li>
+<li>SM2 多机通信控制位</li>
+<li>SM1 控制工作模式</li>
+<li>SM0 控制工作模式</li>
+</ul>
+<h3 id="串行口数据缓冲寄存器"><a href="#串行口数据缓冲寄存器" class="headerlink" title="串行口数据缓冲寄存器"></a>串行口数据缓冲寄存器</h3><p><em>SBUF: Serial Buffer 串行口数据缓冲寄存器 不可位寻址</em><br><em>Adress: 99H</em></p>
+<p>表面上SBUF是一个寄存器，但其实它是由一个只读寄存器和一个只写寄存器构成的。使用时并不需要选择具体使用哪一个寄存器，当对SBUF作读操作时，单片机会自动调用只读寄存器。反过来，当程序对SBUF作写操作时，单片机会自动调用只写寄存器。</p>
+<p>看起来挺复杂，实际上SBUF的工作原理也挺简单的，STC89C52RC的datasheet写的很详细：</p>
+<blockquote><p>······在写入SBUF信号的控制下，把数据装入相同的9位移位寄存器，前面8位为数据字节，其最低位为移位寄存器的输出位。根据不同的工作方式会自动将“1”或TB8的值装入移位寄存器的第9位，并进行发送。</p>
+<p>串行通道的接收寄存器是一个输入移位寄存器。在方式0时它的字长为8位，其他方式时位9位。当一帧接收完毕，移位寄存器中的数据字节装入串行数据缓冲器SBUF中，其第9位则装入SCON寄存器中的RB8位。如果由于SM2使得已接受到的数据无效时，RB8和SBUF中的内容不变。</p>
+<p>由于接收通道内设有输入移位寄存器和SBUF缓冲器，从而能使一帧接收完将数据由移位寄存器装入SBUF后，可立即接收下一帧信息，主机应在该帧接收结束前从SBUF缓冲器中将数据取走，否则前一帧数据将丢失。SBUF以并行方式送往内部数据总线。</p>
+</blockquote>
+<h3 id="串口通信的具体实现"><a href="#串口通信的具体实现" class="headerlink" title="串口通信的具体实现"></a>串口通信的具体实现</h3><p>步骤大致如下：</p>
+<ol>
+<li>配置串行口控制寄存器SCON</li>
+<li>配置定时器 T1 为自动重装模式，禁用 T1 中断</li>
+<li>根据baud计算TH1、TL1初值</li>
+<li>TR1置1，启动定时器</li>
+</ol>
+<p>2019年8月14日</p>
+<h3 id="两种不同的换行符"><a href="#两种不同的换行符" class="headerlink" title="两种不同的换行符"></a>两种不同的换行符</h3><p>在VS Code右下角可以选择行尾序列LF或CRLF，一直以来只知道是两种不同的换行符但没有去深入了解。但在用8051做串口通讯时遇到了问题，直接发送ASCII的第十一位LF时上位机显示的文本并未将其理解为换行符，于是去查了一些相关资料：</p>
+<p>不同的编辑器使用的换行符往往不同，这是一个历史问题。采用的换行标记一般为以下五种，后两种挺少见的，可以忽略：</p>
+<ul>
+<li>ASCII standard</li>
+<li><ul>
+<li>LF: line feed 换行</li>
+</ul>
+</li>
+<li><ul>
+<li>CR: carriage return 回车</li>
+</ul>
+</li>
+<li><ul>
+<li>CRLF: carriage return + line feed 换行 + 回车</li>
+</ul>
+</li>
+<li>Unicode standard</li>
+<li><ul>
+<li>LS: Line Separator</li>
+</ul>
+</li>
+<li><ul>
+<li>PS: Paragraph Separator</li>
+</ul>
+</li>
+</ul>
+<p>多数Unix和类Unix系统（macOS、Linux、FreeBSD etc.）都使用LF作为换行符。而Windows系统使用的换行符是CRLF，选择二者组合的原因还挺有意思的，这和上世纪时广泛使用的电传打印机(teleprinter)有关。</p>
+<p>这篇文章<a href="https://devblogs.microsoft.com/oldnewthing/?p=40193" target="_blank" rel="noopener">Why is the line terminator CR+LF?</a>对原因解释的很清楚：<br><blockquote><p>This protocol dates back to the days of teletypewriters.</p>
+<p>CR stands for “carriage return” – the CR control character returned the print head (“carriage”) to column 0 without advancing the paper. LF stands for “linefeed” – the LF control character advanced the paper one line without moving the print head.So if you wanted to return the print head to column zero (ready to print the next line) and advance the paper (so it prints on fresh paper), you need both CR and LF.</p>
+<p>If you go to the various internet protocol documents, such as RFC 0821 (SMTP), RFC 1939 (POP), RFC 2060 (IMAP), or RFC 2616 (HTTP), you’ll see that they all specify CR+LF as the line termination sequence.</p>
+<p>So the the real question is not “Why do CP/M, MS-DOS, and Win32 use CR+LF as the line terminator?” but rather “Why did other people choose to differ from these standards documents and use some other line terminator?”</p>
+</blockquote></p>
+<p>读到这自然也会好奇为什么C语言中只使用’\n’就能实现换行，事实上这篇文章也提到了原因：<br><blockquote><p>The unix ancestry of the C language carried this convention into the C language standard, which requires only “\n” (which<br>encodes LF) to terminate lines, putting the burden on the runtime libraries to convert raw file data into logical lines.</p>
+<p>The C language also introduced the term “newline” to express the concept of “generic line terminator”. I’m told that the ASCII committee changed the name of character 0x0A to “newline” around 1996, so the confusion level has been raised even higher.</p>
+</blockquote></p>
+<p>2019年8月15日</p>
 <hr>
 <h2 id="Cx51中的坑"><a href="#Cx51中的坑" class="headerlink" title="Cx51中的坑"></a>Cx51中的坑</h2><p>不到十行的程序莫名其妙的报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error C141: syntax error near &apos;int&apos;, expected &apos;__asm&apos;</span><br></pre></td></tr></table></figure></p>
 <p>翻来覆去看对应的语句，怎么都没找到错误，查了一下才知道到底是什么问题。</p>
@@ -1097,7 +1160,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51-的数据类型"><span class="nav-number">1.</span> <span class="nav-text">Cx51 的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器-计数器"><span class="nav-number">2.</span> <span class="nav-text">定时器 / 计数器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定时器"><span class="nav-number">2.1.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计数器"><span class="nav-number">2.2.</span> <span class="nav-text">计数器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">3.</span> <span class="nav-text">中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断允许控制寄存器"><span class="nav-number">3.1.</span> <span class="nav-text">中断允许控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断优先级控制寄存器"><span class="nav-number">3.2.</span> <span class="nav-text">中断优先级控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断函数"><span class="nav-number">3.3.</span> <span class="nav-text">中断函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#串口通信"><span class="nav-number">4.</span> <span class="nav-text">串口通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些基本概念"><span class="nav-number">4.1.</span> <span class="nav-text">一些基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UART"><span class="nav-number">4.2.</span> <span class="nav-text">UART</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS-232"><span class="nav-number">4.3.</span> <span class="nav-text">RS-232</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB"><span class="nav-number">4.4.</span> <span class="nav-text">USB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51中的坑"><span class="nav-number">5.</span> <span class="nav-text">Cx51中的坑</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51-的数据类型"><span class="nav-number">1.</span> <span class="nav-text">Cx51 的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器-计数器"><span class="nav-number">2.</span> <span class="nav-text">定时器 / 计数器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定时器"><span class="nav-number">2.1.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计数器"><span class="nav-number">2.2.</span> <span class="nav-text">计数器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">3.</span> <span class="nav-text">中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断允许控制寄存器"><span class="nav-number">3.1.</span> <span class="nav-text">中断允许控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断优先级控制寄存器"><span class="nav-number">3.2.</span> <span class="nav-text">中断优先级控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断函数"><span class="nav-number">3.3.</span> <span class="nav-text">中断函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#串口通信"><span class="nav-number">4.</span> <span class="nav-text">串口通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些基本概念"><span class="nav-number">4.1.</span> <span class="nav-text">一些基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UART"><span class="nav-number">4.2.</span> <span class="nav-text">UART</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS-232"><span class="nav-number">4.3.</span> <span class="nav-text">RS-232</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB"><span class="nav-number">4.4.</span> <span class="nav-text">USB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串行口控制寄存器"><span class="nav-number">4.5.</span> <span class="nav-text">串行口控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串行口数据缓冲寄存器"><span class="nav-number">4.6.</span> <span class="nav-text">串行口数据缓冲寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串口通信的具体实现"><span class="nav-number">4.7.</span> <span class="nav-text">串口通信的具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两种不同的换行符"><span class="nav-number">4.8.</span> <span class="nav-text">两种不同的换行符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51中的坑"><span class="nav-number">5.</span> <span class="nav-text">Cx51中的坑</span></a></li></ol></div>
             
 
           </div>
