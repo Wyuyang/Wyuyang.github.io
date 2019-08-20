@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="课程需要，学习DS1302的用法。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-20T14:31:12.817Z">
+<meta property="og:updated_time" content="2019-08-20T14:32:59.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DS1302">
 <meta name="twitter:description" content="课程需要，学习DS1302的用法。">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-20 22:31:12" itemprop="dateModified" datetime="2019-08-20T22:31:12+08:00">2019-08-20</time>
+                <time title="修改时间：2019-08-20 22:32:59" itemprop="dateModified" datetime="2019-08-20T22:32:59+08:00">2019-08-20</time>
               
             
           </span>
@@ -458,7 +458,7 @@
 <blockquote><p>Vcc2<br>Primary Power-Supply Pin in Dual Supply Configuration. VCC1 is connected to a backup source to maintain the time and date in the absence of primary power. The DS1302 operates from the larger of VCC1 or VCC2. When VCC2 is greater than VCC1 + 0.2V, VCC2 powers the DS1302. When VCC2 is less than VCC1, VCC1 powers the DS1302.</p>
 </blockquote>
 <p>但是看到Vcc1的引脚说明就知道还是有一点区别的：</p>
-<blockquote><p>Low-Power Operation in Single Supply and Battery-Operated Systems and LowPower Battery Backup. In systems using the trickle charger, the rechargeable energy source is connected to this pin. UL recognized to ensure against reverse charging current when used with a lithium battery. </p>
+<blockquote><p>Vcc1<br>Low-Power Operation in Single Supply and Battery-Operated Systems and LowPower Battery Backup. In systems using the trickle charger, the rechargeable energy source is connected to this pin. UL recognized to ensure against reverse charging current when used with a lithium battery. </p>
 </blockquote>
 <p>简单地说就是Vcc1支持给电池充电（如果使用了可充电电池的话），Vcc2不支持。</p>
 <h2 id="晶振负载电容（load-capacitance）的影响"><a href="#晶振负载电容（load-capacitance）的影响" class="headerlink" title="晶振负载电容（load capacitance）的影响"></a>晶振负载电容（load capacitance）的影响</h2><p>首先，什么是负载电容?晶振的负载电容并非指连接在晶振外部的电容，而是指晶振本身串接在电路中的等效电容值。关于负载电容的更详细的内容，可参考<a href="https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&amp;dbname=CJFD2007&amp;filename=NKDZ200702019" target="_blank" rel="noopener">王跃, 张晰泊, 王彬, 高清运. 用于RTC的32.768 kHz晶振电路的设计</a></p>
@@ -472,6 +472,7 @@
 </blockquote>
 <p>也就是说，如果使用负载电容大于6pF的晶振，DS1302计时会更快。反之，如果小于6pF,计时会变慢。个人觉得如果对计时精准度没有较高的要求，完全可以忽略这一问题，用12pF的晶振来提供时钟信号也不过每个月快3到4分钟而已。</p>
 <p>如果过晶振的负载电容不等于6pF，又希望计时精度更高，也可以选择通过串/并联电容进行修正，详见<a href="http://www.cqvip.com/qk/83588x/200101/4871613.html" target="_blank" rel="noopener">时钟芯片DS1302可靠起振的方法</a></p>
+<p>2019年8月18日</p>
 
       
     </div>
