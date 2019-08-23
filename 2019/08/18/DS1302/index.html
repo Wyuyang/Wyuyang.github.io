@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="课程需要，学习DS1302的用法。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-20T14:32:59.937Z">
+<meta property="og:updated_time" content="2019-08-23T06:07:00.338Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DS1302">
 <meta name="twitter:description" content="课程需要，学习DS1302的用法。">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-20 22:32:59" itemprop="dateModified" datetime="2019-08-20T22:32:59+08:00">2019-08-20</time>
+                <time title="修改时间：2019-08-23 14:07:00" itemprop="dateModified" datetime="2019-08-23T14:07:00+08:00">2019-08-23</time>
               
             
           </span>
@@ -454,6 +454,7 @@
         <p>课程需要，学习DS1302的用法。</p>
 <a id="more"></a> 
 <h2 id="Datasheet"><a href="#Datasheet" class="headerlink" title="Datasheet"></a>Datasheet</h2><p><a href="https://datasheets.maximintegrated.com/en/ds/DS1302.pdf" target="_blank" rel="noopener">DS1302-Datasheet</a><br><a href="https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&amp;dbname=CJFD2007&amp;filename=NKDZ200702019" target="_blank" rel="noopener">Application Note 58: Crystal Considerations for Dallas Real-Time Clocks</a></p>
+<hr>
 <h2 id="Vcc1和Vcc2的区别"><a href="#Vcc1和Vcc2的区别" class="headerlink" title="Vcc1和Vcc2的区别"></a>Vcc1和Vcc2的区别</h2><p>一开始，我是觉得Vcc1和Vcc2没啥区别随便接电源，看到datasheet里这段话更是觉得没有区别：</p>
 <blockquote><p>Vcc2<br>Primary Power-Supply Pin in Dual Supply Configuration. VCC1 is connected to a backup source to maintain the time and date in the absence of primary power. The DS1302 operates from the larger of VCC1 or VCC2. When VCC2 is greater than VCC1 + 0.2V, VCC2 powers the DS1302. When VCC2 is less than VCC1, VCC1 powers the DS1302.</p>
 </blockquote>
@@ -461,7 +462,8 @@
 <blockquote><p>Vcc1<br>Low-Power Operation in Single Supply and Battery-Operated Systems and LowPower Battery Backup. In systems using the trickle charger, the rechargeable energy source is connected to this pin. UL recognized to ensure against reverse charging current when used with a lithium battery. </p>
 </blockquote>
 <p>简单地说就是Vcc1支持给电池充电（如果使用了可充电电池的话），Vcc2不支持。</p>
-<h2 id="晶振负载电容（load-capacitance）的影响"><a href="#晶振负载电容（load-capacitance）的影响" class="headerlink" title="晶振负载电容（load capacitance）的影响"></a>晶振负载电容（load capacitance）的影响</h2><p>首先，什么是负载电容?晶振的负载电容并非指连接在晶振外部的电容，而是指晶振本身串接在电路中的等效电容值。关于负载电容的更详细的内容，可参考<a href="https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&amp;dbname=CJFD2007&amp;filename=NKDZ200702019" target="_blank" rel="noopener">王跃, 张晰泊, 王彬, 高清运. 用于RTC的32.768 kHz晶振电路的设计</a></p>
+<hr>
+<h2 id="晶振负载电容（load-capacitance）的影响"><a href="#晶振负载电容（load-capacitance）的影响" class="headerlink" title="晶振负载电容（load capacitance）的影响"></a>晶振负载电容（load capacitance）的影响</h2><p>首先，什么是负载电容？晶振的负载电容并非指连接在晶振外部的电容，而是指晶振本身串接在电路中的等效电容值。关于负载电容的更详细的内容，可参考<a href="https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&amp;dbname=CJFD2007&amp;filename=NKDZ200702019" target="_blank" rel="noopener">王跃, 张晰泊, 王彬, 高清运. 用于RTC的32.768 kHz晶振电路的设计</a></p>
 <p>根据datasheet：</p>
 <blockquote><p>Connections for Standard 32.768kHz Quartz Crystal. The internal oscillator is designed for operation with a crystal having a specified load capacitance of 6pF.<br>For more information on crystal selection and crystal layout considerations, refer to Application Note 58: Crystal Considerations for Dallas Real-Time Clocks. </p>
 </blockquote>
@@ -471,9 +473,32 @@
 <p>Wrong crystal. An RTC typically runs fast if a crystal with a specified load capacitance (CL) greater than the RTC-specified load capacitance is used. The severity of the inaccuracy is dependent on the value of the CL. For example, using a crystal with a CL of 12pF on an RTC designed with a 6pF CL causes the RTC to be about 3 to 4 minutes per month fast.</p>
 </blockquote>
 <p>也就是说，如果使用负载电容大于6pF的晶振，DS1302计时会更快。反之，如果小于6pF,计时会变慢。个人觉得如果对计时精准度没有较高的要求，完全可以忽略这一问题，用12pF的晶振来提供时钟信号也不过每个月快3到4分钟而已。</p>
-<p>如果过晶振的负载电容不等于6pF，又希望计时精度更高，也可以选择通过串/并联电容进行修正，详见<a href="http://www.cqvip.com/qk/83588x/200101/4871613.html" target="_blank" rel="noopener">时钟芯片DS1302可靠起振的方法</a></p>
+<p>如果过晶振的负载电容不等于6pF，又希望计时精度更高，也可以选择通过串/并联电容进行修正，详见<a href="http://www.cqvip.com/qk/83588x/200101/4871613.html" target="_blank" rel="noopener">屠运武, 谷松, 王甬生, 钟英华. 时钟芯片DS1302可靠起振的方法</a>。</p>
 <p>2019年8月18日</p>
-
+<hr>
+<h2 id="向-DS1302-中写入数据"><a href="#向-DS1302-中写入数据" class="headerlink" title="向 DS1302 中写入数据"></a>向 DS1302 中写入数据</h2><p>DS1302一共有三个引脚用于通信：</p>
+<ul>
+<li>CE</li>
+<li>I/O</li>
+<li>SCLK</li>
+</ul>
+<p>其中CE在datasheet的早期版本中也被叫做RST，虽然名字改了但功能未变。对DS1302读写数据时CE必须输入高电平。</p>
+<p>SCLK为时钟信号输入，用于保证数据发送方和接收方的同步。</p>
+<p>I/0引脚则是真正用于传输数据的引脚，数据传输时先发送低位然后才发送高位。</p>
+<p>根据datasheet：</p>
+<blockquote><p>COMMAND BYTE<br>Figure 3 shows the command byte. A command byte initiates each data transfer. The MSB (bit 7) must be a logic 1. If it is 0, writes to the DS1302 will be disabled. Bit 6 specifies clock/calendar data if logic 0 or RAM data if logic 1. Bits 1 to 5 specify the designated registers to be input or output, and the LSB (bit 0) specifies a write operation (input) if logic 0 or read operation (output) if logic 1. The command byte is always input starting with the LSB (bit 0).</p>
+<p>DATA INPUT<br>Following the eight SCLK cycles that input a write command byte, a data byte is input on the rising edge of the next eight SCLK cycles. Additional SCLK cycles are ignored should they inadvertently occur. Data is input starting with bit 0.</p>
+</blockquote>
+<p>简单地说，就是每次向DS1302发送数据，都只能发送两个字节。先发送的第一个字节是控制命令，第二个字节才是真正想要传送的数据。</p>
+<p>控制命令中，第七位必须为1，否则写入会被禁用无效；第六位用于选择RAM或clock/calender；第一到第五位是要写入（读取）的寄存器的地址；最低位则用于指示读取数据（为1）还是写入数据（为0）。套用微机原理中的概念，I/O引脚同时充当了数据总线、地址总线和控制总线的作用。</p>
+<p>概括：写入时钟数据时，控制命令的构成为（从高到低）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BIN: 1 0 xxxxx 0</span><br><span class="line">// `xxxxx`为目标寄存器的地址。</span><br><span class="line"></span><br><span class="line">HEX: 0x80 | xxxx</span><br><span class="line">// `xxxx`为目标寄存器的地址（十六进制）。</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="从-DS1302-中读取数据"><a href="#从-DS1302-中读取数据" class="headerlink" title="从 DS1302 中读取数据"></a>从 DS1302 中读取数据</h2><p>和写入数据类似，首先要发送一个控制命令，命令包含要读取的寄存器地址、指示本次操作的目的为读取信息，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BIN: 1 0 xxxxx 1</span><br><span class="line">// `xxxxx`为目标寄存器的地址。</span><br><span class="line"></span><br><span class="line">HEX: 0x80 | xxxx</span><br><span class="line">// `xxxx`为目标寄存器的地址（十六进制）。</span><br></pre></td></tr></table></figure>
+<p>2019年8月21日</p>
+<hr>
+<h2 id="DS1302-中的寄存器"><a href="#DS1302-中的寄存器" class="headerlink" title="DS1302 中的寄存器"></a>DS1302 中的寄存器</h2>
       
     </div>
 
@@ -647,7 +672,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Datasheet"><span class="nav-number">1.</span> <span class="nav-text">Datasheet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vcc1和Vcc2的区别"><span class="nav-number">2.</span> <span class="nav-text">Vcc1和Vcc2的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#晶振负载电容（load-capacitance）的影响"><span class="nav-number">3.</span> <span class="nav-text">晶振负载电容（load capacitance）的影响</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Datasheet"><span class="nav-number">1.</span> <span class="nav-text">Datasheet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vcc1和Vcc2的区别"><span class="nav-number">2.</span> <span class="nav-text">Vcc1和Vcc2的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#晶振负载电容（load-capacitance）的影响"><span class="nav-number">3.</span> <span class="nav-text">晶振负载电容（load capacitance）的影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向-DS1302-中写入数据"><span class="nav-number">4.</span> <span class="nav-text">向 DS1302 中写入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从-DS1302-中读取数据"><span class="nav-number">5.</span> <span class="nav-text">从 DS1302 中读取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DS1302-中的寄存器"><span class="nav-number">6.</span> <span class="nav-text">DS1302 中的寄存器</span></a></li></ol></div>
             
 
           </div>
