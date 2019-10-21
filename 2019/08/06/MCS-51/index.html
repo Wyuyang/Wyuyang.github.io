@@ -96,17 +96,17 @@
 
 
 
-  <meta name="description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自[Cx51 User’s Guide][1]">
+  <meta name="description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MCS 51">
 <meta property="og:url" content="http://wangyuyang.me/2019/08/06/MCS-51/index.html">
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
-<meta property="og:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自[Cx51 User’s Guide][1]">
+<meta property="og:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-21T03:18:13.957Z">
+<meta property="og:updated_time" content="2019-10-21T03:27:00.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MCS 51">
-<meta name="twitter:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自[Cx51 User’s Guide][1]">
+<meta name="twitter:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 
 
 
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-10-21 11:18:13" itemprop="dateModified" datetime="2019-10-21T11:18:13+08:00">2019-10-21</time>
+                <time title="修改时间：2019-10-21 11:27:00" itemprop="dateModified" datetime="2019-10-21T11:27:00+08:00">2019-10-21</time>
               
             
           </span>
@@ -452,7 +452,7 @@
 
       
         <p>正式开始学习8051及C51。</p>
-<h2 id="Cx51-的数据类型"><a href="#Cx51-的数据类型" class="headerlink" title="Cx51 的数据类型"></a>Cx51 的数据类型</h2><p>摘自[Cx51 User’s Guide][1]<br><a id="more"></a> </p>
+<h2 id="Cx51-的数据类型"><a href="#Cx51-的数据类型" class="headerlink" title="Cx51 的数据类型"></a>Cx51 的数据类型</h2><p>摘自<a href="http://www.keil.com/support/man/docs/c51/c51_le_datatypes.htm" target="_blank" rel="noopener">Cx51 User’s Guide</a><br><a id="more"></a> </p>
 <table>
 <thead>
 <tr>
@@ -602,7 +602,7 @@
 <li>固有优先级：处理完低优先级中断后才进入高优先级中断，即不发生中断嵌套。</li>
 <li>抢占优先级：打断低优先级中断并立刻进入高优先级中断，处理完高优先级中断后，返回低优先级中断。</li>
 </ul>
-<p>根据[Cx51 User’s Guide][1]，8051内置六个标准中断源：</p>
+<p>根据<a href="http://www.keil.com/support/man/docs/c51/c51_le_datatypes.htm" target="_blank" rel="noopener">Cx51 User’s Guide</a>，8051内置六个标准中断源：</p>
 <table>
 <thead>
 <tr>
@@ -679,7 +679,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Function_Name</span><span class="params">()</span> interrupt Interrupt_Number <span class="keyword">using</span> Register_Bank</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">/* code */</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>代码中<code>Interrupt_Number</code>参考上表，无论是否为默认优先级，该值均不变。<br><code>using Register_Bank</code>语句可省略。</p>
 <p>即使中断函数写在main函数后面，也不需要在main函数前先对中断函数进行声明。</p>
-<p>如果定义两个中断处理函数时，使他们能对同一个中断源进行响应（如两个函数声明时使用了相同的中断向量<code>interrupt 0</code>），那么程序在执行时会发生什么？<br>测试了一下，这样的程序能够通过Keil编译（虽然会有警告<code>WARNING L5: CODE SPACE MEMORY OVERLAP</code>，实际上Keil的官方文档中，[对WARING L5的描述][2]也提到了这种情况，但并未说明后果），暂未测试实际执行情况。</p>
+<p>如果定义两个中断处理函数时，使他们能对同一个中断源进行响应（如两个函数声明时使用了相同的中断向量<code>interrupt 0</code>），那么程序在执行时会发生什么？<br>测试了一下，这样的程序能够通过Keil编译（虽然会有警告<code>WARNING L5: CODE SPACE MEMORY OVERLAP</code>，实际上Keil的官方文档中，<a href="http://www.keil.com/support/docs/839.htm" target="_blank" rel="noopener">对WARING L5的描述</a>也提到了这种情况，但并未说明后果），暂未测试实际执行情况。</p>
 <p>一些关于中断函数的注意事项：</p>
 <blockquote><p>No function arguments may be specified for an interrupt function. The compiler emits an error message if an interrupt function is declared with any arguments.<br>声明中断函数时不能有参数，否则编译器会报错。</p>
 <p>Interrupt function declarations may not include a return value. They must be declared as void. The compiler emits an error message if any attempt is made to define a return value for the interrupt function. The implicit int return value, however, is ignored by the compiler.<br>声明中断函数时不能包含返回值。中断函数必须声明为 void 类型。对于任何试图将中断函数声明为有返回值类型的函数的行为，编译器都会报错。不过，如果返回值为隐式 int 类型则会被编译器忽略。</p>
@@ -707,10 +707,10 @@
 <li>半双工：在某一时刻接收端和发送端是固定的，即一次数据传输时一定有一个为接收端，另一个为发送端。二者地位可互换。二者需要一条信号线和一条接地线连接。</li>
 <li>全双工：在任一时刻接收端和发送端都可变，即两个设备都可以同时接收和发送数据。二者需要一条接地线和两条信号线连接。</li>
 </ul>
-<p>[比特率（Bit rate）][3]：指单位时间内传输送或处理的比特的数量，规定使用“比特每秒”（bit/s或bps）为单位。</p>
+<p><a href="https://zh.wikipedia.org/wiki/%E6%AF%94%E7%89%B9%E7%8E%87" target="_blank" rel="noopener">比特率（Bit rate）</a>：指单位时间内传输送或处理的比特的数量，规定使用“比特每秒”（bit/s或bps）为单位。</p>
 <p>对于单片机而言，波特率数值大小不同于单片机发送或者接收数据的时钟频率，波特率大小可以是单片机时钟频率的1/16或者1/64。</p>
 <h3 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h3><p><em>Universal asynchronous receiver-transmitter 通用异步收发传输器</em></p>
-<p>UART是什么？摘自[这里][4]：</p>
+<p>UART是什么？摘自<a href="http://www.circuitbasics.com/basics-uart-communication/" target="_blank" rel="noopener">这里</a>：</p>
 <blockquote><p>UART stands for Universal Asynchronous Receiver/Transmitter. It’s not a communication protocol like SPI and I2C, but a physical circuit in a microcontroller, or a stand-alone IC. A UART’s main purpose is to transmit and receive serial data.</p>
 </blockquote>
 <p>简单地说，UART不是具体的某一个独立的芯片，而是一种异步串行通信的方式，但这种方式还不能称之为“通信协议”。<br><del>其实我觉得这不就是一种通信协议么…</del></p>
@@ -732,7 +732,7 @@
 </ul>
 <p><del>终于知道以前用PN532时连的线是干啥用的了</del></p>
 <h3 id="RS-232"><a href="#RS-232" class="headerlink" title="RS-232"></a>RS-232</h3><p><em>Recommended Standard 232 RS-232</em></p>
-<p>[RS-232][5]是美国电子工业联盟（EIA）制定的串行数据通信的接口标准，原始编号全称是EIA-RS-232。它被广泛用于计算机串行接口外设连接。</p>
+<p><a href="https://zh.wikipedia.org/wiki/RS-232" target="_blank" rel="noopener">RS-232</a>是美国电子工业联盟（EIA）制定的串行数据通信的接口标准，原始编号全称是EIA-RS-232。它被广泛用于计算机串行接口外设连接。</p>
 <p>RS-232接口最初规定为25个引脚，但大部分设备进行了简化，只使用了其中的9个引脚：</p>
 <table>
 <thead>
@@ -792,7 +792,7 @@
 </table>
 <p>需要注意的是，RS-232标准采用的电平为RS-232电平而不是TTL电平，RS-232电平为负逻辑电平，即-15V~-3V代表逻辑”1”，+3V~+15V代表逻辑”0”。<br>可使用MAX232芯片进行转换。</p>
 <h3 id="USB"><a href="#USB" class="headerlink" title="USB"></a>USB</h3><p><em>Universal Serial Bus 通用串行总线</em></p>
-<p>[USB][6]已经非常熟悉了，其USB接口类型有很多：</p>
+<p><a href="https://zh.wikipedia.org/wiki/USB" target="_blank" rel="noopener">USB</a>已经非常熟悉了，其USB接口类型有很多：</p>
 <ul>
 <li>Standard<ul>
 <li>Type-A</li>
@@ -856,7 +856,7 @@
 </tr>
 </tbody>
 </table>
-<p><em>摘自[USB pinout][7]</em></p>
+<p><em>摘自<a href="https://pinouts.ru/Slots/USB_pinout.shtml" target="_blank" rel="noopener">USB pinout</a></em></p>
 <p>Type-A和Type-B接口有且仅有这四个引脚。</p>
 <p>Type-A SuperSpeed的引脚如下，可以看到虽然多了5个引脚，但1-4引脚依然存在。</p>
 <table>
@@ -915,7 +915,7 @@
 </tr>
 </tbody>
 </table>
-<p>USB标准采用的电平依然不是TTL电平，其D-和D+引脚传输的是差分信号。可使用[CH340][8]芯片进行转换。</p>
+<p>USB标准采用的电平依然不是TTL电平，其D-和D+引脚传输的是差分信号。可使用<a href="http://www.winchiphead.com/download/CH340/CH340DS1.PDF" target="_blank" rel="noopener">CH340</a>芯片进行转换。</p>
 <p>2019年8月8日 立秋</p>
 <h3 id="串行口控制寄存器"><a href="#串行口控制寄存器" class="headerlink" title="串行口控制寄存器"></a>串行口控制寄存器</h3><p><em>SCON: Serial Control 串行口控制寄存器 可位寻址</em><br><em>Address: 98H</em></p>
 <p>类似TCON，控制串口的工作模式及指示串口状态。</p>
@@ -960,7 +960,7 @@
 </li>
 </ul>
 <p>多数Unix和类Unix系统（macOS、Linux、FreeBSD etc.）都使用LF作为换行符。而Windows系统使用的换行符是CRLF，选择二者组合的原因还挺有意思的，这和上世纪时广泛使用的电传打印机(teleprinter)有关。</p>
-<p>这篇文章[Why is the line terminator CR+LF?][9]对原因解释的很清楚：</p>
+<p>这篇文章<a href="https://devblogs.microsoft.com/oldnewthing/?p=40193" target="_blank" rel="noopener">Why is the line terminator CR+LF?</a>对原因解释的很清楚：</p>
 <blockquote><p>This protocol dates back to the days of teletypewriters.</p>
 <p>CR stands for “carriage return” – the CR control character returned the print head (“carriage”) to column 0 without advancing the paper. LF stands for “linefeed” – the LF control character advanced the paper one line without moving the print head.So if you wanted to return the print head to column zero (ready to print the next line) and advance the paper (so it prints on fresh paper), you need both CR and LF.</p>
 <p>If you go to the various internet protocol documents, such as RFC 0821 (SMTP), RFC 1939 (POP), RFC 2060 (IMAP), or RFC 2616 (HTTP), you’ll see that they all specify CR+LF as the line termination sequence.</p>
@@ -1006,7 +1006,7 @@
 <hr>
 <h2 id="MCS-51-的存储器结构"><a href="#MCS-51-的存储器结构" class="headerlink" title="MCS-51 的存储器结构"></a>MCS-51 的存储器结构</h2><p>学习8086汇编时，可以了解到8086采用的是Von Neumann架构，正如王爽在《汇编语言》中反复强调的一样，指令和数据是完全相同的概念，程序和数据共用同一条总线。</p>
 <p>不同于8086，一般认为，MCS-51是采用Harvard架构的MCU，其程序存储器（ROM）和数据存储器（RAM）的Adress Space相互独立。</p>
-<p>扩展阅读：[为什么电脑还沿用冯·诺伊曼结构而不使用哈佛结构？][10]</p>
+<p>扩展阅读：<a href="https://www.zhihu.com/question/22406681/answer/21264994" target="_blank" rel="noopener">为什么电脑还沿用冯·诺伊曼结构而不使用哈佛结构？</a></p>
 <p>从物理上分，即从电路的实际物理结构来区分，MCS-51的存储空间可分为四个部分：</p>
 <ul>
 <li>程序存储器<ul>
@@ -1029,7 +1029,7 @@
 </ul>
 </li>
 </ul>
-<p>这里又牵扯出了两个概念——统一编址和独立编址。<br>实际上是很简单的概念，可参考[内存和外设的统一编址及独立编址][11]和[理解“统一编址与独立编址、I/O端口与I/O内存”][12]</p>
+<p>这里又牵扯出了两个概念——统一编址和独立编址。<br>实际上是很简单的概念，可参考<a href="https://blog.csdn.net/zhandoushi1982/article/details/5976898" target="_blank" rel="noopener">内存和外设的统一编址及独立编址</a>和<a href="https://www.cnblogs.com/armlinux/archive/2010/11/26/2396888.html" target="_blank" rel="noopener">理解“统一编址与独立编址、I/O端口与I/O内存”</a></p>
 <h3 id="MCS-51-的程序存储器"><a href="#MCS-51-的程序存储器" class="headerlink" title="MCS-51 的程序存储器"></a>MCS-51 的程序存储器</h3><p>MCS-51的程序计数器是16位，即地址空间可达2^16 bit = 64KB。</p>
 <p>正常工作模式下（即<span style="TEXT-DECORATION: overline">EA</span>端接高电平），PC从内部ROM的0x0000开始计数。当PC的值大于0x0FFF时，会自动转至片外程序存储器的0x1000处，直到片外存储器的0xFFFF为止。所以逻辑上对片内程序存储器和片外程序存储器不做区分。</p>
 <p>不过实际使用时，为了某些特殊目的，还可以将<span style="TEXT-DECORATION: overline">EA</span>端接低电平，此时单片机会直接从片外ROM的0x0000开始计数，而不再使用片内程序存储器。</p>
@@ -1059,7 +1059,7 @@
 <li>pdata 分页寻址片外数据存储区</li>
 <li>xdata 片外数据存储区</li>
 </ul>
-<p>关于code、idata等详细含义，可查看[Memory Types][13]<br>2019年10月7日 重阳节</p>
+<p>关于code、idata等详细含义，可查看<a href="http://www.keil.com/support/man/docs/c51/c51_le_memtypes.htm" target="_blank" rel="noopener">Memory Types</a><br>2019年10月7日 重阳节</p>
 <hr>
 <h2 id="MCS-51的伪指令"><a href="#MCS-51的伪指令" class="headerlink" title="MCS-51的伪指令"></a>MCS-51的伪指令</h2><p>伪指令主要有以下八个：</p>
 <ul>
@@ -1073,7 +1073,7 @@
 <li>BIT</li>
 </ul>
 <p>这八条指令大致可分为三类，下分类记录。</p>
-<h3 id="ORG和END"><a href="#ORG和END" class="headerlink" title="ORG和END"></a>ORG和END</h3><p>ORG指令制定了其后面第一条指令在ROM中存储时的起始位置，如：</p>
+<h3 id="ORG和END"><a href="#ORG和END" class="headerlink" title="ORG和END"></a>ORG和END</h3><p>ORG指令指定了其后面第一条指令在ROM中存储时的起始位置，如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ORG 0030H</span><br><span class="line">INC A</span><br></pre></td></tr></table></figure>
 <p>这里<code>INC A</code>在ROM中就是从0030H开始存储的。</p>
 <p>顺便复习一下标号，标号是代表着其后面第一条指令的地址，因此下面两种写法是等价的：</p>
@@ -1083,7 +1083,7 @@
 <h3 id="DB、DW和DS"><a href="#DB、DW和DS" class="headerlink" title="DB、DW和DS"></a>DB、DW和DS</h3><ul>
 <li>DB：从指定单元开始，定义n个字节，并在每个字节中存放1个数</li>
 <li>DW：从指定单元开始，定义n个字（对于MCS-51，1个word = 2个byte），并在每个字中存放1个数</li>
-<li>DS：从指定单元开始，定义n空字节</li>
+<li>DS：从指定单元开始，定义n个空字节</li>
 </ul>
 <p>这里的“指定单元”的地址按以下两种方法确定：</p>
 <ol>
@@ -1108,7 +1108,7 @@
 <li>DATA：类似#define，可以先使用在定义（类似goto的函数作用域）</li>
 <li>BIT：类似#define，</li>
 </ul>
-<p>2019年10月24日 霜降<br>———<br> [1]: <a href="http://www.keil.com/support/man/docs/c51/c51_le_datatypes.htm" target="_blank" rel="noopener">http://www.keil.com/support/man/docs/c51/c51_le_datatypes.htm</a><br> [2]: <a href="http://www.keil.com/support/docs/839.htm" target="_blank" rel="noopener">http://www.keil.com/support/docs/839.htm</a><br> [3]: <a href="https://zh.wikipedia.org/wiki/%E6%AF%94%E7%89%B9%E7%8E%87" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E6%AF%94%E7%89%B9%E7%8E%87</a><br> [4]: <a href="http://www.circuitbasics.com/basics-uart-communication/" target="_blank" rel="noopener">http://www.circuitbasics.com/basics-uart-communication/</a><br> [5]: <a href="https://zh.wikipedia.org/wiki/RS-232" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/RS-232</a><br> [6]: <a href="https://zh.wikipedia.org/wiki/USB" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/USB</a><br> [7]: <a href="https://pinouts.ru/Slots/USB_pinout.shtml" target="_blank" rel="noopener">https://pinouts.ru/Slots/USB_pinout.shtml</a><br> [8]: <a href="http://www.winchiphead.com/download/CH340/CH340DS1.PDF" target="_blank" rel="noopener">http://www.winchiphead.com/download/CH340/CH340DS1.PDF</a><br> [9]: <a href="https://devblogs.microsoft.com/oldnewthing/?p=40193" target="_blank" rel="noopener">https://devblogs.microsoft.com/oldnewthing/?p=40193</a><br> [10]: <a href="https://www.zhihu.com/question/22406681/answer/21264994" target="_blank" rel="noopener">https://www.zhihu.com/question/22406681/answer/21264994</a><br> [11]: <a href="https://blog.csdn.net/zhandoushi1982/article/details/5976898" target="_blank" rel="noopener">https://blog.csdn.net/zhandoushi1982/article/details/5976898</a><br> [12]: <a href="https://www.cnblogs.com/armlinux/archive/2010/11/26/2396888.html" target="_blank" rel="noopener">https://www.cnblogs.com/armlinux/archive/2010/11/26/2396888.html</a><br> [13]: <a href="http://www.keil.com/support/man/docs/c51/c51_le_memtypes.htm" target="_blank" rel="noopener">http://www.keil.com/support/man/docs/c51/c51_le_memtypes.htm</a></p>
+<p>2019年10月24日 霜降<br>———</p>
 
       
     </div>
