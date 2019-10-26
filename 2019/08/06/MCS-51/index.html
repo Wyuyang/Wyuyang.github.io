@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-21T03:27:00.191Z">
+<meta property="og:updated_time" content="2019-10-24T12:47:07.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MCS 51">
 <meta name="twitter:description" content="正式开始学习8051及C51。 Cx51 的数据类型摘自Cx51 User’s Guide">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-10-21 11:27:00" itemprop="dateModified" datetime="2019-10-21T11:27:00+08:00">2019-10-21</time>
+                <time title="修改时间：2019-10-24 20:47:07" itemprop="dateModified" datetime="2019-10-24T20:47:07+08:00">2019-10-24</time>
               
             
           </span>
@@ -653,6 +653,8 @@
 </blockquote>
 <p>显然，由中断相关寄存器的名称可以知道，要想使用中断，首先要在中断允许寄存器中启用中断功能，然后调整中断优先级寄存器中优先级的设定（也可不调整直接使用默认优先级）。</p>
 <p>当单片机收到中断信息后，应当转去执行中断信息的处理程序，但是单片机是如何根据中断信息找到处理程序的入口呢？显然，在单片机内部，中断信息和其处理程序建立了某种联系。上表中每一个中断源都对应唯一的一个InterruptNumber——中断类型码，单片机会根据中断类型码，在中断向量表中找到对应的处理程序入口地址，进而开始执行中断服务程序。</p>
+<p><em>2019年10月22日更新</em><br>这里中断向量实际上就是指中断服务程序的入口地址（知乎上有对中断向量为什么叫中断向量的讨论），满足：<code>中断向量 = 中断号 * 8 + 3</code>，加3是为了为LJMP指令（三字节指令）留出足够的空间，从而使单片机复位后能通过0000H处的LJMP指令正确的跳转到程序的起始位置，否则复位后就会进入中断。</p>
+<p>至于为什么中断向量全部间隔8个单元而不是3个，这个问题有待以后了解。</p>
 <h3 id="中断允许控制寄存器"><a href="#中断允许控制寄存器" class="headerlink" title="中断允许控制寄存器"></a>中断允许控制寄存器</h3><p><em>IE: Interrupt Enable  中断允许寄存器  可位寻址</em><br><em>Adress: A8H</em></p>
 <p>单片机对任意中断源是否做出响应均由该寄存器进行控制。</p>
 <ul>
@@ -989,8 +991,10 @@
 </ul>
 <h3 id="立即寻址"><a href="#立即寻址" class="headerlink" title="立即寻址"></a>立即寻址</h3><p>立即寻址的概念比较简单，就是该指令执行时会从寄存器中读取一个立即数。立即数是编写程序时写入程序指令的常数。为了区分这个数是操作数（即参与运算的数）还是地址，会在这个数字之前加上<code>#</code>标志，如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV A, #30H</span><br></pre></td></tr></table></figure>
-<h3 id="直接寻址"><a href="#直接寻址" class="headerlink" title="直接寻址"></a>直接寻址</h3><h3 id="寄存器寻址"><a href="#寄存器寻址" class="headerlink" title="寄存器寻址"></a>寄存器寻址</h3><p>寄存器寻址，其实就是，先把一个立即数放到工作寄存器里，然后从工作寄存器读取这个立即数的过程就是寄存器寻址，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV A, R3</span><br></pre></td></tr></table></figure>
+<h3 id="直接寻址"><a href="#直接寻址" class="headerlink" title="直接寻址"></a>直接寻址</h3><p>顾名思义，直接在指令中给出操作数的真实地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV A, 30H</span><br></pre></td></tr></table></figure>
+<h3 id="寄存器寻址"><a href="#寄存器寻址" class="headerlink" title="寄存器寻址"></a>寄存器寻址</h3><p>寄存器寻址，其实就是，假定有一个立即数存放在工作寄存器里，然后从该工作寄存器读取这个立即数的过程就是寄存器寻址，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV A, R1</span><br></pre></td></tr></table></figure>
 <p>至于R1属于哪一个工作寄存器区，这个由执行该语句时，PSW寄存器中的RS1和RS0的值来决定。</p>
 <h3 id="寄存器间接寻址"><a href="#寄存器间接寻址" class="headerlink" title="寄存器间接寻址"></a>寄存器间接寻址</h3><p>寄存器间接寻址的概念很类似于C语言中的指针，先看下面的语句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV A, R1</span><br></pre></td></tr></table></figure>
@@ -1046,9 +1050,12 @@
 </ul>
 <p>而对于MCS-52系列的MCU，实际上有两块区域被映射到了0x80 ~ 0xFF的地址空间，即可认为这两块区域是独立编址的。这两块区域一个是特殊功能寄存器SFR块，另一个则是一个普通的数据存储器块。</p>
 <p>这两块区域有着完全相同的地址，那么实际在写程序时，如何才能区分这两块区域呢？这个是通过不同的寻址方式实现的，访问SFR块必须采用直接寻址的方式，而访问重叠部分的普通RAM则采用寄存器间接寻址来实现。</p>
-<p>工作寄存器区一共分为四个区，对应四个通用寄存器组。每个通用寄存器组由8个通用寄存器R0~R7构成，使用时具体访问哪一组通用寄存器由PSW寄存器中的RS1和RS0决定。</p>
+<p>工作寄存器区一共分为四个区（0区~3区，首地址分别为0、8、16和24），对应四个通用寄存器组。每个通用寄存器组由8个通用寄存器R0~R7构成，使用时具体访问哪一组通用寄存器由PSW寄存器中的RS1和RS0决定。</p>
+<p>这里就可以回答一个问题，为什么51单片机上电复位后堆栈指针SP指向0007H而不是0000H？</p>
+<p>这是因为，单片机上电复位后，PSW寄存器被重置为0x00，因此也就是默认选择了工作寄存器区0区。因此通用寄存器R0~R7被映射到了地址0x00~0x07，为了避免进行堆栈操作时将该区域的数据破坏，故将堆栈指针SP复位值设计为0007H。</p>
+<p>复位后CPU内部RAM的各单元内容<strong>并不会</strong>被清除，但长时间掉电会造成数据存储器内数据的丢失。</p>
 <p>位寻址区就是指该区域中的每一位均可位寻址，需要注意的就是RAM中并不是只有该区域可以位寻址，SFR中的部分单元也可位寻址。</p>
-<p>用户RAM区，需要注意的就是在汇编时，要把单片机的堆栈指针SP指向该区域。否则由于SP默认指向0007H，在栈向上生长时会破坏工作寄存器区和位寻址区内的数据。</p>
+<p>用户RAM区，需要注意的就是在汇编时，要把单片机的堆栈指针SP指向该区域。否则由于SP复位后指向0007H，在栈向上生长时会破坏工作寄存器区（1区~3区）和位寻址区内的数据。</p>
 <h3 id="Keil-uVision5-查看和修改程序-数据存储器"><a href="#Keil-uVision5-查看和修改程序-数据存储器" class="headerlink" title="Keil uVision5 查看和修改程序\数据存储器"></a>Keil uVision5 查看和修改程序\数据存储器</h3><p>进入调试状态后点击Memory Window，并在Address内填入对应地址即可查看存储器内数据。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查看 ROM 的 CODE 区</span></span><br><span class="line">C:<span class="number">0x00</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看片内 RAM 的 DATA 区</span></span><br><span class="line">D:<span class="number">0x00</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看片内 RAM 的 IDATA 区</span></span><br><span class="line">I:<span class="number">0x00</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看片外 RAM 的 XDATA 区</span></span><br><span class="line">X:<span class="number">0x00</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -1103,12 +1110,111 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">        ORG     0000H</span><br><span class="line">        LJMP    MAIN</span><br><span class="line"></span><br><span class="line">        ORG     0030H</span><br><span class="line">MAIN:</span><br><span class="line">TAB:    DB      &apos;A&apos;, 00H</span><br><span class="line">        MOV     A, 60H</span><br><span class="line">        MOV     R0, 61H</span><br><span class="line">        ADD     A, R0</span><br><span class="line">        END</span><br></pre></td></tr></table></figure>
 <p>正确写法:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">        ORG     0000H</span><br><span class="line">        LJMP    MAIN</span><br><span class="line"></span><br><span class="line">        ORG     0030H</span><br><span class="line">TAB:    DB      &apos;A&apos;, 00H</span><br><span class="line"></span><br><span class="line">        ORG     0060H</span><br><span class="line">MAIN:</span><br><span class="line">        MOV     A, 60H</span><br><span class="line">        MOV     R0, 61H</span><br><span class="line">        ADD     A, R0</span><br><span class="line">        END</span><br></pre></td></tr></table></figure>
+<p>所有的资料都会说，DS指令是用来划分出一部分空间备用，包括Keil的文档也只是简单的提了这么几句话:</p>
+<blockquote><p>The DS statement reserves the specified number of bytes in the current memory space. label is a symbol that is assigned the current memory address. expression is the number of bytes to reserve.<br>This statement reserves space and increments the location counter by the number of bytes reserved.</p>
+</blockquote>
+<p>但是，DB、DW和DS只对程序存储器起作用，而ROM在单片机运行时是不可能被修改的，既然如此，为什么还会需要DS指令？？？</p>
+<p>只查到<code>startup.a51</code>文件中用到了DS指令，其它情况均未检索到。</p>
 <h3 id="EQU、DATA和BIT"><a href="#EQU、DATA和BIT" class="headerlink" title="EQU、DATA和BIT"></a>EQU、DATA和BIT</h3><ul>
 <li>EQU：类似#define，但必须先定义后使用</li>
-<li>DATA：类似#define，可以先使用在定义（类似goto的函数作用域）</li>
-<li>BIT：类似#define，</li>
+<li>DATA：类似#define，可以先使用再定义（类似goto的函数作用域）</li>
+<li>BIT：类似#define，可以先使用再定义</li>
 </ul>
-<p>2019年10月24日 霜降<br>———</p>
+<p>2019年10月21日</p>
+<h2 id="MCS-51的指令"><a href="#MCS-51的指令" class="headerlink" title="MCS-51的指令"></a>MCS-51的指令</h2><p>根据《MCS-51单片机原理、系统设计与应用》一书，111条指令可按以下三种方式分类：</p>
+<p>按字节数分：</p>
+<ul>
+<li>单字节指令</li>
+<li>双字节指令</li>
+<li>三字节指令</li>
+</ul>
+<p>按执行时间分：</p>
+<ul>
+<li>单周期指令</li>
+<li>双周期指令</li>
+<li>四周期指令</li>
+</ul>
+<p>按功能分：</p>
+<ul>
+<li>数据传送类</li>
+<li>算术运算类</li>
+<li>逻辑运算类</li>
+<li>控制转移类</li>
+<li>布尔处理类</li>
+</ul>
+<p>虽然说有111条指令，但操作码助记符也就这45个：</p>
+<ul>
+<li>数据传送类<ul>
+<li>MOV</li>
+<li>MOVC</li>
+<li>MOVX</li>
+<li>PUSH</li>
+<li>POP</li>
+<li>XCH</li>
+<li>XCHD</li>
+</ul>
+</li>
+<li>算术运算类<ul>
+<li>ADD</li>
+<li>ADDC</li>
+<li>SUBB</li>
+<li>INC</li>
+<li>DEC</li>
+<li>MUL</li>
+<li>DIV</li>
+<li>DA</li>
+</ul>
+</li>
+<li>逻辑运算和移位指令<ul>
+<li>ANL</li>
+<li>ORL</li>
+<li>XRL</li>
+<li>CLR</li>
+<li>CPL</li>
+<li>RL</li>
+<li>RR</li>
+<li>RLC</li>
+<li>RRC</li>
+<li>SWAP</li>
+</ul>
+</li>
+<li>控制转移类<ul>
+<li>AJMP</li>
+<li>LJMP</li>
+<li>SJMP</li>
+<li>JMP</li>
+<li>JZ</li>
+<li>JNZ</li>
+<li>CJNE</li>
+<li>DJNZ</li>
+<li>ACALL</li>
+<li>LCALL</li>
+<li>RET</li>
+<li>RETI</li>
+<li>NOP</li>
+</ul>
+</li>
+<li>布尔处理类<ul>
+<li>CLR</li>
+<li>SETB</li>
+<li>CPL</li>
+<li>ANL</li>
+<li>ORL</li>
+<li>JC</li>
+<li>JNC</li>
+<li>JBC</li>
+</ul>
+</li>
+</ul>
+<p>用的比较少的指令：</p>
+<ul>
+<li>XCH：内部RAM、SFR或寄存器内容与累加器内容互换</li>
+<li>XCHD：内部RAM低4位内容与累加器低4位内容交换</li>
+<li>SWAP：累加器高4位与低4位交换</li>
+<li>DA：十进制调整指令</li>
+</ul>
+<p>2019年10月24日 霜降</p>
+<hr>
 
       
     </div>
@@ -1287,7 +1393,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51-的数据类型"><span class="nav-number">1.</span> <span class="nav-text">Cx51 的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器-计数器"><span class="nav-number">2.</span> <span class="nav-text">定时器 / 计数器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定时器"><span class="nav-number">2.1.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计数器"><span class="nav-number">2.2.</span> <span class="nav-text">计数器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">3.</span> <span class="nav-text">中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断允许控制寄存器"><span class="nav-number">3.1.</span> <span class="nav-text">中断允许控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断优先级控制寄存器"><span class="nav-number">3.2.</span> <span class="nav-text">中断优先级控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断函数"><span class="nav-number">3.3.</span> <span class="nav-text">中断函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#串口通信"><span class="nav-number">4.</span> <span class="nav-text">串口通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些基本概念"><span class="nav-number">4.1.</span> <span class="nav-text">一些基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UART"><span class="nav-number">4.2.</span> <span class="nav-text">UART</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS-232"><span class="nav-number">4.3.</span> <span class="nav-text">RS-232</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB"><span class="nav-number">4.4.</span> <span class="nav-text">USB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串行口控制寄存器"><span class="nav-number">4.5.</span> <span class="nav-text">串行口控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串行口数据缓冲寄存器"><span class="nav-number">4.6.</span> <span class="nav-text">串行口数据缓冲寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串口通信的具体实现"><span class="nav-number">4.7.</span> <span class="nav-text">串口通信的具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两种不同的换行符"><span class="nav-number">4.8.</span> <span class="nav-text">两种不同的换行符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51中的坑"><span class="nav-number">5.</span> <span class="nav-text">Cx51中的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS-51的寻址方式"><span class="nav-number">6.</span> <span class="nav-text">MCS-51的寻址方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#立即寻址"><span class="nav-number">6.1.</span> <span class="nav-text">立即寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接寻址"><span class="nav-number">6.2.</span> <span class="nav-text">直接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器寻址"><span class="nav-number">6.3.</span> <span class="nav-text">寄存器寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器间接寻址"><span class="nav-number">6.4.</span> <span class="nav-text">寄存器间接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基址寄存器加变址寄存器间接寻址"><span class="nav-number">6.5.</span> <span class="nav-text">基址寄存器加变址寄存器间接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相对寻址"><span class="nav-number">6.6.</span> <span class="nav-text">相对寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位寻址"><span class="nav-number">6.7.</span> <span class="nav-text">位寻址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS-51-的存储器结构"><span class="nav-number">7.</span> <span class="nav-text">MCS-51 的存储器结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MCS-51-的程序存储器"><span class="nav-number">7.1.</span> <span class="nav-text">MCS-51 的程序存储器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MCS-51-的数据存储器"><span class="nav-number">7.2.</span> <span class="nav-text">MCS-51 的数据存储器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keil-uVision5-查看和修改程序-数据存储器"><span class="nav-number">7.3.</span> <span class="nav-text">Keil uVision5 查看和修改程序\数据存储器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS-51的伪指令"><span class="nav-number">8.</span> <span class="nav-text">MCS-51的伪指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ORG和END"><span class="nav-number">8.1.</span> <span class="nav-text">ORG和END</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DB、DW和DS"><span class="nav-number">8.2.</span> <span class="nav-text">DB、DW和DS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EQU、DATA和BIT"><span class="nav-number">8.3.</span> <span class="nav-text">EQU、DATA和BIT</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51-的数据类型"><span class="nav-number">1.</span> <span class="nav-text">Cx51 的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器-计数器"><span class="nav-number">2.</span> <span class="nav-text">定时器 / 计数器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定时器"><span class="nav-number">2.1.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计数器"><span class="nav-number">2.2.</span> <span class="nav-text">计数器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">3.</span> <span class="nav-text">中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断允许控制寄存器"><span class="nav-number">3.1.</span> <span class="nav-text">中断允许控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断优先级控制寄存器"><span class="nav-number">3.2.</span> <span class="nav-text">中断优先级控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断函数"><span class="nav-number">3.3.</span> <span class="nav-text">中断函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#串口通信"><span class="nav-number">4.</span> <span class="nav-text">串口通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些基本概念"><span class="nav-number">4.1.</span> <span class="nav-text">一些基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UART"><span class="nav-number">4.2.</span> <span class="nav-text">UART</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS-232"><span class="nav-number">4.3.</span> <span class="nav-text">RS-232</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB"><span class="nav-number">4.4.</span> <span class="nav-text">USB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串行口控制寄存器"><span class="nav-number">4.5.</span> <span class="nav-text">串行口控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串行口数据缓冲寄存器"><span class="nav-number">4.6.</span> <span class="nav-text">串行口数据缓冲寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串口通信的具体实现"><span class="nav-number">4.7.</span> <span class="nav-text">串口通信的具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两种不同的换行符"><span class="nav-number">4.8.</span> <span class="nav-text">两种不同的换行符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cx51中的坑"><span class="nav-number">5.</span> <span class="nav-text">Cx51中的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS-51的寻址方式"><span class="nav-number">6.</span> <span class="nav-text">MCS-51的寻址方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#立即寻址"><span class="nav-number">6.1.</span> <span class="nav-text">立即寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接寻址"><span class="nav-number">6.2.</span> <span class="nav-text">直接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器寻址"><span class="nav-number">6.3.</span> <span class="nav-text">寄存器寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器间接寻址"><span class="nav-number">6.4.</span> <span class="nav-text">寄存器间接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基址寄存器加变址寄存器间接寻址"><span class="nav-number">6.5.</span> <span class="nav-text">基址寄存器加变址寄存器间接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相对寻址"><span class="nav-number">6.6.</span> <span class="nav-text">相对寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位寻址"><span class="nav-number">6.7.</span> <span class="nav-text">位寻址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS-51-的存储器结构"><span class="nav-number">7.</span> <span class="nav-text">MCS-51 的存储器结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MCS-51-的程序存储器"><span class="nav-number">7.1.</span> <span class="nav-text">MCS-51 的程序存储器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MCS-51-的数据存储器"><span class="nav-number">7.2.</span> <span class="nav-text">MCS-51 的数据存储器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keil-uVision5-查看和修改程序-数据存储器"><span class="nav-number">7.3.</span> <span class="nav-text">Keil uVision5 查看和修改程序\数据存储器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS-51的伪指令"><span class="nav-number">8.</span> <span class="nav-text">MCS-51的伪指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ORG和END"><span class="nav-number">8.1.</span> <span class="nav-text">ORG和END</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DB、DW和DS"><span class="nav-number">8.2.</span> <span class="nav-text">DB、DW和DS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EQU、DATA和BIT"><span class="nav-number">8.3.</span> <span class="nav-text">EQU、DATA和BIT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS-51的指令"><span class="nav-number">9.</span> <span class="nav-text">MCS-51的指令</span></a></li></ol></div>
             
 
           </div>
