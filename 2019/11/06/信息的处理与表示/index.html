@@ -96,17 +96,17 @@
 
 
 
-  <meta name="description" content="整理自CSAPP Chapter 2">
+  <meta name="description" content="对一些知识的梳理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="信息的处理与表示">
+<meta property="og:title" content="数据的处理与表示">
 <meta property="og:url" content="http://wangyuyang.me/2019/11/06/信息的处理与表示/index.html">
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
-<meta property="og:description" content="整理自CSAPP Chapter 2">
+<meta property="og:description" content="对一些知识的梳理。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-07T05:17:29.437Z">
+<meta property="og:updated_time" content="2019-12-07T05:29:39.763Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="信息的处理与表示">
-<meta name="twitter:description" content="整理自CSAPP Chapter 2">
+<meta name="twitter:title" content="数据的处理与表示">
+<meta name="twitter:description" content="对一些知识的梳理。">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>信息的处理与表示 | Y.-Y. Wang's blog</title>
+  <title>数据的处理与表示 | Y.-Y. Wang's blog</title>
   
 
 
@@ -366,7 +366,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">信息的处理与表示
+          <h1 class="post-title" itemprop="name headline">数据的处理与表示
 
               
             
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-07 13:17:29" itemprop="dateModified" datetime="2019-12-07T13:17:29+08:00">2019-12-07</time>
+                <time title="修改时间：2019-12-07 13:29:39" itemprop="dateModified" datetime="2019-12-07T13:29:39+08:00">2019-12-07</time>
               
             
           </span>
@@ -451,7 +451,7 @@
       
 
       
-        <p>整理自<em>CSAPP Chapter 2</em><br><a id="more"></a> </p>
+        <p>对一些知识的梳理。<br><a id="more"></a> </p>
 <h2 id="一些基础知识"><a href="#一些基础知识" class="headerlink" title="一些基础知识"></a>一些基础知识</h2><p>原码（true form）：是指一个二进制数左边加上符号位后所得到的一串数，其中0代表正，1代表负。以一个八位二进制数为例:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// +11 的原码：</span><br><span class="line">0000 1011</span><br><span class="line"></span><br><span class="line">// -11 的原码</span><br><span class="line">1000 1011</span><br></pre></td></tr></table></figure>
 <p>反码（ones’ complement）：正数的反码是它本身；负数的反码是在原码的基础上，符号位不变，其它位按位取反。如：</p>
@@ -464,7 +464,7 @@
 <hr>
 <h2 id="为什么有符号数会产生这三种表示法？"><a href="#为什么有符号数会产生这三种表示法？" class="headerlink" title="为什么有符号数会产生这三种表示法？"></a>为什么有符号数会产生这三种表示法？</h2><p>数学上，我们在表示十进制正数和负数时，会在这个数之前加上正负号，如“+5”、“-1024”等。在表示二进制有符号数时，也可以用同样的方法，如“+101”，“-100 0000 0000”。</p>
 <p>但在计算机并不能理解“+”和“-”的概念，因而引入了原码的概念，使用最高位来表示正负。</p>
-<p>原码的概念非常通俗易懂，但是使用这种方法来表示正数和负数有一个明显的缺陷————直接对两个使用原码表示的二进制数做运算时，有可能会产生错误的结果。例如，我们知道<code>1 + (-1) = 0</code>，但对于使用原码表示的二进制运算：</p>
+<p>原码的概念非常通俗易懂，但是使用这种方法来表示正数和负数有一个明显的缺陷——直接对两个使用原码表示的二进制数做运算时，有可能会产生错误的结果。例如，我们知道<code>1 + (-1) = 0</code>，但对于使用原码表示的二进制运算：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    0000 0001      // +1</span><br><span class="line">+   1000 0001      // -1</span><br><span class="line">=   1000 0010      // -2</span><br></pre></td></tr></table></figure>
 <p>1000 0010对应的数为-2，这是明显错误的结果，而反码的引入成功解决了这一问题：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    0000 0001      // +1</span><br><span class="line">+   1111 1110      // -1</span><br><span class="line">=   1111 1111      // 对应的原码为 1000 0000，故结果为-0</span><br></pre></td></tr></table></figure>
@@ -477,7 +477,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    // 0 的原码</span><br><span class="line">    0000 0000</span><br><span class="line">    // 0 的反码</span><br><span class="line">    0000 0000</span><br><span class="line">or  1111 1111</span><br><span class="line">    // 0 的补码（正数不变，负数对反码加1）</span><br><span class="line">    0000 0000</span><br></pre></td></tr></table></figure>
 <p>数学上可以证明补码运算时并不会像原码一样出现错误的结果，有兴趣的读者可自行阅读相关资料。</p>
 <blockquote><p>如果有一串任意的二进制数，如<code>1111 1010</code>， 如何知道它表示的数是多少呢？显然，我们首先需要知道这串数到底是有符号数还是无符号数，如果是无符号数，那这个数就是+250；如果这个数是有符号数，我们就需要知道这个数是原码、反码，还是补码。如果这个数是原码，那它就是-122，如果是反码，那这个数就是-5，如果是补码，则其对应的数是-6。也就是说，不同的方法解读同一串二进制数，会得到完全不同的结果。</p>
-<p>那么我们如何判断它是哪一种类型呢？答案是无法判断。无符号数和有符号数只是用0/1序列，如果没有其它条件，我们并不能判断任意一串数字具体是哪一种表达方式。</p>
+<p>那么我们如何判断它是哪一种类型呢？答案是无法判断。无符号数和有符号数只是一个0/1序列，如果没有其它条件，我们并不能判断任意一串数字具体是哪一种表达方式。</p>
 <p>事实上，即使知道一串数是有符号数，我们也依然无法判断这串数究竟是原码、反码还是补码。不过由于补码相对于原码和反码有着诸多优点，一般情况下都是用补码的形式来表示有符号数。</p>
 </blockquote>
 <hr>
@@ -485,8 +485,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">; MCS-51</span><br><span class="line">    mov     a, #81H</span><br><span class="line">    add     a, #01H</span><br><span class="line"></span><br><span class="line">; 8086</span><br><span class="line">    mov     al, 81H</span><br><span class="line">    add     al, 01H</span><br></pre></td></tr></table></figure>
 <p>如果把add指令的操作数当作无符号数，那么add指令相当于计算了<code>129 + 1 = 130</code>，而如果是看作使用补码存储的有符号数，那么add指令相当于计算了<code>-127 + 1 = -126</code>。</p>
 <p>无论采用哪种形式来解读这段代码，add指令在执行时就已经包含了两种含义，得到了同一条信息记录的两种结果。具体采用那种结果应由实际需要来决定。</p>
-<p>我们知道，程序状态字PSW内的CY（CF）（括号内为8086的标志位，下同）和OV（OF）标志位用于表示无符号运算时的进位和有符号运算时的溢出。也就是说，我们再调用add指令时，必然会同时影响进/借位标志和溢出标志的值的。如果我们认为add指令在进行无符号运算，那么直接忽略溢出标志位的变化，关注进/借位标志即可。如果我们认为add指令在进行有符号运算，那么直接忽略进/借位标志的变化，关注溢出标志位即可。</p>
-<blockquote><p>其实在不同架构的机器上，由于硬件设计的不同，在汇编中对于有符号数和无符号数的处理是不同的。对于x86架构（即普通人在生活中能接触到的绝大多数计算机）而言，其设计和上述一样，加减法指令不区分无符号数和有符号数。而对于某些指令集体系结构，如MIPS架构，其处理器的运算电路会区分是带符号数运算还是无符号整数运算，因而其汇编语言中有着专门的有（无）符号整数的加（减）运算指令（如add，sub，addu，subu）。</p>
+<p>我们知道，程序状态字PSW内的CY（CF）（括号内为8086的标志位，下同）和OV（OF）标志位用于表示无符号运算时的进位和有符号运算时的溢出。也就是说，我们在调用add指令时，必然会同时影响进/借位标志和溢出标志的值。如果我们认为add指令在进行无符号运算，那么就可以直接忽略溢出标志位的变化，只关注进/借位标志即可。如果我们认为add指令在进行有符号运算，那么直接忽略进/借位标志的变化，关注溢出标志位即可。</p>
+<blockquote><p>其实在不同架构的机器上，由于硬件设计的不同，不同的汇编语言中对于有符号数和无符号数的处理是不同的。对于x86架构（即普通人在生活中能接触到的绝大多数计算机）而言，其设计和上述一样，加减法指令并不区分无符号数和有符号数。而对于某些指令集体系结构，如MIPS架构，其处理器的运算电路会区分是带符号数运算还是无符号整数运算，因而其汇编语言中有着专门的有（无）符号整数的加（减）运算指令（如add，sub，addu，subu）。</p>
 </blockquote>
 <hr>
 <h2 id="存储数据的方式对C语言有哪些影响？"><a href="#存储数据的方式对C语言有哪些影响？" class="headerlink" title="存储数据的方式对C语言有哪些影响？"></a>存储数据的方式对C语言有哪些影响？</h2><p>在C语言中，程序员只需要使用<code>unsigned</code>和<code>signed</code>关键字来区分有符号数和无符号数，C语言标准并没有指定有符号数的表示方式，但几乎所有的机器都使用补码。虽然各种隐含的底层操作均由编译器实现，但是这种处理模式往往会带来一些难以察觉的问题。</p>
@@ -500,7 +500,7 @@
 <p>执行后命令行上显示 “j = -1”。</p>
 <h4 id="比较无符号数和有符号数的大小"><a href="#比较无符号数和有符号数的大小" class="headerlink" title="比较无符号数和有符号数的大小"></a>比较无符号数和有符号数的大小</h4><p><strong>在C语言中执行一个运算时，如果一个运算数是有符号的而另一个是无符号的，那么C语言会隐式地将有符号数强制类型转换为无符号数，并且假设这两个数都是非负的</strong>，在算数运算时这种行为并没有什么明显影响，但在使用关系运算符时，会产生明显错误的结果。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">char</span> a;</span><br><span class="line">    <span class="keyword">char</span> i = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">char</span> j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    a = ( i &lt; j );                     <span class="comment">// 执行后 a = 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*------------------------------------*/</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> a;</span><br><span class="line">    <span class="keyword">char</span> i = <span class="number">-1</span>;                       <span class="comment">// 补码 1111 1111</span></span><br><span class="line">    <span class="keyword">char</span> j = <span class="number">0</span>;                        <span class="comment">// 补码 0000 0000</span></span><br><span class="line"></span><br><span class="line">    a = ( (<span class="keyword">unsigned</span> <span class="keyword">char</span>)i &lt; j );      <span class="comment">// 因 1111 1111 &gt; 0000 0000</span></span><br><span class="line">                                       <span class="comment">// 执行后 a = 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*------------------------------------*/</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> a;</span><br><span class="line">    <span class="keyword">char</span> i = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    a = ( i &lt; j );                     <span class="comment">// 执行后 a = 0</span></span><br></pre></td></tr></table></figure>
-<h4 id="对浮点数使用运算符-或"><a href="#对浮点数使用运算符-或" class="headerlink" title="对浮点数使用运算符 == 或 !="></a>对浮点数使用运算符 == 或 !=</h4><p>关于IEEE规定的单精度浮点数和双精度浮点数这里不做过多介绍。只需知道很多能用十进制数精确表示的小数（如0.2）无法准确的用二进制数精确表示出来。例如：</p>
+<h4 id="对浮点数使用运算符-或"><a href="#对浮点数使用运算符-或" class="headerlink" title="对浮点数使用运算符 == 或 !="></a>对浮点数使用运算符 == 或 !=</h4><p>关于IEEE规定的单精度浮点数和双精度浮点数这里不做过多介绍。只需知道很多能用十进制数精确表示的小数（如0.2）无法的用二进制数精确表示出来。例如：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> x = <span class="number">-5</span>;</span><br><span class="line"></span><br><span class="line">x = x + <span class="number">0.1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(x == <span class="number">-4.9</span>)</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);                  <span class="comment">// 该语句永远不会被执行</span></span><br></pre></td></tr></table></figure>
 <p>实际上，用调试工具可以看到，第三行执行后x的值为-4.900…007，确实不等于 -4.9。因此一定要避免对浮点数使用<code>==</code>或<code>!=</code>运算符。</p>
 <p>参考资料：</p>
