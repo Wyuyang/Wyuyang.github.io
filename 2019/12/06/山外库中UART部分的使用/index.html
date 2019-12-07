@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="UART相关文件目录：  uart模块的定义：~/Chip/Inc/MKL_uart.h uart模块的实现：~/Chip/Src/MKL_uart.c">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-06T10:41:30.361Z">
+<meta property="og:updated_time" content="2019-12-06T11:48:23.775Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="山外库中UART部分的使用">
 <meta name="twitter:description" content="UART相关文件目录：  uart模块的定义：~/Chip/Inc/MKL_uart.h uart模块的实现：~/Chip/Src/MKL_uart.c">
@@ -392,7 +392,7 @@
                 
               
 
-              <time title="创建时间：2019-12-06 18:27:43 / 修改时间：18:41:30" itemprop="dateCreated datePublished" datetime="2019-12-06T18:27:43+08:00">2019-12-06</time>
+              <time title="创建时间：2019-12-06 18:27:43 / 修改时间：19:48:23" itemprop="dateCreated datePublished" datetime="2019-12-06T18:27:43+08:00">2019-12-06</time>
             
 
             
@@ -510,20 +510,20 @@
 <h3 id="发送-接收数据"><a href="#发送-接收数据" class="headerlink" title="发送/接收数据"></a>发送/接收数据</h3><p><em>相关函数：uart_putchar(), uart_putbuff(), uart_putstr()</em></p>
 <p>根据需要发送的数据量，可以分为发送/接收一个字节、发送/接收多个字节。</p>
 <p>发送数据比较简单，直接调用以下任意一个函数即可：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uart_putchar (UART3, <span class="string">'A'</span>);             <span class="comment">// 发送字节 'A'</span></span><br><span class="line">uart_putbuff (UART3,<span class="string">"1234567"</span>, <span class="number">3</span>);     <span class="comment">// 实际发送字符串 `1234567` 的前 3 个字节'1', '2', '3'</span></span><br><span class="line">uart_putstr (UART3,<span class="string">"1234567"</span>);         <span class="comment">// 实际发送了 7 个字节 `1234567`</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uart_putchar (UART2, <span class="string">'A'</span>);             <span class="comment">// 发送字节 'A'</span></span><br><span class="line">uart_putbuff (UART2,<span class="string">"1234567"</span>, <span class="number">3</span>);     <span class="comment">// 实际发送字符串 `1234567` 的前 3 个字节'1', '2', '3'</span></span><br><span class="line">uart_putstr (UART2,<span class="string">"1234567"</span>);         <span class="comment">// 实际发送了 7 个字节 `1234567`</span></span><br></pre></td></tr></table></figure>
 <p>接收数据有两种实现：</p>
 <h4 id="等待法"><a href="#等待法" class="headerlink" title="等待法"></a>等待法</h4><p><em>相关函数：uart_getchar()</em></p>
 <p>如果没有接收到数据则原地等待，只有接收到数据程序才继续向下执行。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line">uart_getchar (UART3, &amp;ch);             <span class="comment">// 等待接收 1 个字节，保存到变量 ch 里</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line">uart_getchar (UART2, &amp;ch);             <span class="comment">// 等待接收 1 个字节，保存到变量 ch 里</span></span><br></pre></td></tr></table></figure>
 <p>等待法只能用于接收一个字节的数据。</p>
 <h4 id="查询法"><a href="#查询法" class="headerlink" title="查询法"></a>查询法</h4><p><em>相关函数：uart_query(), uart_querychar(), uart_querystr(), uart_querybuff()</em></p>
 <p>这四个名字里都带<code>query</code>的函数都有一个相同功能：每执行一次，就会判断一次单片机是否已经接收到了数据，如果接收到了数据则返回值1，否则返回0。</p>
 <p>除此之外，在接收数据上与等待法不同的是，如果<strong>没有接收到数据，则程序继续向下执行</strong>；如果接收到数据，则将其保存到指定变量中，并继续向下执行。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( uart_querychar (UART3,&amp;ch) == <span class="number">1</span>)   <span class="comment">//查询接收 1 个字符，保存到 ch 里</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( uart_querychar (UART2,&amp;ch) == <span class="number">1</span>)   <span class="comment">//查询接收 1 个字符，保存到 ch 里</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>类似的，查询法接收多字节数据只需调用<code>uart_querystr()</code>即可，详见<em>攻城略地——一天攻破K60/KL26</em>。</p>
 <p>关于<code>uart_getchar()</code>和<code>uart_querychar()</code>的区别，可以看下面两段代码，这两段代码的功能实际上是相同的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(!uart_querychar (UART3, &amp;ch))    <span class="comment">// 等待接收到数据</span></span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"></span><br><span class="line">uart_getchar (UART3, &amp;ch);</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(!uart_querychar (UART2, &amp;ch))    <span class="comment">// 等待接收到数据</span></span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"></span><br><span class="line">uart_getchar (UART2, &amp;ch);</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br></pre></td></tr></table></figure>
 <p>山外库里还有两个名字接近的的函数<code>uart_query()</code>和<code>uart_querybuff()</code>，在<code>~/Chip/Src/MKL_uart.c</code>下可以看到<code>uart_query()</code>和<code>uart_querychar()</code>几乎完全一样，只不过<code>uart_query()</code>函数只判断有没有接收到数据，即使接收到数据也不保存。</p>
 <p>而前面的<code>uart_querystr()</code>函数如果没有接收到数据，并不会改变传入数组的值， 但<code>uart_querybuff()</code>函数在没有接收到数据的情况下会将传入数组清零。</p>
 
@@ -556,8 +556,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/08/PTA-数据结构与算法题目集/" rel="next" title="PTA-数据结构与算法题目集">
-                <i class="fa fa-chevron-left"></i> PTA-数据结构与算法题目集
+              <a href="/2019/11/06/信息的处理与表示/" rel="next" title="信息的处理与表示">
+                <i class="fa fa-chevron-left"></i> 信息的处理与表示
               </a>
             
           </div>
@@ -634,7 +634,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
