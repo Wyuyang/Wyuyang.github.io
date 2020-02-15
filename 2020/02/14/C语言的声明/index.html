@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="对 Expert C Programming 第三章的理解。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-15T10:21:49.501Z">
+<meta property="og:updated_time" content="2020-02-15T10:23:13.235Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C 语言的声明">
 <meta name="twitter:description" content="对 Expert C Programming 第三章的理解。">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-15 18:21:49" itemprop="dateModified" datetime="2020-02-15T18:21:49+08:00">2020-02-15</time>
+                <time title="修改时间：2020-02-15 18:23:13" itemprop="dateModified" datetime="2020-02-15T18:23:13+08:00">2020-02-15</time>
               
             
           </span>
@@ -466,7 +466,7 @@
 </ul>
 </li>
 </ul>
-<p>说明符（specifier）的概念其实已经很熟悉了，包括类型说明符（type-specifier），也包括变量的存储类型（storage-class）和类型限定符（type-qualifier）。显然，声明中至少要有一个类型说明符。</p>
+<p>说明符（specifier）的概念其实已经很熟悉了，包括类型说明符（type-specifier），也包括变量的存储类型说明符（storage-class-specifier）和类型限定符（type-qualifier）。显然，声明中至少要有一个类型说明符。</p>
 <p>声明中specifier的顺序可以任意互换，例如下面的声明是等价的：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> *p1;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> *p2;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="keyword">const</span> *p3;</span><br></pre></td></tr></table></figure>
 <p>type-specifier和type-qualifier决定了declarator的返回类型。如上面的<code>*p1</code>的返回值类型应为<code>const unsigned int</code>，或者说，<code>p1</code>是指向<code>const unsigned int</code>类型的指针。</p>
