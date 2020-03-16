@@ -96,17 +96,18 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://wangyuyang.me/categories/index.html">
+  <meta name="description" content="一些个性化设置ssh欢迎信息直接修改/etc/motd即可，如：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry Pi笔记">
+<meta property="og:url" content="http://wangyuyang.me/2020/03/15/Raspberry-Pi笔记/index.html">
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
+<meta property="og:description" content="一些个性化设置ssh欢迎信息直接修改/etc/motd即可，如：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-06T04:56:06.649Z">
+<meta property="og:updated_time" content="2020-03-16T13:07:07.296Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="Raspberry Pi笔记">
+<meta name="twitter:description" content="一些个性化设置ssh欢迎信息直接修改/etc/motd即可，如：">
 
-
-  
 
 
   <link rel="alternate" href="/atom.xml" title="Y.-Y. Wang's blog" type="application/atom+xml"/>
@@ -114,7 +115,7 @@
 
 
 
-  <link rel="canonical" href="http://wangyuyang.me/categories/"/>
+  <link rel="canonical" href="http://wangyuyang.me/2020/03/15/Raspberry-Pi笔记/"/>
 
 
 
@@ -124,7 +125,7 @@
   };
 </script>
 
-  <title>categories | Y.-Y. Wang's blog</title>
+  <title>Raspberry Pi笔记 | Y.-Y. Wang's blog</title>
   
 
 
@@ -269,7 +270,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -308,28 +309,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -356,45 +335,195 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangyuyang.me/2020/03/15/Raspberry-Pi笔记/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y.-Y. Wang"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y.-Y. Wang's blog"/>
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">categories
-
-</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">Raspberry Pi笔记
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-15 19:24:52" itemprop="dateCreated datePublished" datetime="2020-03-15T19:24:52+08:00">2020-03-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-16 21:07:07" itemprop="dateModified" datetime="2020-03-16T21:07:07+08:00">2020-03-16</time>
+              
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="一些个性化设置"><a href="#一些个性化设置" class="headerlink" title="一些个性化设置"></a>一些个性化设置</h2><p><strong>ssh欢迎信息</strong><br>直接修改<code>/etc/motd</code>即可，如：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      ______ ______</span><br><span class="line">    _/      Y      \_</span><br><span class="line">   // ~~ ~~ | ~~ ~  \\</span><br><span class="line">  // ~ ~ ~~ | ~~~ ~~ \\      </span><br><span class="line"> //________.|.________\\     欢迎回来~</span><br><span class="line">`----------`-&apos;----------&apos;</span><br></pre></td></tr></table></figure>
+<p>推荐两个网站：<br><a href="https://www.asciiart.eu/" target="_blank" rel="noopener">ASCIIArt</a><br><a href="https://manytools.org/hacker-tools/convert-images-to-ascii-art/" target="_blank" rel="noopener">Convert Images to Ascii Art</a></p>
+<p><strong>motd显示两次的问题</strong><br>只在win10上遇到了这一问题，占坑以后解决。</p>
+<p><strong>Shell提示符颜色</strong><br>修改<code>/home/username/.bashrc</code>或<code>/root/.bashrc</code>即可。</p>
+<p>自用设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS1=&apos;$&#123;debian_chroot:+($debian_chroot)&#125;\[\033[01;36m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w \$\[\033[00m\] &apos;</span><br></pre></td></tr></table></figure></p>
+<p>转义符含义可参考<a href="https://blog.csdn.net/weixin_42205987/article/details/82056751" target="_blank" rel="noopener">这篇文章</a></p>
+<h2 id="Samba"><a href="#Samba" class="headerlink" title="Samba"></a>Samba</h2><p><strong>安装教程</strong><br>参考<a href="https://www.jianshu.com/p/5de3a2e688b4" target="_blank" rel="noopener">这里</a>和官方文档。</p>
+<p><strong>Win10添加网络位置时提示“输入的文件夹似乎无效。请选择另一个”</strong><br>解决方法：不要使用“添加一个网络位置”，应选择“映射网络驱动器”。</p>
+<p>原因参考<a href="https://blog.51cto.com/xdataplus/1875159" target="_blank" rel="noopener">这篇文章</a>。</p>
+<p><strong>Failed to start Samba SMB Daemon</strong><br>解决思路看<a href="https://www.cnblogs.com/hehehe886/p/7605348.html" target="_blank" rel="noopener">这里</a>。</p>
+<h2 id="远程桌面"><a href="#远程桌面" class="headerlink" title="远程桌面"></a>远程桌面</h2><p>安装xrdp：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install xrdp</span><br></pre></td></tr></table></figure>
+<p>然后使用windows自带的“远程桌面连接”即可。</p>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/14/C语言的声明/" rel="next" title="C 语言的声明">
+                <i class="fa fa-chevron-left"></i> C 语言的声明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/16/Nginx入门/" rel="prev" title="Nginx入门">
+                Nginx入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -424,8 +553,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -495,6 +633,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些个性化设置"><span class="nav-number">1.</span> <span class="nav-text">一些个性化设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Samba"><span class="nav-number">2.</span> <span class="nav-text">Samba</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程桌面"><span class="nav-number">3.</span> <span class="nav-text">远程桌面</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

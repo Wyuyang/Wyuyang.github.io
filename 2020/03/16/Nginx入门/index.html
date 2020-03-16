@@ -96,17 +96,18 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://wangyuyang.me/categories/index.html">
+  <meta name="description" content="终于知道大一时盲目的跟着教程在VPS上搭建WordPress博客时做的步骤有什么意义了，之后可以考虑抽空学一下计算机网络。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx入门">
+<meta property="og:url" content="http://wangyuyang.me/2020/03/16/Nginx入门/index.html">
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
+<meta property="og:description" content="终于知道大一时盲目的跟着教程在VPS上搭建WordPress博客时做的步骤有什么意义了，之后可以考虑抽空学一下计算机网络。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-06T04:56:06.649Z">
+<meta property="og:updated_time" content="2020-03-16T13:12:04.386Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="Nginx入门">
+<meta name="twitter:description" content="终于知道大一时盲目的跟着教程在VPS上搭建WordPress博客时做的步骤有什么意义了，之后可以考虑抽空学一下计算机网络。">
 
-
-  
 
 
   <link rel="alternate" href="/atom.xml" title="Y.-Y. Wang's blog" type="application/atom+xml"/>
@@ -114,7 +115,7 @@
 
 
 
-  <link rel="canonical" href="http://wangyuyang.me/categories/"/>
+  <link rel="canonical" href="http://wangyuyang.me/2020/03/16/Nginx入门/"/>
 
 
 
@@ -124,7 +125,7 @@
   };
 </script>
 
-  <title>categories | Y.-Y. Wang's blog</title>
+  <title>Nginx入门 | Y.-Y. Wang's blog</title>
   
 
 
@@ -269,7 +270,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -308,28 +309,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -356,45 +335,178 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangyuyang.me/2020/03/16/Nginx入门/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y.-Y. Wang"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y.-Y. Wang's blog"/>
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">categories
-
-</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">Nginx入门
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-16 20:22:30 / 修改时间：21:12:04" itemprop="dateCreated datePublished" datetime="2020-03-16T20:22:30+08:00">2020-03-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><del>终于知道大一时盲目的跟着教程在VPS上搭建WordPress博客时做的步骤有什么意义了，之后可以考虑抽空学一下计算机网络。</del><br><a id="more"></a></p>
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><p>Nginx是一个著名的开源Web和反向代理服务器。</p>
+<h3 id="什么是Web服务器？"><a href="#什么是Web服务器？" class="headerlink" title="什么是Web服务器？"></a>什么是Web服务器？</h3><p>按顺序阅读以下内容，访问可能比较慢，需要挂代理：<br><a href="https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/What_is_a_web_server" target="_blank" rel="noopener">什么是网络服务器？</a><br><a href="https://mozillazg.com/2015/06/let-us-build-a-web-server-part-1-zh-cn.html" target="_blank" rel="noopener">让我们一起来构建一个 Web 服务器（一）</a></p>
+<h3 id="如何利用Nginx部署一个静态页面？"><a href="#如何利用Nginx部署一个静态页面？" class="headerlink" title="如何利用Nginx部署一个静态页面？"></a>如何利用Nginx部署一个静态页面？</h3><p>以Raspberry Pi 4为例，首先安装Nginx：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nginx</span><br></pre></td></tr></table></figure>
+<p>安装完成后，在浏览器里输入Raspberry的IP地址<code>192.108.xxx.xxx</code>，就会看到如下的欢迎页：</p>
+<blockquote><p>Welcome to nginx!<br>If you see this page, the nginx web server is successfully installed and working. Further configuration is required.</p>
+<p>For online documentation and support please refer to nginx.org.<br>Commercial support is available at nginx.com.</p>
+<p>Thank you for using nginx.</p>
+</blockquote>
+<p>这里实际上就是Raspberry在接收到浏览器的请求后，将<code>/var/www/html</code>下的静态HTML文件<code>index.nginx-debian.html</code>（欢迎页）给浏览器。只需要把这个文件替换为我想要发送的文件（HTML、图像等）就可以了。</p>
+<p>那么，如何指定Nginx发送什么文件呢？一种方法是通过修改<code>/etc/nginx.conf</code>来实现，只要把文件路径放到这个配置文件里就可以了。具体步骤可以参考Nginx的说明文档<a href="http://nginx.org/en/docs/beginners_guide.html#static" target="_blank" rel="noopener">Beginner’s Guide</a>。</p>
+<p>除了上面这种方法外，还有一种更简单的方法，在<code>/var/www/html</code>下新建一个文件夹<code>test</code>，并在<code>/var/www/html/test</code>下新建一个文件<code>test.txt</code>（或者<code>tset.html</code>，都可以）。然后在文件中输入<code>Hello World!</code>，保存。回到浏览器。输入<code>192.168.xxx.xxx/test/test.txt</code>，即可。</p>
+<p>利用Nginx + HTML + CSS + Javascript是可以实现非常漂亮的界面的，例如<a href="http://ariang.mayswind.net/latest/" target="_blank" rel="noopener">AriaNG</a></p>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/15/Raspberry-Pi笔记/" rel="next" title="Raspberry Pi笔记">
+                <i class="fa fa-chevron-left"></i> Raspberry Pi笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -424,8 +536,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -495,6 +616,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx"><span class="nav-number">1.</span> <span class="nav-text">Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Web服务器？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Web服务器？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何利用Nginx部署一个静态页面？"><span class="nav-number">1.2.</span> <span class="nav-text">如何利用Nginx部署一个静态页面？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
