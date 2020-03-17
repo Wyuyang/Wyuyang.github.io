@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wangyuyang.me/"/>
-  <updated>2020-03-16T13:12:04.386Z</updated>
+  <updated>2020-03-17T11:58:49.149Z</updated>
   <id>http://wangyuyang.me/</id>
   
   <author>
@@ -17,13 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>热烈欢迎吾儿惠东成为本站第880位访客</title>
+    <link href="http://wangyuyang.me/2020/03/17/%E7%83%AD%E7%83%88%E6%AC%A2%E8%BF%8E%E5%90%BE%E5%84%BF%E6%83%A0%E4%B8%9C%E6%88%90%E4%B8%BA%E6%9C%AC%E7%AB%99%E7%AC%AC880%E4%BD%8D%E8%AE%BF%E5%AE%A2/"/>
+    <id>http://wangyuyang.me/2020/03/17/热烈欢迎吾儿惠东成为本站第880位访客/</id>
+    <published>2020-03-17T11:52:09.000Z</published>
+    <updated>2020-03-17T11:58:49.149Z</updated>
+    
+    <content type="html"><![CDATA[<p>蓬荜生辉</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;蓬荜生辉&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Nginx入门</title>
     <link href="http://wangyuyang.me/2020/03/16/Nginx%E5%85%A5%E9%97%A8/"/>
     <id>http://wangyuyang.me/2020/03/16/Nginx入门/</id>
     <published>2020-03-16T12:22:30.000Z</published>
-    <updated>2020-03-16T13:12:04.386Z</updated>
+    <updated>2020-03-16T13:16:27.408Z</updated>
     
-    <content type="html"><![CDATA[<p><del>终于知道大一时盲目的跟着教程在VPS上搭建WordPress博客时做的步骤有什么意义了，之后可以考虑抽空学一下计算机网络。</del><br><a id="more"></a></p><h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><p>Nginx是一个著名的开源Web和反向代理服务器。</p><h3 id="什么是Web服务器？"><a href="#什么是Web服务器？" class="headerlink" title="什么是Web服务器？"></a>什么是Web服务器？</h3><p>按顺序阅读以下内容，访问可能比较慢，需要挂代理：<br><a href="https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/What_is_a_web_server" target="_blank" rel="noopener">什么是网络服务器？</a><br><a href="https://mozillazg.com/2015/06/let-us-build-a-web-server-part-1-zh-cn.html" target="_blank" rel="noopener">让我们一起来构建一个 Web 服务器（一）</a></p><h3 id="如何利用Nginx部署一个静态页面？"><a href="#如何利用Nginx部署一个静态页面？" class="headerlink" title="如何利用Nginx部署一个静态页面？"></a>如何利用Nginx部署一个静态页面？</h3><p>以Raspberry Pi 4为例，首先安装Nginx：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nginx</span><br></pre></td></tr></table></figure><p>安装完成后，在浏览器里输入Raspberry的IP地址<code>192.108.xxx.xxx</code>，就会看到如下的欢迎页：</p><blockquote><p>Welcome to nginx!<br>If you see this page, the nginx web server is successfully installed and working. Further configuration is required.</p><p>For online documentation and support please refer to nginx.org.<br>Commercial support is available at nginx.com.</p><p>Thank you for using nginx.</p></blockquote><p>这里实际上就是Raspberry在接收到浏览器的请求后，将<code>/var/www/html</code>下的静态HTML文件<code>index.nginx-debian.html</code>（欢迎页）给浏览器。只需要把这个文件替换为我想要发送的文件（HTML、图像等）就可以了。</p><p>那么，如何指定Nginx发送什么文件呢？一种方法是通过修改<code>/etc/nginx.conf</code>来实现，只要把文件路径放到这个配置文件里就可以了。具体步骤可以参考Nginx的说明文档<a href="http://nginx.org/en/docs/beginners_guide.html#static" target="_blank" rel="noopener">Beginner’s Guide</a>。</p><p>除了上面这种方法外，还有一种更简单的方法，在<code>/var/www/html</code>下新建一个文件夹<code>test</code>，并在<code>/var/www/html/test</code>下新建一个文件<code>test.txt</code>（或者<code>tset.html</code>，都可以）。然后在文件中输入<code>Hello World!</code>，保存。回到浏览器。输入<code>192.168.xxx.xxx/test/test.txt</code>，即可。</p><p>利用Nginx + HTML + CSS + Javascript是可以实现非常漂亮的界面的，例如<a href="http://ariang.mayswind.net/latest/" target="_blank" rel="noopener">AriaNG</a></p>]]></content>
+    <content type="html"><![CDATA[<p><del>终于知道大一时盲目的跟着教程在VPS上搭建WordPress博客时做的步骤有什么意义了，之后可以考虑抽空学一下计算机网络。</del><br><a id="more"></a></p><h2 id="什么是Nginx？"><a href="#什么是Nginx？" class="headerlink" title="什么是Nginx？"></a>什么是Nginx？</h2><p>Nginx是一个著名的开源Web和反向代理服务器。</p><h2 id="什么是Web服务器？"><a href="#什么是Web服务器？" class="headerlink" title="什么是Web服务器？"></a>什么是Web服务器？</h2><p>按顺序阅读以下内容，访问可能比较慢，需要挂代理：<br><a href="https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/What_is_a_web_server" target="_blank" rel="noopener">什么是网络服务器？</a><br><a href="https://mozillazg.com/2015/06/let-us-build-a-web-server-part-1-zh-cn.html" target="_blank" rel="noopener">让我们一起来构建一个 Web 服务器（一）</a></p><h2 id="如何利用Nginx部署一个静态页面？"><a href="#如何利用Nginx部署一个静态页面？" class="headerlink" title="如何利用Nginx部署一个静态页面？"></a>如何利用Nginx部署一个静态页面？</h2><p>以Raspberry Pi 4为例，首先安装Nginx：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nginx</span><br></pre></td></tr></table></figure><p>安装完成后，在浏览器里输入Raspberry的IP地址<code>192.108.xxx.xxx</code>，就会看到如下的欢迎页：</p><blockquote><p>Welcome to nginx!<br>If you see this page, the nginx web server is successfully installed and working. Further configuration is required.</p><p>For online documentation and support please refer to nginx.org.<br>Commercial support is available at nginx.com.</p><p>Thank you for using nginx.</p></blockquote><p>这里实际上就是Raspberry在接收到浏览器的请求后，将<code>/var/www/html</code>下的静态HTML文件<code>index.nginx-debian.html</code>（欢迎页）给浏览器。只需要把这个文件替换为我想要发送的文件（HTML、图像等）就可以了。</p><p>那么，如何指定Nginx发送什么文件呢？一种方法是通过修改<code>/etc/nginx.conf</code>来实现，只要把文件路径放到这个配置文件里就可以了。具体步骤可以参考Nginx的说明文档<a href="http://nginx.org/en/docs/beginners_guide.html#static" target="_blank" rel="noopener">Beginner’s Guide</a>。</p><p>除了上面这种方法外，还有一种更简单的方法，在<code>/var/www/html</code>下新建一个文件夹<code>test</code>，并在<code>/var/www/html/test</code>下新建一个文件<code>test.txt</code>（或者<code>tset.html</code>，都可以）。然后在文件中输入<code>Hello World!</code>，保存。回到浏览器。输入<code>192.168.xxx.xxx/test/test.txt</code>，即可。</p><p>利用Nginx + HTML + CSS + Javascript是可以实现非常漂亮的界面的，例如<a href="http://ariang.mayswind.net/latest/" target="_blank" rel="noopener">AriaNG</a></p>]]></content>
     
     <summary type="html">
     
@@ -360,28 +382,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>模拟登录HFUT新教务系统</title>
-    <link href="http://wangyuyang.me/2019/01/20/%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95HFUT%E6%96%B0%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F/"/>
-    <id>http://wangyuyang.me/2019/01/20/模拟登录HFUT新教务系统/</id>
-    <published>2019-01-20T06:16:35.000Z</published>
-    <updated>2019-02-16T09:51:48.780Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>今天继续试一试模拟登录学校的新教务系统，新教务系统是由上海树维开发的。</p></blockquote><h2 id="思路寻找"><a href="#思路寻找" class="headerlink" title="思路寻找"></a>思路寻找</h2><p>和模拟登录信息门户一样，切到开发者模式，登录一次看一看请求过程。<br>login中可以看到网页后台提交了一个Request Payload：<br><a id="more"></a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;   </span><br><span class="line">    username: "2019123456", </span><br><span class="line">    password: "91abd3f34f9de4fccfb71eade0dd825e275939ebf", </span><br><span class="line">    captcha: ""</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>username是直接明文提交的，没什么问题，但password明显是加密过的。加密方式倒也很好判断，网页在加载时载入了一个名为<code>sha1.js</code>的文件，肯定是对密码进行了SHA-1加密。但是直接用密码在<a href="http://www.sha1-online.com/" target="_blank" rel="noopener">这里</a>试了一下，得到的结果和Request Payload并不一样。试着用<code>CTRL + F</code> 搜一下sha1.js中出现的<code>CryptpJS</code>，在login的Response中找到这段代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> encryptPassword = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">$.get(&#123;</span><br><span class="line">  url: <span class="built_in">window</span>.CONTEXT_PATH + <span class="string">"/login-salt"</span>,</span><br><span class="line">  <span class="keyword">async</span>: <span class="literal">false</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">salt</span>) </span>&#123;</span><br><span class="line">    encryptPassword = <span class="keyword">new</span> <span class="built_in">String</span>(CryptoJS.SHA1(salt + <span class="string">'-'</span> + $(<span class="string">"#p"</span>).val())) + <span class="string">""</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> postData = &#123;</span><br><span class="line">  username: $form.find(<span class="string">"[name=u]"</span>).val(),</span><br><span class="line">  password: encryptPassword,</span><br><span class="line">  captcha: $form.find(<span class="string">"[name=c]"</span>).val()</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p><p>可以看到实际提交的encryptPassword，加密前为<code>salt + &#39;-&#39; + password</code>, 而salt则从login-salt中获得。</p><p>需要注意，和登录信息门户时提交Form Data的方法不同，Post Payload请求需要另外做一些处理。</p><p>流程已经基本明确，剩下的就是要靠requests库来实现这一过程。</p><hr><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录页</span></span><br><span class="line">login = <span class="string">'http://jxglstu.hfut.edu.cn/eams5-student/login'</span></span><br><span class="line"><span class="comment"># salt</span></span><br><span class="line">login_salt = <span class="string">'http://jxglstu.hfut.edu.cn/eams5-student/login-salt'</span></span><br><span class="line"><span class="comment"># 学籍信息</span></span><br><span class="line">student_info = <span class="string">'http://jxglstu.hfut.edu.cn/eams5-student/for-std/student-info/'</span></span><br><span class="line"></span><br><span class="line">UA = <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'</span></span><br><span class="line"></span><br><span class="line">header = &#123;</span><br><span class="line">         <span class="string">'User-Agent'</span> : UA ,</span><br><span class="line">         <span class="string">'Connection'</span> : <span class="string">'keep-alive'</span> ,</span><br><span class="line">         <span class="string">'Content-Type'</span> : <span class="string">'application/json'</span></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">request_payload = &#123;</span><br><span class="line">                  <span class="string">'username'</span> : <span class="string">'2019123456'</span>, </span><br><span class="line">                  <span class="string">'password'</span> : <span class="string">''</span>, </span><br><span class="line">                  <span class="string">'captcha'</span> : <span class="string">''</span></span><br><span class="line">                  &#125;</span><br><span class="line"></span><br><span class="line">jwxt_session = requests.session()</span><br><span class="line">salt = jwxt_session.get(url=login_salt, headers=header)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算摘要</span></span><br><span class="line">password = salt.text + <span class="string">'-'</span> + <span class="string">'这里填入密码'</span></span><br><span class="line">encryptPassword = hashlib.sha1(password.encode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line">request_payload[<span class="string">'password'</span>] = encryptPassword.hexdigest()</span><br><span class="line"></span><br><span class="line">request_payload = json.dumps(request_payload, separators=(<span class="string">','</span>, <span class="string">':'</span>)).encode(encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line">jwxt_session.post(login, data=request_payload, headers=header)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开学籍信息页，验证是否登录成功</span></span><br><span class="line">r = jwxt_session.get(student_info)</span><br><span class="line">r.text</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'学籍信息.txt'</span>,<span class="string">'w'</span>,encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> file:</span><br><span class="line">    file.write(r.text)</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;&lt;p&gt;今天继续试一试模拟登录学校的新教务系统，新教务系统是由上海树维开发的。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;思路寻找&quot;&gt;&lt;a href=&quot;#思路寻找&quot; class=&quot;headerlink&quot; title=&quot;思路寻找&quot;&gt;&lt;/a&gt;思路寻找&lt;/h2&gt;&lt;p&gt;和模拟登录信息门户一样，切到开发者模式，登录一次看一看请求过程。&lt;br&gt;login中可以看到网页后台提交了一个Request Payload：&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Python" scheme="http://wangyuyang.me/tags/Python/"/>
     
   </entry>
   
