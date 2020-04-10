@@ -96,17 +96,17 @@
 
 
 
-  <meta name="description" content="UART相关文件目录：  uart模块的定义：~/Chip/Inc/MKL_uart.h uart模块的实现：~/Chip/Src/MKL_uart.c">
+  <meta name="description" content="选择Mosfet应该考虑哪些因素?厂家NXP，TI，Infineon，Toshiba等公司都有Mosfet可选，善用官网提供的筛选工具对参数进行筛选。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="山外库中UART部分的使用">
-<meta property="og:url" content="http://wangyuyang.me/2019/12/06/山外库中UART部分的使用/index.html">
+<meta property="og:title" content="Mosfet选型笔记">
+<meta property="og:url" content="http://wangyuyang.me/2020/04/08/Mosfet选型笔记/index.html">
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
-<meta property="og:description" content="UART相关文件目录：  uart模块的定义：~/Chip/Inc/MKL_uart.h uart模块的实现：~/Chip/Src/MKL_uart.c">
+<meta property="og:description" content="选择Mosfet应该考虑哪些因素?厂家NXP，TI，Infineon，Toshiba等公司都有Mosfet可选，善用官网提供的筛选工具对参数进行筛选。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-06T11:48:23.775Z">
+<meta property="og:updated_time" content="2020-04-08T16:14:05.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="山外库中UART部分的使用">
-<meta name="twitter:description" content="UART相关文件目录：  uart模块的定义：~/Chip/Inc/MKL_uart.h uart模块的实现：~/Chip/Src/MKL_uart.c">
+<meta name="twitter:title" content="Mosfet选型笔记">
+<meta name="twitter:description" content="选择Mosfet应该考虑哪些因素?厂家NXP，TI，Infineon，Toshiba等公司都有Mosfet可选，善用官网提供的筛选工具对参数进行筛选。">
 
 
 
@@ -115,7 +115,7 @@
 
 
 
-  <link rel="canonical" href="http://wangyuyang.me/2019/12/06/山外库中UART部分的使用/"/>
+  <link rel="canonical" href="http://wangyuyang.me/2020/04/08/Mosfet选型笔记/"/>
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>山外库中UART部分的使用 | Y.-Y. Wang's blog</title>
+  <title>Mosfet选型笔记 | Y.-Y. Wang's blog</title>
   
 
 
@@ -349,7 +349,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wangyuyang.me/2019/12/06/山外库中UART部分的使用/"/>
+    <link itemprop="mainEntityOfPage" href="http://wangyuyang.me/2020/04/08/Mosfet选型笔记/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Y.-Y. Wang"/>
@@ -366,7 +366,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">山外库中UART部分的使用
+          <h1 class="post-title" itemprop="name headline">Mosfet选型笔记
 
               
             
@@ -392,12 +392,24 @@
                 
               
 
-              <time title="创建时间：2019-12-06 18:27:43 / 修改时间：19:48:23" itemprop="dateCreated datePublished" datetime="2019-12-06T18:27:43+08:00">2019-12-06</time>
+              <time title="创建时间：2020-04-08 23:03:19" itemprop="dateCreated datePublished" datetime="2020-04-08T23:03:19+08:00">2020-04-08</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-04-09 00:14:05" itemprop="dateModified" datetime="2020-04-09T00:14:05+08:00">2020-04-09</time>
               
             
           </span>
@@ -439,93 +451,24 @@
       
 
       
-        <h2 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h2><p>相关文件目录：</p>
-<ul>
-<li>uart模块的定义：<code>~/Chip/Inc/MKL_uart.h</code></li>
-<li>uart模块的实现：<code>~/Chip/Src/MKL_uart.c</code></li>
-</ul>
-<a id="more"></a> 
-<p>使用串口的基本流程：初始化串口——发送/接收数据。</p>
-<table>
-<thead>
-<tr>
-<th>Functions</th>
-<th>Features</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>uart_init</td>
-<td>初始化串口</td>
-</tr>
-<tr>
-<td>uart_getchar</td>
-<td>等待接收 1 个字节</td>
-</tr>
-<tr>
-<td>uart_querychar</td>
-<td>查询接收 1 个字符</td>
-</tr>
-<tr>
-<td>uart_querystr</td>
-<td>查询接收字符串</td>
-</tr>
-<tr>
-<td>uart_querybuff</td>
-<td>查询接收 buff</td>
-</tr>
-<tr>
-<td>uart_putstr</td>
-<td>发送字符串</td>
-</tr>
-<tr>
-<td>uart_rx_irq_en</td>
-<td>开串口接收中断</td>
-</tr>
-<tr>
-<td>uart_rx_irq_dis</td>
-<td>关串口接收中断</td>
-</tr>
-<tr>
-<td>uart_tx_irq_en</td>
-<td>开串口发送中断</td>
-</tr>
-<tr>
-<td>uart_tx_irq_dis</td>
-<td>关串口发送中断</td>
-</tr>
-<tr>
-<td>uart_txc_irq_en</td>
-<td>开串口发送完成中断</td>
-</tr>
-<tr>
-<td>uart_txc_irq_dis</td>
-<td>关串口发送完成中断</td>
-</tr>
-</tbody>
-</table>
-<h3 id="初始化串口"><a href="#初始化串口" class="headerlink" title="初始化串口"></a>初始化串口</h3><p><em>相关函数：uart_init()</em></p>
-<p>直接调用<code>uart_init()</code>即可：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uart_init (UART1,<span class="number">115200</span>);               <span class="comment">// 初始化 串口 1 波特率为 115200</span></span><br></pre></td></tr></table></figure>
-<h3 id="发送-接收数据"><a href="#发送-接收数据" class="headerlink" title="发送/接收数据"></a>发送/接收数据</h3><p><em>相关函数：uart_putchar(), uart_putbuff(), uart_putstr()</em></p>
-<p>根据需要发送的数据量，可以分为发送/接收一个字节、发送/接收多个字节。</p>
-<p>发送数据比较简单，直接调用以下任意一个函数即可：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uart_putchar (UART2, <span class="string">'A'</span>);             <span class="comment">// 发送字节 'A'</span></span><br><span class="line">uart_putbuff (UART2,<span class="string">"1234567"</span>, <span class="number">3</span>);     <span class="comment">// 实际发送字符串 `1234567` 的前 3 个字节'1', '2', '3'</span></span><br><span class="line">uart_putstr (UART2,<span class="string">"1234567"</span>);         <span class="comment">// 实际发送了 7 个字节 `1234567`</span></span><br></pre></td></tr></table></figure>
-<p>接收数据有两种实现：</p>
-<h4 id="等待法"><a href="#等待法" class="headerlink" title="等待法"></a>等待法</h4><p><em>相关函数：uart_getchar()</em></p>
-<p>如果没有接收到数据则原地等待，只有接收到数据程序才继续向下执行。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line">uart_getchar (UART2, &amp;ch);             <span class="comment">// 等待接收 1 个字节，保存到变量 ch 里</span></span><br></pre></td></tr></table></figure>
-<p>等待法只能用于接收一个字节的数据。</p>
-<h4 id="查询法"><a href="#查询法" class="headerlink" title="查询法"></a>查询法</h4><p><em>相关函数：uart_query(), uart_querychar(), uart_querystr(), uart_querybuff()</em></p>
-<p>这四个名字里都带<code>query</code>的函数都有一个相同功能：每执行一次，就会判断一次单片机是否已经接收到了数据，如果接收到了数据则返回值1，否则返回0。</p>
-<p>除此之外，在接收数据上与等待法不同的是，如果<strong>没有接收到数据，则程序继续向下执行</strong>；如果接收到数据，则将其保存到指定变量中，并继续向下执行。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( uart_querychar (UART2,&amp;ch) == <span class="number">1</span>)   <span class="comment">//查询接收 1 个字符，保存到 ch 里</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>类似的，查询法接收多字节数据只需调用<code>uart_querystr()</code>即可，详见<em>攻城略地——一天攻破K60/KL26</em>。</p>
-<p>关于<code>uart_getchar()</code>和<code>uart_querychar()</code>的区别，可以看下面两段代码，这两段代码的功能实际上是相同的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(!uart_querychar (UART2, &amp;ch))    <span class="comment">// 等待接收到数据</span></span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"></span><br><span class="line">uart_getchar (UART2, &amp;ch);</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"成功接收到一个字节"</span>);</span><br></pre></td></tr></table></figure>
-<p>山外库里还有两个名字接近的的函数<code>uart_query()</code>和<code>uart_querybuff()</code>，在<code>~/Chip/Src/MKL_uart.c</code>下可以看到<code>uart_query()</code>和<code>uart_querychar()</code>几乎完全一样，只不过<code>uart_query()</code>函数只判断有没有接收到数据，即使接收到数据也不保存。</p>
-<p>而前面的<code>uart_querystr()</code>函数如果没有接收到数据，并不会改变传入数组的值， 但<code>uart_querybuff()</code>函数在没有接收到数据的情况下会将传入数组清零。</p>
+        <h2 id="选择Mosfet应该考虑哪些因素"><a href="#选择Mosfet应该考虑哪些因素" class="headerlink" title="选择Mosfet应该考虑哪些因素?"></a>选择Mosfet应该考虑哪些因素?</h2><h4 id="厂家"><a href="#厂家" class="headerlink" title="厂家"></a>厂家</h4><p>NXP，TI，Infineon，Toshiba等公司都有Mosfet可选，善用官网提供的筛选工具对参数进行筛选。<br><a id="more"></a> </p>
+<h4 id="确定N沟道还是P沟道"><a href="#确定N沟道还是P沟道" class="headerlink" title="确定N沟道还是P沟道"></a>确定N沟道还是P沟道</h4><p>这个没啥好说的，二者特性不一样，N沟道相对便宜一点，按需要来选。</p>
+<p>还有一些Mos管会注明：N + Schottky或者Monolithically Integrated Schottky-like Diode。也就是说片内集成了肖特基二极管，根据需要还可以在外部并联一个二极管。</p>
+<h4 id="考虑工作电压和电流"><a href="#考虑工作电压和电流" class="headerlink" title="考虑工作电压和电流"></a>考虑工作电压和电流</h4><p>主要是看Vgs，Vds之类的参数是否满足需求，这个都和应用有关，没有太大发挥的余地。</p>
+<p>注：关于Mosfet各项参数的含义和等效电路模型可参考Texas Instruments的Application Report：<a href="http://www.ti.com/lit/an/slva714c/slva714c.pdf" target="_blank" rel="noopener">SLVA714C - Understanding Smart Gate Drive</a>。</p>
+<h4 id="散热和成本"><a href="#散热和成本" class="headerlink" title="散热和成本"></a>散热和成本</h4><p><del>DIY不需要考虑，加铜管加散热片加硅脂硬怼，买买买就完事了，反正学校报销hhh</del></p>
+<h4 id="导通电阻和寄生电容"><a href="#导通电阻和寄生电容" class="headerlink" title="导通电阻和寄生电容"></a>导通电阻和寄生电容</h4><p>这两个参数比较关键，导通电阻Rds(on)决定了功率损耗和额外热量的产生，越小越好，一般都在毫欧级。一些电源设计中为了减小Rds往往会令多个Mosfet并联。</p>
+<p>寄生电容不仅影响充电速率（进而影响开关速率），还会影响系统的稳定性。例如栅极电容Qgd过大会导致Miller效应的产生，因此Qg越小越好，一般都在纳法级。</p>
+<p>但是需要注意，<del>鱼和熊掌不可得兼</del>Rds越小，往往寄生电容越大，因此选型时两个都要考虑。</p>
+<p>另外这两个参数都和工作时栅极电压有关，应根据实际情况来选。各半导体企业官网里的Filter都会提供4.5V，10V等电压下的筛选器。</p>
+<h4 id="针对不同应用场合，对其他参数进行选择"><a href="#针对不同应用场合，对其他参数进行选择" class="headerlink" title="针对不同应用场合，对其他参数进行选择"></a>针对不同应用场合，对其他参数进行选择</h4><p>显然，不同的应用中对Mosfet特性的要求也不一样，例如在电机驱动中:</p>
+<blockquote><p>Motor control is another application where power MOSFETs find use and where the most important selection criteria might again differ. A motor-control circuit doesn’t switch at the high frequencies found in modern switching power supplies. A typical half-bridge control circuit employs two MOSFETs (a full bridge uses four). But both of the MOSFETs spend a fair amount of time switched off – dead time.</p>
+<p>Reverse Recovery Time (trr) becomes very important in such applications. When a control circuit switches a MOSFET in a bridge circuit to the off state when controlling an inductive load such as a motor winding, the other switch in the bridge conducts current in the reverse direction temporarily, via the body diode in the MOSFET–hence recirculating the current to continue to supply the motor. When the first MOSFET turns on again, the stored charge in the other MOSFET diode must be removed and discharged through the first, and that is a loss of energy, a short trr period minimizes such losses.</p>
+</blockquote>
+<p>说白了就是反向恢复时间trr越短越好，不同应用场景需求不一样<del>反正我也不懂</del>。</p>
+<p>另外还有开启/关闭延迟，这个也是越快越好。开关速度慢会导致功率损耗。</p>
+<h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p><del>Infineon的DirectrFET Series金属封装看着好帅</del><br>主要影响散热、体积以及寄生电感等问题，TO220还有DPAK最常用。</p>
+<p>扩展阅读：<br><a href="https://www.eetimes.com/the-application-guides-the-mosfet-selection-process/#" target="_blank" rel="noopener">The application guides the MOSFET selection process</a><br><a href="https://blog.csdn.net/gtkknd/article/details/26324397" target="_blank" rel="noopener">MOS管的导通特性</a></p>
 
       
     </div>
@@ -556,8 +499,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/06/信息的处理与表示/" rel="next" title="数据的处理与表示">
-                <i class="fa fa-chevron-left"></i> 数据的处理与表示
+              <a href="/2020/03/16/Nginx入门/" rel="next" title="Nginx入门">
+                <i class="fa fa-chevron-left"></i> Nginx入门
               </a>
             
           </div>
@@ -565,10 +508,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/21/MSP430F5529-LaunchPad例程在CCS下编译失败的问题/" rel="prev" title="MSP430F5529 LaunchPad例程在CCS下编译失败的问题">
-                MSP430F5529 LaunchPad例程在CCS下编译失败的问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -704,7 +643,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UART"><span class="nav-number">1.</span> <span class="nav-text">UART</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化串口"><span class="nav-number">1.1.</span> <span class="nav-text">初始化串口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送-接收数据"><span class="nav-number">1.2.</span> <span class="nav-text">发送/接收数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#等待法"><span class="nav-number">1.2.1.</span> <span class="nav-text">等待法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询法"><span class="nav-number">1.2.2.</span> <span class="nav-text">查询法</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#选择Mosfet应该考虑哪些因素"><span class="nav-number">1.</span> <span class="nav-text">选择Mosfet应该考虑哪些因素?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#厂家"><span class="nav-number">1.0.1.</span> <span class="nav-text">厂家</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#确定N沟道还是P沟道"><span class="nav-number">1.0.2.</span> <span class="nav-text">确定N沟道还是P沟道</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#考虑工作电压和电流"><span class="nav-number">1.0.3.</span> <span class="nav-text">考虑工作电压和电流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#散热和成本"><span class="nav-number">1.0.4.</span> <span class="nav-text">散热和成本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导通电阻和寄生电容"><span class="nav-number">1.0.5.</span> <span class="nav-text">导通电阻和寄生电容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#针对不同应用场合，对其他参数进行选择"><span class="nav-number">1.0.6.</span> <span class="nav-text">针对不同应用场合，对其他参数进行选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">1.0.7.</span> <span class="nav-text">封装</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
