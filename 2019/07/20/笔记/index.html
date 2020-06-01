@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
 <meta property="og:description" content="学一些东西时遇到的问题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-22T02:34:02.934Z">
+<meta property="og:updated_time" content="2020-04-25T03:27:15.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记">
 <meta name="twitter:description" content="学一些东西时遇到的问题。">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-04-22 10:34:02" itemprop="dateModified" datetime="2020-04-22T10:34:02+08:00">2020-04-22</time>
+                <time title="修改时间：2020-04-25 11:27:15" itemprop="dateModified" datetime="2020-04-25T11:27:15+08:00">2020-04-25</time>
               
             
           </span>
@@ -452,7 +452,7 @@
 
       
         <p>学一些东西时遇到的问题。<br><a id="more"></a> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">目录</span><br><span class="line">1. Assembly Language</span><br><span class="line">    1.1 DOSBox 窗口大小调整无反应</span><br><span class="line"></span><br><span class="line">2. LabVIEW</span><br><span class="line">    2.1 Control Design 效率问题</span><br><span class="line">    2.2 隐藏标题栏后前面板顶部依然有一个白色长条？</span><br><span class="line">    2.3 设置启动动画</span><br><span class="line">    2.4 设置淡入淡出效果</span><br><span class="line">    2.5 子面板 VI 显示位置不正确的问题</span><br><span class="line"></span><br><span class="line">3. OpenCV</span><br><span class="line">    3.1 imread() 函数用法</span><br><span class="line">    3.2 使用 Matplotlib 正确显示彩色图像</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">目录</span><br><span class="line">1. Assembly Language</span><br><span class="line">    1.1 DOSBox 窗口大小调整无反应</span><br><span class="line"></span><br><span class="line">2. LabVIEW</span><br><span class="line">    2.1 Control Design 效率问题</span><br><span class="line">    2.2 隐藏标题栏后前面板顶部依然有一个白色长条？</span><br><span class="line">    2.3 设置启动动画</span><br><span class="line">    2.4 设置淡入淡出效果</span><br><span class="line">    2.5 子面板 VI 显示位置不正确的问题</span><br><span class="line"></span><br><span class="line">3. OpenCV</span><br><span class="line">    3.1 imread() 函数用法</span><br><span class="line">    3.2 使用 Matplotlib 正确显示彩色图像</span><br><span class="line"></span><br><span class="line">4.Tasking</span><br><span class="line">    4.1 查看 Eclipse 版本</span><br><span class="line">    4.2 安装 Eclipse Marketplace</span><br><span class="line">    4.3 更换界面主题</span><br></pre></td></tr></table></figure>
 <h2 id="Assembly-Language"><a href="#Assembly-Language" class="headerlink" title="Assembly Language"></a>Assembly Language</h2><h3 id="DOSBox-窗口大小调整无反应"><a href="#DOSBox-窗口大小调整无反应" class="headerlink" title="DOSBox 窗口大小调整无反应"></a>DOSBox 窗口大小调整无反应</h3><p>根据网络上的说法，调整安装目录下<code>dosbox-0.74-3.conf</code>下的配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">windowresolution=original</span><br><span class="line">output=surface</span><br></pre></td></tr></table></figure></p>
 <p>改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">windowresolution = 1536*864</span><br><span class="line">output = overlay</span><br></pre></td></tr></table></figure></p>
 <p>发现没有变化，Google一下，建议改<code>scaler</code>为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[render]</span><br><span class="line"></span><br><span class="line">frameskip = 0</span><br><span class="line">aspect = false</span><br><span class="line">scaler = normal2x forced</span><br></pre></td></tr></table></figure></p>
@@ -490,6 +490,99 @@
 <p>OpenCV follows BGR order, while matplotlib likely follows RGB order.</p>
 <p>So when you display an image loaded in OpenCV using pylab functions, you may need to convert it into RGB mode. </p>
 </blockquote><br>关于为什么OpenCV选择BGR而不是RGB这个问题，可以看这里<a href="https://www.zhihu.com/question/264044792" target="_blank" rel="noopener">深度学习中为什么普遍使用BGR而不用RGB？</a><br>另附上Stackoverflow中给出的两种解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = img[::,::<span class="number">-1</span>]</span><br><span class="line">pyplot.imshow(img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">img = cv2.imread(<span class="string">'xxoo.png'</span>)</span><br><span class="line">img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">pyplot.imshow(img)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="Tasking"><a href="#Tasking" class="headerlink" title="Tasking"></a>Tasking</h2><h3 id="查看-Eclipse-版本"><a href="#查看-Eclipse-版本" class="headerlink" title="查看 Eclipse 版本"></a>查看 Eclipse 版本</h3><p><code>Help-&gt;Welcome-&gt;What&#39;s New-&gt;Eclipse Platform</code></p>
+<p>这里可以看到我安装的数字版本号为Eclipse 4.5，对应版本名称Mars。</p>
+<p>下附Eclipse版本代号对应关系。</p>
+<table>
+<thead>
+<tr>
+<th>Platfrom version</th>
+<th>Version name</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eclipse 3.1</td>
+<td>IO</td>
+<td>2005</td>
+</tr>
+<tr>
+<td>Eclipse 3.2</td>
+<td>Callisto</td>
+<td>2006</td>
+</tr>
+<tr>
+<td>Eclipse 3.3</td>
+<td>Europa</td>
+<td>2007</td>
+</tr>
+<tr>
+<td>Eclipse 3.4</td>
+<td>Ganymede</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>Eclipse 3.5</td>
+<td>Galileo</td>
+<td>2009</td>
+</tr>
+<tr>
+<td>Eclipse 3.6</td>
+<td>Helios</td>
+<td>2010</td>
+</tr>
+<tr>
+<td>Eclipse 3.7</td>
+<td>Indigo</td>
+<td>2011</td>
+</tr>
+<tr>
+<td>Eclipse 4.2</td>
+<td>Juno</td>
+<td>2012</td>
+</tr>
+<tr>
+<td>Eclipse 4.3</td>
+<td>Kepler</td>
+<td>2013</td>
+</tr>
+<tr>
+<td>Eclipse 4.4</td>
+<td>Luna</td>
+<td>2014</td>
+</tr>
+<tr>
+<td>Eclipse 4.5</td>
+<td>Mars</td>
+<td>2015</td>
+</tr>
+<tr>
+<td>Eclipse 4.6</td>
+<td>Neon</td>
+<td>2016</td>
+</tr>
+<tr>
+<td>Eclipse 4.7</td>
+<td>Oxygen</td>
+<td>2017</td>
+</tr>
+<tr>
+<td>Eclipse 4.8</td>
+<td>Photon</td>
+<td>2018</td>
+</tr>
+</tbody>
+</table>
+<p><del>Eclipse 4.9之后更新频率变高，名字就很土了，直接就是发行日期，详见Wiki</del></p>
+<h3 id="安装-Eclipse-Marketplace"><a href="#安装-Eclipse-Marketplace" class="headerlink" title="安装 Eclipse Marketplace"></a>安装 Eclipse Marketplace</h3><p>类似Visual Studio Code中的扩展管理工具，如果在Help菜单下找不到该工具需要手动安装。</p>
+<p>安装方法：<code>Help-&gt;Install New Software</code>，在Work with中输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://download.eclipse.org/mpc/mars</span><br><span class="line"># &apos;/mars&apos; 应替换为自己Eclipse版本代号，如4.8版本替换为&apos;/photon&apos;</span><br></pre></td></tr></table></figure>
+<p>然后勾选EPP MarketplaceClient即可。</p>
+<h3 id="更换界面主题"><a href="#更换界面主题" class="headerlink" title="更换界面主题"></a>更换界面主题</h3><p>在MarketPlace里搜索theme即可，一个比一个丑，放弃了。</p>
+<h3 id="使用-VS-Code-作为编辑器"><a href="#使用-VS-Code-作为编辑器" class="headerlink" title="使用 VS Code 作为编辑器"></a>使用 VS Code 作为编辑器</h3><p>鉴于Eclipse丑到极致，以后一律默认使用VS Code作为文本编辑器。</p>
+<p>设置外部编辑器修改文件后Eclipse自动刷新，<code>Window-&gt;Preferences-&gt;General-&gt;Workspace</code>，然后选中右侧<code>Refresh using native hooks or polling</code>和<code>Refresh on access</code>即可，如果需要也可勾选<code>Build automatically</code>。</p>
 
       
     </div>
@@ -602,7 +695,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -668,7 +761,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Assembly-Language"><span class="nav-number">1.</span> <span class="nav-text">Assembly Language</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOSBox-窗口大小调整无反应"><span class="nav-number">1.1.</span> <span class="nav-text">DOSBox 窗口大小调整无反应</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LabVIEW"><span class="nav-number">2.</span> <span class="nav-text">LabVIEW</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-Design效率问题"><span class="nav-number">2.1.</span> <span class="nav-text">Control Design效率问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏标题栏后前面板顶部依然有一个白色长条？"><span class="nav-number">2.2.</span> <span class="nav-text">隐藏标题栏后前面板顶部依然有一个白色长条？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置启动动画"><span class="nav-number">2.3.</span> <span class="nav-text">设置启动动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置淡入淡出效果"><span class="nav-number">2.4.</span> <span class="nav-text">设置淡入淡出效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子面板-VI-显示位置不正确的问题"><span class="nav-number">2.5.</span> <span class="nav-text">子面板 VI 显示位置不正确的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV"><span class="nav-number">3.</span> <span class="nav-text">OpenCV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#imread-函数用法"><span class="nav-number">3.1.</span> <span class="nav-text">imread()函数用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Matplotlib正确显示彩色图像"><span class="nav-number">3.2.</span> <span class="nav-text">使用Matplotlib正确显示彩色图像</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Assembly-Language"><span class="nav-number">1.</span> <span class="nav-text">Assembly Language</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOSBox-窗口大小调整无反应"><span class="nav-number">1.1.</span> <span class="nav-text">DOSBox 窗口大小调整无反应</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LabVIEW"><span class="nav-number">2.</span> <span class="nav-text">LabVIEW</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-Design效率问题"><span class="nav-number">2.1.</span> <span class="nav-text">Control Design效率问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏标题栏后前面板顶部依然有一个白色长条？"><span class="nav-number">2.2.</span> <span class="nav-text">隐藏标题栏后前面板顶部依然有一个白色长条？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置启动动画"><span class="nav-number">2.3.</span> <span class="nav-text">设置启动动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置淡入淡出效果"><span class="nav-number">2.4.</span> <span class="nav-text">设置淡入淡出效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子面板-VI-显示位置不正确的问题"><span class="nav-number">2.5.</span> <span class="nav-text">子面板 VI 显示位置不正确的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV"><span class="nav-number">3.</span> <span class="nav-text">OpenCV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#imread-函数用法"><span class="nav-number">3.1.</span> <span class="nav-text">imread()函数用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Matplotlib正确显示彩色图像"><span class="nav-number">3.2.</span> <span class="nav-text">使用Matplotlib正确显示彩色图像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tasking"><span class="nav-number">4.</span> <span class="nav-text">Tasking</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-Eclipse-版本"><span class="nav-number">4.1.</span> <span class="nav-text">查看 Eclipse 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Eclipse-Marketplace"><span class="nav-number">4.2.</span> <span class="nav-text">安装 Eclipse Marketplace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更换界面主题"><span class="nav-number">4.3.</span> <span class="nav-text">更换界面主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-VS-Code-作为编辑器"><span class="nav-number">4.4.</span> <span class="nav-text">使用 VS Code 作为编辑器</span></a></li></ol></li></ol></div>
             
 
           </div>
