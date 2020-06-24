@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="检测技术老师也太绝了，明确说考试内容书上没有，是课上讲的内容，于是决定利用阿里云的对象存储OSS服务配合智能语音交互平台的录音转文字服务提取文字稿。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用Aliyun智能语音交互平台将视频课语音转文字稿">
+<meta property="og:url" content="http://wangyuyang.me/2020/06/24/视频课语音转文字稿/index.html">
+<meta property="og:site_name" content="Y.-Y. Wang&#39;s blog">
+<meta property="og:description" content="检测技术老师也太绝了，明确说考试内容书上没有，是课上讲的内容，于是决定利用阿里云的对象存储OSS服务配合智能语音交互平台的录音转文字服务提取文字稿。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-06-24T16:32:35.269Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用Aliyun智能语音交互平台将视频课语音转文字稿">
+<meta name="twitter:description" content="检测技术老师也太绝了，明确说考试内容书上没有，是课上讲的内容，于是决定利用阿里云的对象存储OSS服务配合智能语音交互平台的录音转文字服务提取文字稿。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Y.-Y. Wang's blog" type="application/atom+xml"/>
+
+
+
+
+  <link rel="canonical" href="http://wangyuyang.me/2020/06/24/视频课语音转文字稿/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>利用Aliyun智能语音交互平台将视频课语音转文字稿 | Y.-Y. Wang's blog</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-112074623-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-112074623-1');
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Y.-Y. Wang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br/>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangyuyang.me/2020/06/24/视频课语音转文字稿/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y.-Y. Wang"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y.-Y. Wang's blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">利用Aliyun智能语音交互平台将视频课语音转文字稿
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-06-24 23:50:04" itemprop="dateCreated datePublished" datetime="2020-06-24T23:50:04+08:00">2020-06-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-06-25 00:32:35" itemprop="dateModified" datetime="2020-06-25T00:32:35+08:00">2020-06-25</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>检测技术老师也太绝了，明确说考试内容书上没有，是课上讲的内容，于是决定利用阿里云的对象存储OSS服务配合智能语音交互平台的录音转文字服务提取文字稿。<br><a id="more"></a> </p>
+<h2 id="第一步，获取音频文件"><a href="#第一步，获取音频文件" class="headerlink" title="第一步，获取音频文件"></a>第一步，获取音频文件</h2><p>之前为了提取PPT已经下载了课程录像。直接利用ffmpeg从视频中提取音频文件就行了。需要注意的是阿里云只支持支持单轨/双轨的wav格式、mp3格式的录音文件识别，另外采样率支持8000Hz、16000Hz。因此要在转换时注意一下，直接用ffmpeg就行了。</p>
+<h2 id="第二步，将待识别文件上传至OSS"><a href="#第二步，将待识别文件上传至OSS" class="headerlink" title="第二步，将待识别文件上传至OSS"></a>第二步，将待识别文件上传至OSS</h2><p>根据文档说明：</p>
+<blockquote><p>录音文件识别是针对已经录制完成的录音文件，进行识别的服务。录音文件识别是非实时的，识别的文件需要提交基于HTTP可访问的URL地址，不支持提交本地文件。</p>
+</blockquote>
+<p>之前租的VPS和内网穿透服务都很久没续费了，既然不支持本地文件识别，就按照官方建议开通了对象存储OSS服务，选标准型就好，按量付费价格也挺便宜的。然后上传音频文件并设置权限为公开可读就行了。</p>
+<h2 id="第三步，开通智能语音交互平台"><a href="#第三步，开通智能语音交互平台" class="headerlink" title="第三步，开通智能语音交互平台"></a>第三步，开通智能语音交互平台</h2><p>按说明文档一步一步来就行，选择开通试用版每天可白嫖2h的免费转换服务。</p>
+<h2 id="第四步，使用阿里云Python-SDK调用接口"><a href="#第四步，使用阿里云Python-SDK调用接口" class="headerlink" title="第四步，使用阿里云Python SDK调用接口"></a>第四步，使用阿里云Python SDK调用接口</h2><p>这个地方有点小坑，官方文档在两个看似完全相同的页面提供了不完全相同的Python Demo，其中一个程序调用时一直报41050015错误，文档中给出的解决方法是：“请确认请求参数appkey值是否设置正确，或者是否与阿里云账号的AccessKey ID同一个账号”。然而我反复确认，AccessKey ID和AppKey都填写的完全正确，对应的权限也在RAM控制台给了。</p>
+<p>反复对比文档，最终发现另一个程序地域ID参数完全不同，不清楚两个文档为什么不一样，然后试了一下这个Demo完全正常。</p>
+<p>由于服务器返回的转换结果是json格式文件，后附提取文稿的程序代码。</p>
+<h2 id="效果评价"><a href="#效果评价" class="headerlink" title="效果评价"></a>效果评价</h2><p>一言难尽，连蒙带猜能大概知道在讲什么东西吧，果然便宜没好货。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[6:49] 这次呢我们把这个城市系统啊，就是说如 果说我们对一个我们说了，对于一个我们的一个仪器啊一个检测系统来讲。</span><br><span class="line">[6:58] 我们需要知道它的特性的情况下，那么我们一般的这种方法采用是都标准的方法来做的。但是这个标定呢。</span><br><span class="line">[7:5] 那么呃从之前的课程内容可以看出，那么他需要的是我们的输入量。</span><br><span class="line">[7:12] 呃，和输出量两个量预期呃，通过这两个量之间的一些有效的定位关系，来求出中间的这样一个量子关系。</span><br><span class="line">[7:21] 这个量子关系呢，那么你可以啊再成为一个标定。</span><br><span class="line">[7:25] 这个特或者这个特特性，然后这种标定在这个标定呢，我们上节课也说了一点，就是说。</span><br><span class="line">[7:31] 那么我们一个传感器或者测试性能测量系统的时候，它的标定的时候呢。</span><br><span class="line">[7:37] 有这种静态特性标定和动态特性标的。</span><br><span class="line">[7:41] 那么静态特性标定呢，那么从我们这个呃ppt给大家的这种概念上来讲，我们讲的是给出。</span><br><span class="line">[7:48] 呃，标定处于这样一个我们一个无关的这样一辆配置。也就是说它的一个放大。</span><br></pre></td></tr></table></figure>
+<h2 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h2><p>官网给的Demo，直接把AccessKey ID等参数填进去就行了，很像之前用requests库写的爬虫。</p>
+<p>然后因为是轮询，转换过程中会返回大量无用的等待信息，可以对getResponse筛选一下，只存储状态码为21050000的结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="keyword">import</span> ClientException</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="keyword">import</span> ServerException</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.client <span class="keyword">import</span> AcsClient</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.request <span class="keyword">import</span> CommonRequest</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fileTrans</span><span class="params">(akId, akSecret, appKey, fileLink)</span> :</span></span><br><span class="line">    <span class="comment"># 地域ID，常量内容，请勿改变</span></span><br><span class="line">    REGION_ID = <span class="string">"cn-shanghai"</span></span><br><span class="line">    PRODUCT = <span class="string">"nls-filetrans"</span></span><br><span class="line">    DOMAIN = <span class="string">"filetrans.cn-shanghai.aliyuncs.com"</span></span><br><span class="line">    API_VERSION = <span class="string">"2018-08-17"</span></span><br><span class="line">    POST_REQUEST_ACTION = <span class="string">"SubmitTask"</span></span><br><span class="line">    GET_REQUEST_ACTION = <span class="string">"GetTaskResult"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 请求参数key</span></span><br><span class="line">    KEY_APP_KEY = <span class="string">"appkey"</span></span><br><span class="line">    KEY_FILE_LINK = <span class="string">"file_link"</span></span><br><span class="line">    KEY_VERSION = <span class="string">"version"</span></span><br><span class="line">    KEY_ENABLE_WORDS = <span class="string">"enable_words"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 是否开启智能分轨</span></span><br><span class="line">    KEY_AUTO_SPLIT = <span class="string">"auto_split"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 响应参数key</span></span><br><span class="line">    KEY_TASK = <span class="string">"Task"</span></span><br><span class="line">    KEY_TASK_ID = <span class="string">"TaskId"</span></span><br><span class="line">    KEY_STATUS_TEXT = <span class="string">"StatusText"</span></span><br><span class="line">    KEY_RESULT = <span class="string">"Result"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 状态值</span></span><br><span class="line">    STATUS_SUCCESS = <span class="string">"SUCCESS"</span></span><br><span class="line">    STATUS_RUNNING = <span class="string">"RUNNING"</span></span><br><span class="line">    STATUS_QUEUEING = <span class="string">"QUEUEING"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建AcsClient实例</span></span><br><span class="line">    client = AcsClient(akId, akSecret, REGION_ID)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提交录音文件识别请求</span></span><br><span class="line">    postRequest = CommonRequest()</span><br><span class="line">    postRequest.set_domain(DOMAIN)</span><br><span class="line">    postRequest.set_version(API_VERSION)</span><br><span class="line">    postRequest.set_product(PRODUCT)</span><br><span class="line">    postRequest.set_action_name(POST_REQUEST_ACTION)</span><br><span class="line">    postRequest.set_method(<span class="string">'POST'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 新接入请使用4.0版本，已接入(默认2.0)如需维持现状，请注释掉该参数设置</span></span><br><span class="line">    <span class="comment"># 设置是否输出词信息，默认为false，开启时需要设置version为4.0</span></span><br><span class="line">    task = &#123;KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : <span class="string">"4.0"</span>, KEY_ENABLE_WORDS : <span class="keyword">False</span>&#125;</span><br><span class="line">    <span class="comment"># 开启智能分轨，如果开启智能分轨 task中设置KEY_AUTO_SPLIT : True</span></span><br><span class="line">    <span class="comment"># task = &#123;KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False, KEY_AUTO_SPLIT : True&#125;</span></span><br><span class="line">    task = json.dumps(task)</span><br><span class="line"></span><br><span class="line">    print(task)</span><br><span class="line"></span><br><span class="line">    postRequest.add_body_params(KEY_TASK, task)</span><br><span class="line">    taskId = <span class="string">""</span></span><br><span class="line">    <span class="keyword">try</span> :</span><br><span class="line">        postResponse = client.do_action_with_exception(postRequest)</span><br><span class="line">        postResponse = json.loads(postResponse)</span><br><span class="line">        <span class="keyword">print</span> (postResponse)</span><br><span class="line">        statusText = postResponse[KEY_STATUS_TEXT]</span><br><span class="line">        <span class="keyword">if</span> statusText == STATUS_SUCCESS :</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">"录音文件识别请求成功响应！"</span>)</span><br><span class="line">            taskId = postResponse[KEY_TASK_ID]</span><br><span class="line">        <span class="keyword">else</span> :</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">"录音文件识别请求失败！"</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">except</span> ServerException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">print</span> (e)</span><br><span class="line">    <span class="keyword">except</span> ClientException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">print</span> (e)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建CommonRequest，设置任务ID</span></span><br><span class="line">    getRequest = CommonRequest()</span><br><span class="line">    getRequest.set_domain(DOMAIN)</span><br><span class="line">    getRequest.set_version(API_VERSION)</span><br><span class="line">    getRequest.set_product(PRODUCT)</span><br><span class="line">    getRequest.set_action_name(GET_REQUEST_ACTION)</span><br><span class="line">    getRequest.set_method(<span class="string">'GET'</span>)</span><br><span class="line">    getRequest.add_query_param(KEY_TASK_ID, taskId)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提交录音文件识别结果查询请求</span></span><br><span class="line">    <span class="comment"># 以轮询的方式进行识别结果的查询，直到服务端返回的状态描述符为"SUCCESS"、"SUCCESS_WITH_NO_VALID_FRAGMENT"，</span></span><br><span class="line">    <span class="comment"># 或者为错误描述，则结束轮询。</span></span><br><span class="line">    statusText = <span class="string">""</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span> :</span><br><span class="line">        <span class="keyword">try</span> :</span><br><span class="line">            getResponse = client.do_action_with_exception(getRequest)</span><br><span class="line">            getResponse = json.loads(getResponse)</span><br><span class="line">            <span class="keyword">print</span> (getResponse)</span><br><span class="line"></span><br><span class="line">            statusText = getResponse[KEY_STATUS_TEXT]</span><br><span class="line">            <span class="keyword">if</span> statusText == STATUS_RUNNING <span class="keyword">or</span> statusText == STATUS_QUEUEING :</span><br><span class="line">                <span class="comment"># 继续轮询</span></span><br><span class="line">                time.sleep(<span class="number">10</span>)</span><br><span class="line">            <span class="keyword">else</span> :</span><br><span class="line">                <span class="comment"># 退出轮询</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">except</span> ServerException <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">print</span> (e)</span><br><span class="line">        <span class="keyword">except</span> ClientException <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">print</span> (e)</span><br><span class="line">    <span class="keyword">if</span> statusText == STATUS_SUCCESS :</span><br><span class="line">        <span class="keyword">print</span> (<span class="string">"录音文件识别成功！"</span>)</span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">        <span class="keyword">print</span> (<span class="string">"录音文件识别失败！"</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">accessKeyId = <span class="string">"xxxxxxxxxxxxxxx"</span></span><br><span class="line">accessKeySecret = <span class="string">"xxxxxxxxxxxx"</span></span><br><span class="line">appKey = <span class="string">"xxxxxxxxxx"</span></span><br><span class="line">fileLink = <span class="string">"https://xxxxxxxxxxx.mp3"</span></span><br><span class="line"><span class="comment"># 执行录音文件识别</span></span><br><span class="line">fileTrans(accessKeyId, accessKeySecret, appKey, fileLink)</span><br></pre></td></tr></table></figure>
+<p>对json文件进行简单的处理，获取需要的文本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 毫秒转时间戳</span></span><br><span class="line"><span class="comment"># e.g. 70000ms = [1:10]</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convertmillis</span><span class="params">(milli)</span>:</span></span><br><span class="line">    milli /= <span class="number">1000</span></span><br><span class="line">    milli = int(milli)</span><br><span class="line">    minutes, seconds = divmod(milli, <span class="number">60</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'['</span> + str(minutes) + <span class="string">':'</span> + str(seconds) + <span class="string">'] '</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开已保存到本地的json文件</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"text.json"</span>,<span class="string">'r'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    raw_data = json.load(f)</span><br><span class="line"></span><br><span class="line">result_text = raw_data[<span class="string">"Result"</span>][<span class="string">"Sentences"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存文本和对应的时间戳</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"outputText.txt"</span>,<span class="string">'a+'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> result_text:</span><br><span class="line">        f.write(convertmillis(i[<span class="string">"BeginTime"</span>]))</span><br><span class="line">        f.write(i[<span class="string">"Text"</span>])</span><br><span class="line">        f.write(<span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/01/从腾讯课堂回放中提取PPT/" rel="next" title="从腾讯课堂回放中提取PPT">
+                <i class="fa fa-chevron-left"></i> 从腾讯课堂回放中提取PPT
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Y.-Y. Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步，获取音频文件"><span class="nav-number">1.</span> <span class="nav-text">第一步，获取音频文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步，将待识别文件上传至OSS"><span class="nav-number">2.</span> <span class="nav-text">第二步，将待识别文件上传至OSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步，开通智能语音交互平台"><span class="nav-number">3.</span> <span class="nav-text">第三步，开通智能语音交互平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四步，使用阿里云Python-SDK调用接口"><span class="nav-number">4.</span> <span class="nav-text">第四步，使用阿里云Python SDK调用接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果评价"><span class="nav-number">5.</span> <span class="nav-text">效果评价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序"><span class="nav-number">6.</span> <span class="nav-text">程序</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y.-Y. Wang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.7.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color='30,30,30' opacity='0.4' zIndex='-1' count='45' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":125,"height":250},"mobile":{"show":true}});</script></body>
+</html>
